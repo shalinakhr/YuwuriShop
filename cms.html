@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS Admin Dashboard - Yuwuri Shop</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brown: {
+              50: '#FDFBF7',
+              100: '#F7F3ED',
+              200: '#E3CEB1',
+              300: '#C7A07A',
+              700: '#734128',
+              900: '#391E10',
+            },
+            accentYellow: '#FBFF5B',
+            accentBlue: '#A1C9FF',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#FDFBF7] text-brown-900 font-sans antialiased min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-brown-200/80 flex flex-col justify-between hidden md:flex shrink-0">
+    <div>
+      <div class="p-6 border-b border-brown-100">
+        <a href="#" class="text-2xl font-serif font-bold tracking-tight text-brown-900">
+          Yuwuri<span class="text-brown-700 font-normal italic">.cms</span>
+        </a>
+        <p class="text-[11px] text-brown-700/80 mt-1">Daily Shirt & Blouse Admin</p>
+      </div>
+
+      <nav class="p-4 space-y-1.5 text-sm">
+        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-brown-900 text-white font-medium shadow-sm">
+          <i class="fa-solid fa-chart-pie w-4"></i> Dashboard
+        </a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-brown-700 hover:bg-brown-100 hover:text-brown-900 transition-colors font-medium">
+          <i class="fa-solid fa-shirt w-4"></i> Katalog Produk
+        </a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-brown-700 hover:bg-brown-100 hover:text-brown-900 transition-colors font-medium">
+          <i class="fa-solid fa-cart-shopping w-4"></i> Pesanan Masuk
+        </a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-brown-700 hover:bg-brown-100 hover:text-brown-900 transition-colors font-medium">
+          <i class="fa-solid fa-users w-4"></i> Pelanggan
+        </a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-brown-700 hover:bg-brown-100 hover:text-brown-900 transition-colors font-medium">
+          <i class="fa-solid fa-sliders w-4"></i> Pengaturan Toko
+        </a>
+      </nav>
+    </div>
+
+    <div class="p-4 border-t border-brown-100">
+      <div class="flex items-center gap-3 p-2">
+        <div class="w-9 h-9 rounded-full bg-accentYellow text-brown-900 font-bold flex items-center justify-center text-sm border border-brown-900/20">
+          Y
+        </div>
+        <div class="text-xs">
+          <p class="font-bold text-brown-900">Yuwuri Admin</p>
+          <p class="text-brown-700">yuwurishop@gmail.com</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <div class="flex-grow flex flex-col">
+    
+    <!-- Topbar Header -->
+    <header class="bg-white border-b border-brown-200/80 px-6 py-4 flex items-center justify-between sticky top-0 z-40">
+      <div class="flex items-center gap-4">
+        <button class="md:hidden text-brown-900 text-lg">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1 class="font-serif font-bold text-xl text-brown-900">Ringkasan Toko</h1>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <div class="relative hidden sm:block">
+          <input type="text" placeholder="Cari produk / pesanan..." class="pl-9 pr-4 py-2 bg-brown-50 border border-brown-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-brown-700 w-64">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-brown-700 text-xs"></i>
+        </div>
+        <button class="px-4 py-2 bg-accentYellow text-brown-900 rounded-xl font-semibold text-xs hover:bg-yellow-300 transition-colors flex items-center gap-2">
+          <i class="fa-solid fa-plus text-xs"></i> Tambah Produk
+        </button>
+      </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <main class="p-6 md:p-8 space-y-8 flex-grow">
+      
+      <!-- Metrics Overview Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <div class="bg-white p-5 rounded-2xl border border-brown-200/80 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-xs text-brown-700 font-medium block mb-1">Total Penjualan</span>
+            <span class="font-serif font-bold text-2xl text-brown-900">Rp 4.250.000</span>
+            <span class="text-[10px] text-green-600 font-semibold block mt-1"><i class="fa-solid fa-arrow-up text-[8px]"></i> +12% dari minggu lalu</span>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-brown-100 text-brown-900 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-wallet"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-brown-200/80 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-xs text-brown-700 font-medium block mb-1">Pesanan Masuk</span>
+            <span class="font-serif font-bold text-2xl text-brown-900">84 Pesanan</span>
+            <span class="text-[10px] text-brown-700 block mt-1">12 perlu dikemas</span>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-accentBlue/30 text-brown-900 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-box"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-brown-200/80 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-xs text-brown-700 font-medium block mb-1">Total Produk Active</span>
+            <span class="font-serif font-bold text-2xl text-brown-900">30 Item</span>
+            <span class="text-[10px] text-brown-700 block mt-1">Kemeja & Blouse</span>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-accentYellow/40 text-brown-900 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-shirt"></i>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-brown-200/80 shadow-sm flex items-center justify-between">
+          <div>
+            <span class="text-xs text-brown-700 font-medium block mb-1">Stok Menipis</span>
+            <span class="font-serif font-bold text-2xl text-brown-900">3 Produk</span>
+            <span class="text-[10px] text-red-500 font-semibold block mt-1">Perlu Restock Grosir</span>
+          </div>
+          <div class="w-11 h-11 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Main Section: Management Table & Quick Form -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Table List (8 Cols) -->
+        <div class="lg:col-span-8 bg-white rounded-2xl border border-brown-200/80 shadow-sm overflow-hidden">
+          <div class="p-6 border-b border-brown-100 flex items-center justify-between">
+            <div>
+              <h2 class="font-serif font-bold text-lg text-brown-900">Daftar Produk Yuwuri Shop</h2>
+              <p class="text-xs text-brown-700">Kelola harga, varian, dan ketersediaan stok kemeja/blouse.</p>
+            </div>
+            <select class="px-3 py-1.5 bg-brown-50 border border-brown-200 rounded-xl text-xs font-medium text-brown-900 focus:outline-none">
+              <option>Semua Kategori</option>
+              <option>Kemeja Daily</option>
+              <option>Blouse Modern</option>
+            </select>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-brown-900">
+              <thead class="bg-brown-50 text-brown-700 font-semibold uppercase tracking-wider border-b border-brown-100">
+                <tr>
+                  <th class="p-4">Produk</th>
+                  <th class="p-4">Kategori</th>
+                  <th class="p-4">Harga Jual</th>
+                  <th class="p-4">Stok</th>
+                  <th class="p-4">Status</th>
+                  <th class="p-4 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-brown-100 font-medium">
+                <!-- Row 1 -->
+                <tr class="hover:bg-brown-50/50 transition-colors">
+                  <td class="p-4 flex items-center gap-3">
+                    <div class="w-9 h-11 bg-brown-100 rounded-lg flex items-center justify-center shrink-0">
+                      <i class="fa-solid fa-shirt text-brown-700 text-sm"></i>
+                    </div>
+                    <div>
+                      <span class="font-bold block">Kemeja Rayon
