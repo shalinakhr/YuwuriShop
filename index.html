@@ -58,37 +58,35 @@
         <span class="font-medium">Gratis Ongkir untuk Koleksi Kemeja Anti-Kusut (Start Rp 30.000)</span>
     </div>
 
-    <!-- Navigation -->
-    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-brown-200/60">
+    <!-- Header / Navbar -->
+    <header class="border-b border-brown-200/60 bg-white/90 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-            <!-- Logo -->
+            
+            <!-- Logo (Kiri) -->
             <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900">
                 Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
             </a>
             
-            <!-- Desktop Menu -->
-            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold">
-                <a href="#" class="text-brown-900 border-b-2 border-brown-900 pb-1">Beranda</a>
-                <a href="catalog.html" class="text-brown-700 hover:text-brown-900 transition-colors">Koleksi</a>
-                <a href="about.html" class="text-brown-700 hover:text-brown-900 transition-colors">Tentang Kami</a>
+            <!-- Menu Navigasi (Tengah) -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="index.html" class="text-brown-700 font-semibold border-b-2 border-brown-700 pb-0.5">Home</a>
+                <a href="catalog.html" class="hover:text-brown-700 transition-colors">Catalog</a>
+                <a href="about.html" class="hover:text-brown-700 transition-colors">About Us</a>
+                <a href="contact.html" class="hover:text-brown-700 transition-colors">Contact</a>
             </nav>
 
-            <!-- Action Buttons -->
-            <div class="flex items-center gap-2 sm:gap-4">
-                
-                <!-- Icon Profil (Pengganti "Masuk") -->
-                <a href="#" class="w-10 h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 flex items-center justify-center" title="Profil Akun">
-                    <i class="fa-regular fa-user text-lg"></i>
+            <!-- Kolom Cari & Keranjang (Kanan) -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <div class="relative hidden sm:block">
+                    <input type="text" placeholder="Cari kemeja/blouse..." class="pl-8 pr-4 py-1.5 text-xs bg-brown-100 border border-brown-200 rounded-full focus:outline-none focus:ring-1 focus:ring-brown-700 w-40 lg:w-56">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-brown-700/60"></i>
+                </div>
+                <a href="cart.html" class="p-2 hover:bg-brown-100 rounded-full transition-colors text-brown-900 relative inline-flex items-center justify-center">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span class="absolute top-1 right-1 w-4 h-4 bg-accentYellow text-brown-900 text-[10px] font-bold rounded-full flex items-center justify-center border border-brown-900">3</span>
                 </a>
-                
-                <!-- Icon Keranjang (Pengganti "Belanja Sekarang") -->
-                <a href="cart.html" class="w-10 h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 relative flex items-center justify-center" title="Keranjang Belanja">
-                    <i class="fa-solid fa-cart-shopping text-lg"></i>
-                    <!-- Badge jumlah barang (bisa dihapus jika tidak perlu) -->
-                    <span class="absolute top-1.5 right-1 w-4 h-4 bg-accentYellow text-brown-900 text-[10px] font-bold rounded-full flex items-center justify-center border border-brown-900">0</span>
-                </a>
-
             </div>
+            
         </div>
     </header>
 
