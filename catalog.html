@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Katalog Produk — Yuwuri Shop</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brown: {
+              50: '#FDFBF7',
+              100: '#FAF5EF',
+              200: '#E3CEB1',
+              300: '#C7A07A',
+              700: '#734128',
+              900: '#391E10',
+            },
+            accentYellow: '#FBFF5B',
+            accentBlue: '#A1C9FF',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .card-shadow {
+      transition: all 0.25s ease;
+    }
+    .card-shadow:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px -8px rgba(57, 30, 16, 0.12);
+    }
+  </style>
+</head>
+<body class="bg-[#FDFBF7] text-brown-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- Top Promo Bar -->
+  <div class="bg-brown-900 text-brown-50 text-xs py-2 px-4 text-center flex items-center justify-center gap-2">
+    <span class="bg-accentYellow text-brown-900 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider">Gratis Ongkir</span>
+    <span class="font-medium">Koleksi Kemeja & Blouse Daily Anti-Kusut (Rp 30.000 - Rp 80.000)</span>
+  </div>
+
+  <!-- Header / Navbar -->
+  <header class="border-b border-brown-200/60 bg-[#FDFBF7]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <a href="#" class="text-2xl font-serif font-bold tracking-tight text-brown-900">
+        Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
+      </a>
+      
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="#" class="hover:text-brown-700 transition-colors">Home</a>
+        <a href="#" class="text-brown-700 font-semibold border-b-2 border-brown-700 pb-0.5">Catalog</a>
+        <a href="#" class="hover:text-brown-700 transition-colors">About Us</a>
+        <a href="#" class="hover:text-brown-700 transition-colors">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <div class="relative hidden sm:block">
+          <input type="text" placeholder="Cari kemeja/blouse..." class="pl-8 pr-4 py-1.5 text-xs bg-brown-100 border border-brown-200 rounded-full focus:outline-none focus:ring-1 focus:ring-brown-700 w-40 lg:w-56">
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-brown-700/60"></i>
+        </div>
+        <button class="p-2 hover:bg-brown-100 rounded-full transition-colors text-brown-900 relative">
+          <i class="fa-solid fa-bag-shopping text-lg"></i>
+          <span class="absolute top-1 right-1 w-4 h-4 bg-accentYellow text-brown-900 text-[10px] font-bold rounded-full flex items-center justify-center border border-brown-900">3</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Banner / Header Title -->
+  <section class="bg-brown-100/60 border-b border-brown-200/50 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="inline-block px-3 py-1 bg-accentYellow text-brown-900 text-[11px] font-bold tracking-wider rounded-full uppercase mb-2">
+            Daily Collection
+          </span>
+          <h1 class="text-3xl md:text-4xl font-serif font-bold text-brown-900">Katalog Kemeja & Blouse</h1>
+          <p class="text-xs sm:text-sm text-brown-700 mt-1">30 Pilihan outfit harian adem, anti-kusut, dan nyaman untuk kuliah/kerja.</p>
+        </div>
+        <div class="text-xs text-brown-700 font-medium">
+          Menampilkan <span class="font-bold text-brown-900">1-30</span> dari <span class="font-bold text-brown-900">30</span> produk
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Catalog Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 flex-grow">
+    
+    <!-- Filter & Sort Bar -->
+    <div class="bg-white p-4 rounded-2xl border border-brown-200/80 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+      
+      <!-- Category Pills -->
+      <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none text-xs">
+        <button class="px-4 py-2 rounded-xl bg-brown-900 text-white font-bold whitespace-nowrap shrink-0">Semua (30)</button>
+        <button class="px-4 py-2 rounded-xl bg-brown-100 hover:bg-brown-200/60 text-brown-900 font-medium whitespace-nowrap shrink-0">Kemeja Polos</button>
+        <button class="px-4 py-2 rounded-xl bg-brown-100 hover:bg-brown-200/60 text-brown-900 font-medium whitespace-nowrap shrink-0">Blouse Motif</button>
+        <button class="px-4 py-2 rounded-xl bg-brown-100 hover:bg-brown-200/60 text-brown-900 font-medium whitespace-nowrap shrink-0">Oversized</button>
+        <button class="px-4 py-2 rounded-xl bg-brown-100 hover:bg-brown-200/60 text-brown-900 font-medium whitespace-nowrap shrink-0">Linen & Rayon</button>
+      </div>
+
+      <!-- Sorting & Filter Controls -->
+      <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+        <div class="flex items-center gap-2 text-xs font-medium text-brown-700">
+          <i class="fa-solid fa-arrow-down-short-wide"></i>
+          <span>Urutkan:</span>
+        </div>
+        <select class="px-3 py-2 text-xs bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-brown-700 font-medium text-brown-900 cursor-pointer">
+          <option>Terpopuler (Best Seller)</option>
+          <option>Harga: Terendah - Tertinggi</option>
+          <option>Harga: Tertinggi - Terendah</option>
+          <option>Terbaru</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- 30 Products Grid -->
+    <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+      
+      <!-- Product items dynamically generated via JS for clean markup -->
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-14 flex items-center justify-center gap-2 text-xs font-semibold">
+      <button class="w-9 h-9 rounded-xl border border-brown-200 bg-white text-brown-700 hover:bg-brown-100 flex items-center justify-center">
+        <i class="fa-solid fa-chevron-left text-xs"></i>
+      </button>
+      <button class="w-9 h-9 rounded-xl bg-brown-900 text-white flex items-center justify-center">1</button>
+      <button class="w-9 h-9 rounded-xl border border-brown-200 bg-white text-brown-700 hover:bg-brown-100 flex items-center justify-center">2</button>
+      <button class="w-9 h-9 rounded-xl border border-brown-200 bg-white text-brown-700 hover:bg-brown-100 flex items-center justify-center">3</button>
+      <button class="w-9 h-9 rounded-xl border border-brown-200 bg-white text-brown-700 hover:bg-brown-100 flex items-center justify-center">
+        <i class="fa-solid fa-chevron-right text-xs"></i>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-brown-200/60 bg-white py-10 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 text-xs text-brown-700">
+        <div>
+          <a href="#" class="text-xl font-serif font-bold text-brown-900 block mb-3">
+            Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
+          </a>
+          <p class="leading-relaxed">Kemeja & blouse dailywear anak muda berkualitas tinggi dengan bahan adem dan tahan kusut. Start from Rp 30.000!</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-3">Bantuan & Kontak</h4>
+          <p class="mb-1"><i class="fa-brands fa-whatsapp text-brown-900 me-1"></i> WA: 089618633132</p>
+          <p><i class="fa-regular fa-envelope text-brown-900 me-1"></i> yuwurishop@gmail.com</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-3">Kategori</h4>
+          <ul class="space-y-1.5">
+            <li><a href="#" class="hover:text-brown-900">Kemeja Cotton Rayon</a></li>
+            <li><a href="#" class="hover:text-brown-900">Blouse Linen Daily</a></li>
+            <li><a href="#" class="hover:text-brown-900">Oversized Office Shirt</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-3">Keunggulan</h4>
+          <span class="inline-block px-2.5 py-1 bg-accentYellow text-brown-900 font-bold rounded mb-2">Real Pict Guarantee</span>
+          <p>Bahan adem, cocok untuk cuaca tropis & beraktivitas harian.</p>
+        </div>
+      </div>
+      
+      <div class="border-t border-brown-200/60 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-brown-700">
+        <p>&copy; 2026 Yuwuri Shop. All rights reserved.</p>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-brown-900">Privacy Policy</a>
+          <a href="#" class="hover:text-brown-900">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script to Generate 30 Items -->
+  <script>
+    const products = [
+      { id: 1, name: "Almond Crop Oversize Shirt", cat: "Kemeja Polos", price: "Rp 35.000", tag: "Best Seller", tagBg: "bg-accentYellow text-brown-900", color: "#E3CEB1", pattern: "collar" },
+      { id: 2, name: "Soft Linen Daily Blouse", cat: "Linen & Rayon", price: "Rp 42.000", tag: "Anti Kusut", tagBg: "bg-accentBlue text-brown-900", color: "#C7A07A", pattern: "button" },
+      { id: 3, name: "Korean Pocket Basic Shirt", cat: "Kemeja Polos", price: "Rp 38.000", tag: "New", tagBg: "bg-brown-900 text-white", color: "#FAF5EF", pattern: "pocket" },
+      { id: 4, name: "Pastel Flowy Rayon Blouse", cat: "Linen & Rayon", price: "Rp 45.000", tag: "Favorit", tagBg: "bg-accentYellow text-brown-900", color: "#D8C4B6", pattern: "vneck" },
+      { id: 5, name: "Stripe Relaxed Oversized", cat: "Oversized", price: "Rp 49.000", tag: "Disc 15%", tagBg: "bg-red-500 text-white", color: "#B8A390", pattern: "stripe" },
+      { id: 6, name: "Corduroy Outer Blouse", cat: "Blouse Motif", price: "Rp 68.000", tag: "Best Seller", tagBg: "bg-accentYellow text-brown-900", color: "#734128", pattern: "collar" },
+      { id: 7, name: "Minimalist Linen Popover", cat: "Linen & Rayon", price: "Rp 55.000", tag: "Adem", tagBg: "bg-accentBlue text-brown-900", color: "#EEDCC6", pattern: "vneck" },
+      { id: 8, name: "Puff Sleeve Casual Shirt", cat: "Blouse Motif", price: "Rp 40.000", tag: "Trending", tagBg: "bg-brown-900 text-white", color: "#D1BBA0", pattern: "puff" },
+      { id: 9, name: "Mocha Daily Work Shirt", cat: "Kemeja Polos", price: "Rp 32.000", tag: "Hemat", tagBg: "bg-emerald-600 text-white", color: "#5C341F", pattern: "button" },
+      { id: 10, name: "Oversized Boyfriend Cotton", cat: "Oversized", price: "Rp 52.000", tag: "Restock", tagBg: "bg-accentYellow text-brown-900", color: "#E6D7C3", pattern: "pocket" },
+      { id: 11, name: "Floral Vintage Rayon Blouse", cat: "Blouse Motif", price: "Rp 48.000", tag: "Limited", tagBg: "bg-brown-900 text-white", color: "#C49A76", pattern: "stripe" },
+      { id: 12, name: "Crinkle Airflow Daily Shirt", cat: "Kemeja Polos", price: "Rp 36.000", tag: "Tanpa Setrika", tagBg: "bg-accentBlue text-brown-900", color: "#FAF0E6", pattern: "collar" },
+      { id: 13, name: "Earth Tone Plaid Shirt", cat: "Blouse Motif", price: "Rp 58.000", tag: "Best Seller", tagBg: "bg-accentYellow text-brown-900", color: "#8C5437", pattern: "stripe" },
+      { id: 14, name: "Mandarin Collar Rayon Shirt", cat: "Kemeja Polos", price: "Rp 44.000", tag: "New Arrival", tagBg: "bg-brown-900 text-white", color: "#DFD3C3", pattern: "vneck" },
+      { id: 15, name: "Chiffon Layered Daily Blouse", cat: "Blouse Motif", price: "Rp 62.000", tag: "Anggun", tagBg: "bg-accentBlue text-brown-900", color: "#E8D8C8", pattern: "puff" },
+      { id: 16, name: "Linen Crop Drop Shoulder", cat: "Linen & Rayon", price: "Rp 50.000", tag: "Hot Item", tagBg: "bg-accentYellow text-brown-900", color: "#BDA58B", pattern: "pocket" },
+      { id: 17, name: "Classic White Daily Shirt", cat: "Kemeja Polos", price: "Rp 30.000", tag: "Super Murah", tagBg: "bg-emerald-600 text-white", color: "#FFFFFF", pattern: "button" },
+      { id: 18, name: "Oversized Denim Light Shirt", cat: "Oversized", price: "Rp 75.000", tag: "Premium", tagBg: "bg-accentBlue text-brown-900", color: "#A1C9FF", pattern: "collar" },
+      { id: 19, name: "Ribbed Knit Collar Shirt", cat: "Kemeja Polos", price: "Rp 65.000", tag: "Comfy", tagBg: "bg-brown-900 text-white", color: "#9E7A5A", pattern: "collar" },
+      { id: 20, name: "Soft Silk Daily Blouse", cat: "Blouse Motif", price: "Rp 78.000", tag: "Mewah", tagBg: "bg-accentYellow text-brown-900", color: "#F7EBE1", pattern: "vneck" },
+      { id: 21, name: "Basic Pocket Linen Shirt", cat: "Linen & Rayon", price: "Rp 46.000", tag: "Best Seller", tagBg: "bg-accentYellow text-brown-900", color: "#D4C3B2", pattern: "pocket" },
+      { id: 22, name: "Striped Chic Daily Blouse", cat: "Blouse Motif", price: "Rp 39.000", tag: "Disc 10%", tagBg: "bg-red-500 text-white", color: "#AB927A", pattern: "stripe" },
+      { id: 23, name: "V-Neck Button Loose Shirt", cat: "Kemeja Polos", price: "Rp 37.000", tag: "Adem", tagBg: "bg-accentBlue text-brown-900", color: "#EAE0D5", pattern: "vneck" },
+      { id: 24, name: "Oversized Flannel Brown Shirt", cat: "Oversized", price: "Rp 70.000", tag: "Kekinian", tagBg: "bg-brown-900 text-white", color: "#633B27", pattern: "stripe" },
+      { id: 25, name: "Balloon Sleeve Linen Blouse", cat: "Linen & Rayon", price: "Rp 54.000", tag: "Cute Fit", tagBg: "bg-accentYellow text-brown-900", color: "#DBCBB9", pattern: "puff" },
+      { id: 26, name: "Basic Rayon Long Shirt", cat: "Linen & Rayon", price: "Rp 41.000", tag: "Hijab Friendly", tagBg: "bg-accentBlue text-brown-900", color: "#C2A88F", pattern: "button" },
+      { id: 27, name: "Retro Cuban Collar Shirt", cat: "Kemeja Polos", price: "Rp 59.000", tag: "Trendy", tagBg: "bg-brown-900 text-white", color: "#875C3D", pattern: "collar" },
+      { id: 28, name: "Short Sleeve Daily Blouse", cat: "Kemeja Polos", price: "Rp 33.000", tag: "Casual", tagBg: "bg-emerald-600 text-white", color: "#F3E9DD", pattern: "vneck" },
+      { id: 29, name: "Oversized Linen Outer Shirt", cat: "Oversized", price: "Rp 66.000", tag: "Favorite", tagBg: "bg-accentYellow text-brown-900", color: "#A88B70", pattern: "pocket" },
+      { id: 30, name: "Premium Twill Cotton Shirt", cat: "Kemeja Polos", price: "Rp 80.000", tag: "Top Rated", tagBg: "bg-brown-900 text-white", color: "#4A2817", pattern: "button" }
+    ];
+
+    const grid = document.getElementById('productGrid');
+
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.className = "bg-white rounded-2xl border border-brown-200/80 overflow-hidden card-shadow flex flex-col justify-between group";
+      
+      card.innerHTML = `
+        <div>
+          <!-- Image Box Placeholder -->
+          <div class="relative w-full aspect-[4/5] flex items-center justify-center p-6 border-b border-brown-100" style="background-color: ${p.color}15;">
+            
+            <!-- Badge -->
+            <span class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-brown-900/10 ${p.tagBg}">
+              ${p.tag}
+            </span>
+
+            <!-- Wishlist Button -->
+            <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-brown-900 flex items-center justify-center transition-colors shadow-sm">
+              <i class="fa-regular fa-heart text-xs"></i>
+            </button>
+
+            <!-- Illustrated SVG Shirt Placeholder -->
+            <div class="w-24 h-28 flex items-center justify-center relative transform group-hover:scale-105 transition-transform duration-300">
+              <svg viewBox="0 0 100 120" class="w-full h-full drop-shadow-md" fill="${p.color}">
+                <path d="M 20 25 L 35 10 L 65 10 L 80 25 L 95 35 L 85 55 L 75 48 L 75 110 L 25 110 L 25 48 L 15 55 L 5 35 Z" stroke="#391E10" stroke-width="2.5" stroke-linejoin="round" />
+                <path d="M 35 10 L 50 30 L 65 10" stroke="#391E10" stroke-width="2.5" fill="none" />
+                <circle cx="50" cy="45" r="2" fill="#391E10" />
+                <circle cx="50" cy="65" r="2" fill="#391E10" />
+                <circle cx="50" cy="85" r="2" fill="#391E10" />
+                ${p.pattern === 'pocket' ? '<rect x="58" y="42" width="12" height="15" stroke="#391E10" stroke-width="1.5" fill="none" />' : ''}
+              </svg>
+            </div>
+          </div>
+
+          <!-- Product Details -->
+          <div class="p-4">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-brown-700/70">${p.cat}</span>
+            <h3 class="font-serif font-bold text-sm text-brown-900 mt-0.5 line-clamp-1 group-hover:text-brown-700 transition-colors">
+              ${p.name}
+            </h3>
+            <p class="text-[11px] text-brown-700/80 mt-1">Bahan adem, anti-kusut</p>
+          </div>
+        </div>
+
+        <!-- Price & Action -->
+        <div class="p-4 pt-0 flex items-center justify-between gap-2 mt-2">
+          <div>
+            <span class="text-xs text-brown-700/60 block text-[10px]">Harga</span>
+            <span class="font-bold text-brown-900 text-sm md:text-base">${p.price}</span>
+          </div>
+          <button class="w-9 h-9 rounded-xl bg-brown-900 hover:bg-brown-700 text-white flex items-center justify-center transition-colors shadow-sm" title="Tambah ke keranjang">
+            <i class="fa-solid fa-plus text-xs"></i>
+          </button>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>
