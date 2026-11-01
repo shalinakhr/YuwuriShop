@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuwuri Shop | Affordable Fashion for Fancy Women</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- COLOR PALETTE & VARIABLES --- */
+        :root {
+            /* Warna Cokelat dari Referensi Gambar */
+            --cream-bg: #FDFCEB;
+            --light-brown: #E3CEB1;
+            --med-brown: #C7A07A;
+            --dark-brown: #754128;
+            --darkest-brown: #391E10;
+            
+            /* Warna Aksen Request */
+            --accent-yellow: #FBFF5B;
+            --accent-blue: #A1C9FF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--cream-bg);
+            color: var(--darkest-brown);
+            line-height: 1.6;
+        }
+
+        /* --- NAVBAR --- */
+        header {
+            background-color: var(--cream-bg);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--light-brown);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark-brown);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent-blue);
+            font-size: 30px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-brown);
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background-color: var(--light-brown);
+            padding: 80px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-bottom: 5px solid var(--accent-yellow);
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            color: var(--darkest-brown);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero-content h1 span {
+            background-color: var(--accent-yellow);
+            padding: 0 10px;
+            border-radius: 5px;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: var(--dark-brown);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-inline: auto;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-blue);
+            color: var(--darkest-brown);
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid var(--darkest-brown);
+            box-shadow: 4px 4px 0px var(--dark-brown);
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-yellow);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px var(--dark-brown);
+        }
+
+        /* --- VALUE PROPOSITION --- */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 60px 5%;
+            background-color: var(--cream-bg);
+            flex-wrap: wrap;
+        }
+
+        .feature-card {
+            background-color: white;
+            border: 2px solid var(--med-brown);
+            border-radius: 15px;
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 4px 4px 0px var(--light-brown);
+        }
+
+        .feature-card h3 {
+            color: var(--dark-brown);
+            margin-bottom: 10px;
+            font-size: 20px;
+            border-bottom: 3px solid var(--accent-yellow);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* --- PRODUCT SECTION --- */
+        .products {
+            padding: 60px 5%;
+            background-color: var(--dark-brown);
+            color: var(--cream-bg);
+            text-align: center;
+        }
+
+        .products h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: var(--accent-yellow);
+        }
+
+        .product-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .product-card {
+            background-color: var(--cream-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            width: 280px;
+            border: 3px solid var(--med-brown);
+            position: relative;
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent-yellow);
+            color: var(--darkest-brown);
+            padding: 5px 15px;
+            font-weight: 700;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .product-img {
+            height: 250px;
+            background-color: var(--light-brown);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-brown);
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .product-info h4 {
+            color: var(--darkest-brown);
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .product-info p {
+            color: var(--med-brown);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--dark-brown);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .btn-buy {
+            display: block;
+            text-align: center;
+            background-color: var(--accent-blue);
+            color: var(--darkest-brown);
+            padding: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            border: 1px solid var(--darkest-brown);
+            transition: 0.3s;
+        }
+
+        .btn-buy:hover {
+            background-color: var(--accent-yellow);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--darkest-brown);
+            color: var(--cream-bg);
+            text-align: center;
+            padding: 30px 5%;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header & Nav -->
+    <header>
+        <a href="#" class="logo"><span>✨</span> Yuwuri Shop</a>
+        <nav>
+            <ul>
+                <li><a href="#">Beranda</a></li>
+                <li><a href="#koleksi">Koleksi</a></li>
+                <li><a href="#tentang">Tentang Kami</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Tampil Stylish, <br><span>Bebas Gerah</span> Seharian!</h1>
+            <p>Affordable Fashion for Fancy Women. Temukan koleksi kemeja dan blouse daily yang nyaman, ringan, dan anti-kusut untuk wanita muda berhijab maupun non-hijab.</p>
+            <br>
+            <a href="#koleksi" class="btn-primary">Belanja Sekarang 🛍️</a>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="features" id="tentang">
+        <div class="feature-card">
+            <h3>Nyaman & Adem 🌬️</h3>
+            <p>Bahan ringan yang sejuk, dirancang khusus agar tidak gerah meski cuaca sedang panas-panasnya.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Anti Kusut ✨</h3>
+            <p>Beraktivitas seharian tanpa khawatir baju berantakan. Kemeja selalu rapi dari pagi sampai malam.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Harga Terjangkau 💸</h3>
+            <p>Kualitas butik dengan harga jujur mulai dari Rp30.000 saja. Hemat dan tetap on-point!</p>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products" id="koleksi">
+        <h2>Koleksi Daily Andalanmu</h2>
+        <div class="product-grid">
+            
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="badge">Best Seller</div>
+                <div class="product-img">
+                    [ Foto Blouse ]
+                </div>
+                <div class="product-info">
+                    <h4>Blouse Sopan Elegan</h4>
+                    <p>Desain modern, cocok untuk hijabers.</p>
+                    <span class="price">Rp45.000</span>
+                    <a href="#" class="btn-buy">Masukkan Keranjang</a>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="badge">New Arrival</div>
+                <div class="product-img">
+                    [ Foto Kemeja ]
+                </div>
+                <div class="product-info">
+                    <h4>Kemeja Anti-Kusut</h4>
+                    <p>Nyaman dan ringan untuk ngampus/kerja.</p>
+                    <span class="price">Rp55.000</span>
+                    <a href="#" class="btn-buy">Masukkan Keranjang</a>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-img">
+                    [ Foto Kemeja Oversize ]
+                </div>
+                <div class="product-info">
+                    <h4>Daily Shirt All-Size</h4>
+                    <p>Fit untuk semua ukuran badan.</p>
+                    <span class="price">Rp40.000</span>
+                    <a href="#" class="btn-buy">Masukkan Keranjang</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Yuwuri Shop. Affordable Fashion for Fancy Women.</p>
+    </footer>
+
+</body>
+</html>
