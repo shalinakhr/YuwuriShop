@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pembayaran QRIS — Yuwuri Shop</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brown: {
+              50: '#FDFBF7',
+              100: '#FAF5EF',
+              200: '#E3CEB1',
+              300: '#C7A07A',
+              700: '#734128',
+              900: '#391E10',
+            },
+            accentYellow: '#FBFF5B',
+            accentBlue: '#A1C9FF',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#FDFBF7] text-brown-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- Header / Navbar -->
+  <header class="border-b border-brown-200/60 bg-[#FDFBF7]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="catalog.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900">
+        Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
+      </a>
+      <div class="flex items-center gap-2 text-xs text-brown-700 font-medium">
+        <i class="fa-solid fa-lock text-green-600"></i>
+        <span>Pembayaran Aman via QRIS</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-12 flex-grow w-full">
+    
+    <!-- Timer Banner -->
+    <div class="bg-brown-900 text-white p-4 rounded-2xl mb-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left shadow-md">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-accentYellow text-brown-900 flex items-center justify-center text-lg font-bold">
+          <i class="fa-solid fa-clock"></i>
+        </div>
+        <div>
+          <h2 class="font-semibold text-sm">Selesaikan Pembayaran Dalam</h2>
+          <p class="text-xs text-brown-200">Scan QRIS sebelum batas waktu berakhir</p>
+        </div>
+      </div>
+      <div class="bg-brown-700 px-4 py-2 rounded-xl border border-brown-300/30">
+        <span id="countdown" class="font-mono font-bold text-lg text-accentYellow tracking-wider">15:00</span>
+      </div>
+    </div>
+
+    <!-- Main Payment Container -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+      
+      <!-- QRIS Display Box -->
+      <div class="md:col-span-7 bg-white p-6 md:p-8 rounded-2xl border border-brown-200/80 shadow-sm text-center">
+        
+        <!-- Merchant Info -->
+        <div class="flex items-center justify-between pb-6 border-b border-brown-100 mb-6">
+          <div class="text-left">
+            <span class="text-[10px] uppercase font-bold text-brown-700 tracking-wider block">Merchant</span>
+            <span class="font-serif font-bold text-lg text-brown-900">Yuwuri Shop Official</span>
+          </div>
+          <div class="px-3 py-1 bg-red-50 border border-red-200 rounded-lg flex items-center gap-1.5">
+            <span class="font-extrabold text-red-600 tracking-tighter text-sm italic">QRIS</span>
+            <span class="text-[9px] font-bold text-brown-700">GPN</span>
+          </div>
+        </div>
+
+        <!-- QR Code Image -->
+        <div class="relative inline-block p-4 bg-white border-2 border-brown-900/10 rounded-2xl shadow-inner mb-4">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=YUWURI_SHOP_QRIS_PAYMENT_SIMULATION" alt="QRIS Yuwuri Shop" class="w-48 h-48 md:w-56 md:h-56 mx-auto object-contain">
+          
+          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div class="w-10 h-10 bg-white rounded-lg p-1 shadow-md border border-brown-200 flex items-center justify-center">
+              <span class="font-serif font-bold text-brown-900 text-xs">YWR</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-xs text-brown-700 mb-4 font-medium">Bisa di-scan menggunakan semua aplikasi e-Wallet & m-Banking:</p>
+        
+        <!-- e-Wallet Supported Icons -->
+        <div class="flex flex-wrap items-center justify-center gap-2 text-[10px] text-brown-700 font-bold mb-6">
+          <span class="px-2.5 py-1 bg-brown-50 border border-brown-200 rounded-md">GoPay</span>
+          <span class="px-2.5 py-1 bg-brown-50 border border-brown-200 rounded-md">ShopeePay</span>
+          <span class="px-2.5 py-1 bg-brown-50 border border-brown-200 rounded-md">OVO</span>
+          <span class="px-2.5 py-1 bg-brown-50 border border-brown-200 rounded-md">DANA</span>
+          <span class="px-2.5 py-1 bg-brown-50 border border-brown-200 rounded-md">BCA Mobile</span>
+          <span class="px-2.5 py-1 bg-brown-50 border border-brown-200 rounded-md">Livin' Mandiri</span>
+        </div>
+
+        <!-- Action Button -->
+        <button onclick="checkPaymentStatus()" class="w-full py-3.5 bg-brown-900 hover:bg-brown-700 text-white font-semibold text-xs md:text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+          <i class="fa-solid fa-circle-check text-accentYellow"></i> Saya Sudah Bayar / Cek Status
+        </button>
+
+      </div>
+
+      <!-- Order Summary -->
+      <div class="md:col-span-5 space-y-6">
+        
+        <div class="bg-white p-6 rounded-2xl border border-brown-200/80 shadow-sm">
+          <span class="text-xs text-brown-700 uppercase tracking-wider font-semibold block mb-1">Total Yang Harus Dibayar</span>
+          <div class="text-2xl md:text-3xl font-serif font-bold text-brown-900 mb-4" id="paymentTotalAmount">
+            Rp 0
+          </div>
+          <div class="pt-3 border-t border-brown-100 flex justify-between text-xs text-brown-700">
+            <span>Jumlah Pesanan:</span>
+            <span class="font-bold text-brown-900" id="paymentItemCount">0 Item</span>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-brown-200/80 shadow-sm text-xs">
+          <h3 class="font-serif font-bold text-sm text-brown-900 mb-3">Cara Pembayaran:</h3>
+          <ol class="space-y-2.5 text-brown-700 list-decimal pl-4">
+            <li>Buka aplikasi <strong>BCA Mobile, Livin, GoPay, ShopeePay, OVO, atau DANA</strong>.</li>
+            <li>Pilih menu <strong>Scan / Bayar / QRIS</strong>.</li>
+            <li>Arahkan kamera HP ke QR Code di sebelah kiri.</li>
+            <li>Periksa nama penerima: <strong>Yuwuri Shop Official</strong>.</li>
+            <li>Tekan <strong>Bayar</strong>.</li>
+          </ol>
+        </div>
+
+        <a href="cart.html" class="inline-flex items-center justify-center w-full py-2.5 border border-brown-200 bg-white text-brown-700 hover:bg-brown-50 rounded-xl text-xs font-semibold transition-colors gap-2">
+          <i class="fa-solid fa-arrow-left text-[10px]"></i> Kembali ke Keranjang
+        </a>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="border-t border-brown-200/60 bg-white py-6 mt-12 text-center text-xs text-brown-700">
+    <p>&copy; 2026 Yuwuri Shop. Payment Powered by QRIS National Standard.</p>
+  </footer>
+
+  <script>
+    function getCart() {
+      return JSON.parse(localStorage.getItem('yuwuri_cart')) || [];
+    }
+
+    function formatRupiah(number) {
+      return 'Rp ' + (number || 0).toLocaleString('id-ID');
+    }
+
+    function loadOrderDetails() {
+      const cart = getCart();
+      const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+      let subtotal = 0;
+
+      cart.forEach(item => {
+        subtotal += (item.price || 35000) * item.quantity;
+      });
+
+      const shippingFee = subtotal > 0 ? 10000 : 0;
+      const discount = subtotal >= 100000 ? 10000 : 0;
+      const grandTotal = subtotal > 0 ? (subtotal + shippingFee - discount) : 0;
+
+      document.getElementById('paymentTotalAmount').innerText = formatRupiah(grandTotal > 0 ? grandTotal : 50000);
+      document.getElementById('paymentItemCount').innerText = `${totalQty > 0 ? totalQty : 1} Item`;
+    }
+
+    function startTimer(duration, display) {
+      let timer = duration, minutes, seconds;
+      setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+          timer = duration;
+        }
+      }, 1000);
+    }
+
+    function checkPaymentStatus() {
+      alert("Pembayaran Berhasil Diverifikasi! Terima kasih sudah berbelanja di Yuwuri Shop.");
+      localStorage.removeItem('yuwuri_cart');
+      window.location.href = "catalog.html";
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      loadOrderDetails();
+      const fifteenMinutes = 60 * 15;
+      const display = document.querySelector('#countdown');
+      startTimer(fifteenMinutes, display);
+    });
+  </script>
+</body>
+</html>
