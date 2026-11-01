@@ -3,362 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yuwuri Shop | Affordable Fashion for Fancy Women</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Yuwuri Shop - Affordable Fashion for Fancy Women</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brown: {
+                            50: '#FDFBF7',
+                            100: '#F7F3ED',
+                            200: '#E3CEB1',
+                            300: '#C7A07A',
+                            700: '#734128',
+                            900: '#391E10',
+                        },
+                        accentYellow: '#FBFF5B',
+                        accentBlue: '#A1C9FF',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* --- COLOR PALETTE & VARIABLES --- */
-        :root {
-            /* Warna Cokelat dari Referensi Gambar */
-            --cream-bg: #FDFCEB;
-            --light-brown: #E3CEB1;
-            --med-brown: #C7A07A;
-            --dark-brown: #754128;
-            --darkest-brown: #391E10;
-            
-            /* Warna Aksen Request */
-            --accent-yellow: #FBFF5B;
-            --accent-blue: #A1C9FF;
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: var(--cream-bg);
-            color: var(--darkest-brown);
-            line-height: 1.6;
-        }
-
-        /* --- NAVBAR --- */
-        header {
-            background-color: var(--cream-bg);
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--light-brown);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--dark-brown);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo span {
-            color: var(--accent-blue);
-            font-size: 30px;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 25px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--dark-brown);
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--accent-blue);
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            background-color: var(--light-brown);
-            padding: 80px 5%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            border-bottom: 5px solid var(--accent-yellow);
-        }
-
-        .hero-content h1 {
-            font-size: 48px;
-            color: var(--darkest-brown);
-            margin-bottom: 15px;
-            line-height: 1.2;
-        }
-
-        .hero-content h1 span {
-            background-color: var(--accent-yellow);
-            padding: 0 10px;
-            border-radius: 5px;
-        }
-
-        .hero-content p {
-            font-size: 18px;
-            color: var(--dark-brown);
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-inline: auto;
-        }
-
-        .btn-primary {
-            background-color: var(--accent-blue);
-            color: var(--darkest-brown);
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: 700;
-            text-decoration: none;
-            border-radius: 50px;
-            border: 2px solid var(--darkest-brown);
-            box-shadow: 4px 4px 0px var(--dark-brown);
-            transition: all 0.2s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--accent-yellow);
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px var(--dark-brown);
-        }
-
-        /* --- VALUE PROPOSITION --- */
-        .features {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            padding: 60px 5%;
-            background-color: var(--cream-bg);
-            flex-wrap: wrap;
-        }
-
-        .feature-card {
-            background-color: white;
-            border: 2px solid var(--med-brown);
-            border-radius: 15px;
-            padding: 30px;
-            width: 300px;
-            text-align: center;
-            box-shadow: 4px 4px 0px var(--light-brown);
-        }
-
-        .feature-card h3 {
-            color: var(--dark-brown);
-            margin-bottom: 10px;
-            font-size: 20px;
-            border-bottom: 3px solid var(--accent-yellow);
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        /* --- PRODUCT SECTION --- */
-        .products {
-            padding: 60px 5%;
-            background-color: var(--dark-brown);
-            color: var(--cream-bg);
-            text-align: center;
-        }
-
-        .products h2 {
-            font-size: 36px;
-            margin-bottom: 40px;
-            color: var(--accent-yellow);
-        }
-
-        .product-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .product-card {
-            background-color: var(--cream-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            width: 280px;
-            border: 3px solid var(--med-brown);
-            position: relative;
-        }
-
-        .badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: var(--accent-yellow);
-            color: var(--darkest-brown);
-            padding: 5px 15px;
-            font-weight: 700;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-
-        .product-img {
-            height: 250px;
-            background-color: var(--light-brown);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dark-brown);
-            font-weight: bold;
-        }
-
-        .product-info {
-            padding: 20px;
-            text-align: left;
-        }
-
-        .product-info h4 {
-            color: var(--darkest-brown);
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-
-        .product-info p {
-            color: var(--med-brown);
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .price {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--dark-brown);
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .btn-buy {
-            display: block;
-            text-align: center;
-            background-color: var(--accent-blue);
-            color: var(--darkest-brown);
-            padding: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 8px;
-            border: 1px solid var(--darkest-brown);
-            transition: 0.3s;
-        }
-
-        .btn-buy:hover {
-            background-color: var(--accent-yellow);
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            background-color: var(--darkest-brown);
-            color: var(--cream-bg);
-            text-align: center;
-            padding: 30px 5%;
-        }
-
-        footer p {
-            opacity: 0.8;
-            font-size: 14px;
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(57, 30, 16, 0.2);
         }
     </style>
 </head>
-<body>
+<body class="bg-brown-50 text-brown-900 font-sans antialiased flex flex-col min-h-screen">
 
-    <!-- Header & Nav -->
-    <header>
-        <a href="#" class="logo"><span>✨</span> Yuwuri Shop</a>
-        <nav>
-        <ul>
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="catalog.html">Katalog</a></li>
-            <li><a href="about.html">Tentang Kami</a></li>
-            <li><a href="contact.html">Kontak</a></li>
-        </ul>
-    </nav>
+    <!-- Top Promo Bar -->
+    <div class="bg-brown-900 text-brown-50 text-xs py-2 px-4 text-center flex items-center justify-center gap-2">
+        <span class="bg-accentYellow text-brown-900 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider">Promo Spesial</span>
+        <span class="font-medium">Gratis Ongkir untuk Koleksi Kemeja Anti-Kusut (Start Rp 30.000)</span>
+    </div>
+
+    <!-- Navigation -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-brown-200/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900">
+                Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold">
+                <a href="#" class="text-brown-900 border-b-2 border-brown-900 pb-1">Beranda</a>
+                <a href="catalog.html" class="text-brown-700 hover:text-brown-900 transition-colors">Koleksi</a>
+                <a href="about.html" class="text-brown-700 hover:text-brown-900 transition-colors">Tentang Kami</a>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-4">
+                <a href="#" class="hidden sm:block text-sm font-semibold text-brown-900 hover:text-brown-700 transition-colors">Masuk</a>
+                <a href="catalog.html" class="bg-brown-900 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-brown-700 transition-colors shadow-sm">
+                    Belanja Sekarang
+                </a>
+            </div>
+        </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Tampil Stylish, <br><span>Bebas Gerah</span> Seharian!</h1>
-            <p>Affordable Fashion for Fancy Women. Temukan koleksi kemeja dan blouse daily yang nyaman, ringan, dan anti-kusut untuk wanita muda berhijab maupun non-hijab.</p>
-            <br>
-            <a href="#koleksi" class="btn-primary">Belanja Sekarang 🛍️</a>
-        </div>
-    </section>
-
-    <!-- Value Proposition -->
-    <section class="features" id="tentang">
-        <div class="feature-card">
-            <h3>Nyaman & Adem 🌬️</h3>
-            <p>Bahan ringan yang sejuk, dirancang khusus agar tidak gerah meski cuaca sedang panas-panasnya.</p>
-        </div>
-        <div class="feature-card">
-            <h3>Anti Kusut ✨</h3>
-            <p>Beraktivitas seharian tanpa khawatir baju berantakan. Kemeja selalu rapi dari pagi sampai malam.</p>
-        </div>
-        <div class="feature-card">
-            <h3>Harga Terjangkau 💸</h3>
-            <p>Kualitas butik dengan harga jujur mulai dari Rp30.000 saja. Hemat dan tetap on-point!</p>
-        </div>
-    </section>
-
-    <!-- Products -->
-    <section class="products" id="koleksi">
-        <h2>Koleksi Daily Andalanmu</h2>
-        <div class="product-grid">
+    <section class="relative bg-brown-100 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
-            <!-- Product 1 -->
-            <div class="product-card">
-                <div class="badge">Best Seller</div>
-                <div class="product-img">
-                    [ Foto Blouse ]
-                </div>
-                <div class="product-info">
-                    <h4>Blouse Sopan Elegan</h4>
-                    <p>Desain modern, cocok untuk hijabers.</p>
-                    <span class="price">Rp45.000</span>
-                    <a href="#" class="btn-buy">Masukkan Keranjang</a>
-                </div>
-            </div>
-
-            <!-- Product 2 -->
-            <div class="product-card">
-                <div class="badge">New Arrival</div>
-                <div class="product-img">
-                    [ Foto Kemeja ]
-                </div>
-                <div class="product-info">
-                    <h4>Kemeja Anti-Kusut</h4>
-                    <p>Nyaman dan ringan untuk ngampus/kerja.</p>
-                    <span class="price">Rp55.000</span>
-                    <a href="#" class="btn-buy">Masukkan Keranjang</a>
+            <!-- Hero Text -->
+            <div class="relative z-10 text-center lg:text-left">
+                <span class="inline-block px-3 py-1 bg-accentYellow text-brown-900 text-xs font-bold tracking-wider rounded-full uppercase mb-4">
+                    Dailywear Premium
+                </span>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-brown-900 leading-tight mb-6">
+                    Tampil Stylish,<br>
+                    <span class="relative inline-block">
+                        <span class="relative z-10">Bebas Gerah</span>
+                        <span class="absolute bottom-2 left-0 w-full h-4 bg-accentBlue/60 -z-10 -rotate-1"></span>
+                    </span> Seharian.
+                </h1>
+                <p class="text-brown-700 text-base sm:text-lg mb-8 max-w-lg mx-auto lg:mx-0">
+                    Kemeja dan blouse dengan bahan ringan, adem, dan anti-kusut. Dirancang khusus untuk mahasiswi dan pekerja aktif berhijab maupun non-hijab.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="catalog.html" class="w-full sm:w-auto text-center bg-brown-900 text-white px-8 py-3.5 rounded-full font-semibold hover:bg-brown-700 transition-colors shadow-md text-sm md:text-base">
+                        Lihat Koleksi Lengkap
+                    </a>
+                    <a href="#keunggulan" class="w-full sm:w-auto text-center px-8 py-3.5 rounded-full font-semibold text-brown-900 hover:bg-brown-200/50 transition-colors text-sm md:text-base flex items-center justify-center gap-2">
+                        Pelajari Lebih Lanjut <i class="fa-solid fa-arrow-down text-xs"></i>
+                    </a>
                 </div>
             </div>
 
-            <!-- Product 3 -->
-            <div class="product-card">
-                <div class="product-img">
-                    [ Foto Kemeja Oversize ]
-                </div>
-                <div class="product-info">
-                    <h4>Daily Shirt All-Size</h4>
-                    <p>Fit untuk semua ukuran badan.</p>
-                    <span class="price">Rp40.000</span>
-                    <a href="#" class="btn-buy">Masukkan Keranjang</a>
+            <!-- Hero Image / Visual (Placeholder using Shapes & Colors) -->
+            <div class="relative w-full h-[400px] lg:h-[500px] flex items-center justify-center">
+                <!-- Abstract Decorative Shapes -->
+                <div class="absolute inset-0 bg-brown-200/40 rounded-full blur-3xl transform scale-110"></div>
+                <div class="absolute top-10 right-10 w-48 h-48 bg-accentYellow/80 rounded-full mix-blend-multiply blur-xl"></div>
+                <div class="absolute bottom-10 left-10 w-64 h-64 bg-accentBlue/60 rounded-full mix-blend-multiply blur-xl"></div>
+                
+                <!-- Main Product Illustration/Image Placeholder -->
+                <div class="relative z-10 bg-white p-4 rounded-[2rem] shadow-xl border border-brown-200 rotate-2 w-72 lg:w-80">
+                    <div class="bg-brown-50 aspect-[3/4] rounded-2xl flex items-center justify-center border border-brown-100 overflow-hidden relative group">
+                        <!-- Simulated Shirt Graphic -->
+                        <div class="w-32 h-40 text-brown-300">
+                             <svg viewBox="0 0 100 120" class="w-full h-full drop-shadow-md" fill="currentColor">
+                                <path d="M 20 25 L 35 10 L 65 10 L 80 25 L 95 35 L 85 55 L 75 48 L 75 110 L 25 110 L 25 48 L 15 55 L 5 35 Z" stroke="#391E10" stroke-width="2.5" stroke-linejoin="round" />
+                                <path d="M 35 10 L 50 30 L 65 10" stroke="#391E10" stroke-width="2.5" fill="none" />
+                                <circle cx="50" cy="45" r="2" fill="#391E10" />
+                                <circle cx="50" cy="65" r="2" fill="#391E10" />
+                                <circle cx="50" cy="85" r="2" fill="#391E10" />
+                            </svg>
+                        </div>
+                        <div class="absolute bottom-4 left-0 w-full text-center">
+                            <span class="bg-white/90 backdrop-blur text-brown-900 text-xs font-bold py-1.5 px-4 rounded-full shadow-sm">
+                                Best Seller - Rp 35.000
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </section>
 
+    <!-- Value Proposition (Keunggulan) -->
+    <section id="keunggulan" class="py-20 bg-white border-y border-brown-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-brown-900 mb-4">Mengapa Memilih Yuwuri Shop?</h2>
+                <p class="text-brown-700 max-w-2xl mx-auto text-sm md:text-base">Kami memahami masalah kamu yang sering menemukan baju gerah dan gampang kusut. Ini solusi dari kami.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Fitur 1 -->
+                <div class="bg-brown-50 p-8 rounded-3xl border border-brown-200/50 hover-lift text-center">
+                    <div class="w-16 h-16 mx-auto bg-accentBlue text-brown-900 rounded-full flex items-center justify-center text-2xl mb-6 shadow-sm">
+                        <i class="fa-solid fa-wind"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-brown-900 mb-3">Super Adem</h3>
+                    <p class="text-brown-700 text-sm leading-relaxed">Bahan pilihan yang ringan dan menyerap keringat. Nyaman dipakai seharian di cuaca panas Indonesia.</p>
+                </div>
+                
+                <!-- Fitur 2 -->
+                <div class="bg-brown-50 p-8 rounded-3xl border border-brown-200/50 hover-lift text-center">
+                    <div class="w-16 h-16 mx-auto bg-accentYellow text-brown-900 rounded-full flex items-center justify-center text-2xl mb-6 shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-brown-900 mb-3">Anti-Kusut</h3>
+                    <p class="text-brown-700 text-sm leading-relaxed">Tidak perlu repot menyetrika berkali-kali. Baju tetap rapi dari pagi saat berangkat hingga pulang kerja/kuliah.</p>
+                </div>
+
+                <!-- Fitur 3 -->
+                <div class="bg-brown-50 p-8 rounded-3xl border border-brown-200/50 hover-lift text-center">
+                    <div class="w-16 h-16 mx-auto bg-brown-300 text-white rounded-full flex items-center justify-center text-2xl mb-6 shadow-sm">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold text-brown-900 mb-3">Harga Terjangkau</h3>
+                    <p class="text-brown-700 text-sm leading-relaxed">Kualitas butik mulai dari Rp 30.000-an saja. Tampil *fancy* tidak harus menguras dompet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="py-20 bg-brown-900 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-accentYellow rounded-full mix-blend-overlay opacity-20 blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-accentBlue rounded-full mix-blend-overlay opacity-20 blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl md:text-5xl font-serif font-bold text-white mb-6">Siap Menemukan Outfit Favoritmu?</h2>
+            <p class="text-brown-200 text-base md:text-lg mb-10 max-w-2xl mx-auto">
+                Ribuan wanita sudah membuktikan kenyamanan kemeja Yuwuri Shop. Jangan sampai kehabisan stok warna incaranmu!
+            </p>
+            <a href="catalog.html" class="inline-block bg-accentYellow text-brown-900 px-10 py-4 rounded-full text-base font-bold hover:bg-yellow-300 transition-colors shadow-[0_0_20px_rgba(251,255,91,0.4)]">
+                Lihat Katalog Katalog Kami
+            </a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Yuwuri Shop. Affordable Fashion for Fancy Women.</p>
+    <footer class="bg-white pt-16 pb-8 border-t border-brown-200/60 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                
+                <div class="md:col-span-2">
+                    <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900 block mb-4">
+                        Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
+                    </a>
+                    <p class="text-brown-700 text-sm leading-relaxed max-w-sm mb-6">
+                        Affordable Fashion for Fancy Women. Kami menyediakan kemeja dan blouse dailywear yang nyaman, adem, dan tahan kusut dengan harga terbaik.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-brown-100 text-brown-900 flex items-center justify-center hover:bg-brown-900 hover:text-white transition-colors">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-brown-100 text-brown-900 flex items-center justify-center hover:bg-brown-900 hover:text-white transition-colors">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-4 text-sm">Tautan Cepat</h4>
+                    <ul class="space-y-3 text-sm text-brown-700">
+                        <li><a href="#" class="hover:text-brown-900 transition-colors">Beranda</a></li>
+                        <li><a href="catalog.html" class="hover:text-brown-900 transition-colors">Katalog Produk</a></li>
+                        <li><a href="about.html" class="hover:text-brown-900 transition-colors">Tentang Kami</a></li>
+                        <li><a href="#" class="hover:text-brown-900 transition-colors">Cara Pembelian</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-4 text-sm">Hubungi Kami</h4>
+                    <ul class="space-y-3 text-sm text-brown-700">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-brands fa-whatsapp text-brown-900"></i>
+                            0896-1863-3132
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-regular fa-envelope text-brown-900"></i>
+                            yuwurishop@gmail.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-brown-100 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-brown-700">
+                <p>&copy; 2026 Yuwuri Shop. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-brown-900 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-brown-900 transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
     </footer>
 
 </body>
