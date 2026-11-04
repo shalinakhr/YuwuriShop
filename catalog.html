@@ -55,19 +55,19 @@
     <!-- Top Promo Bar -->
     <div class="bg-brown-900 text-brown-50 text-xs py-2 px-4 text-center flex items-center justify-center gap-2">
         <span class="bg-accentYellow text-brown-900 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider">Promo Spesial</span>
-        <span class="font-medium">Gratis Ongkir untuk Koleksi Kemeja Anti-Kusut (Start Rp 30.000)</span>
+        <span class="font-medium">Koleksi Cardigan & Blouse Fashionable (Start Rp 30.000)</span>
     </div>
 
     <!-- Header / Navbar -->
     <header class="border-b border-brown-200/60 bg-white/90 backdrop-blur-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
             
-            <!-- Logo (Kiri) -->
+            <!-- Logo -->
             <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900">
                 Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
             </a>
             
-            <!-- Menu Navigasi (Tengah) -->
+            <!-- Menu Navigasi -->
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
                 <a href="index.html" class="hover:text-brown-700 transition-colors">Home</a>
                 <a href="catalog.html" class="text-brown-700 font-semibold border-b-2 border-brown-700 pb-0.5">Catalog</a>
@@ -75,27 +75,22 @@
                 <a href="contact.html" class="hover:text-brown-700 transition-colors">Contact</a>
             </nav>
 
-            <!-- Kolom Cari, Profil & Keranjang (Kanan) -->
-      <div class="flex items-center gap-2 sm:gap-4">
-        
-        <!-- Pencarian -->
-        <div class="relative hidden sm:block">
-          <input type="text" placeholder="Cari kemeja/blouse..." class="pl-8 pr-4 py-1.5 text-xs bg-brown-100 border border-brown-200 rounded-full focus:outline-none focus:ring-1 focus:ring-brown-700 w-40 lg:w-56">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-brown-700/60"></i>
-        </div>
+            <!-- Kolom Cari, Profil & Keranjang -->
+            <div class="flex items-center gap-2 sm:gap-4">
+              <div class="relative hidden sm:block">
+                <input type="text" placeholder="Cari kemeja/blouse..." class="pl-8 pr-4 py-1.5 text-xs bg-brown-100 border border-brown-200 rounded-full focus:outline-none focus:ring-1 focus:ring-brown-700 w-40 lg:w-56">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-brown-700/60"></i>
+              </div>
 
-        <!-- Icon Profil / Login -->
-        <a href="login.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 flex items-center justify-center" title="Masuk / Profil">
-          <i class="fa-regular fa-user text-lg"></i>
-        </a>
+              <a href="admin-yuwuri-secret.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 flex items-center justify-center" title="CMS Admin">
+                <i class="fa-regular fa-user text-lg"></i>
+              </a>
 
-        <!-- Icon Keranjang -->
-        <a href="cart.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 relative inline-flex items-center justify-center" title="Keranjang Belanja">
-          <i class="fa-solid fa-bag-shopping text-lg"></i>
-          <span id="cartCount" class="absolute top-1 sm:top-1.5 right-0 sm:right-1 w-4 h-4 bg-accentYellow text-brown-900 text-[10px] font-bold rounded-full flex items-center justify-center border border-brown-900">0</span>
-        </a>
-        
-      </div>
+              <a href="cart.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 relative inline-flex items-center justify-center" title="Keranjang Belanja">
+                <i class="fa-solid fa-bag-shopping text-lg"></i>
+                <span id="cartCount" class="absolute top-1 sm:top-1.5 right-0 sm:right-1 w-4 h-4 bg-accentYellow text-brown-900 text-[10px] font-bold rounded-full flex items-center justify-center border border-brown-900">0</span>
+              </a>
+            </div>
             
         </div>
     </header>
@@ -108,8 +103,8 @@
           <span class="inline-block px-3 py-1 bg-accentYellow text-brown-900 text-[11px] font-bold tracking-wider rounded-full uppercase mb-2">
             Daily Collection
           </span>
-          <h1 class="text-3xl md:text-4xl font-serif font-bold text-brown-900">Katalog Kemeja & Blouse</h1>
-          <p class="text-xs sm:text-sm text-brown-700 mt-1">30 Pilihan outfit harian adem, anti-kusut, dan nyaman untuk kuliah/kerja.</p>
+          <h1 class="text-3xl md:text-4xl font-serif font-bold text-brown-900">Katalog Cardigan & Blouse</h1>
+          <p class="text-xs sm:text-sm text-brown-700 mt-1">30 Pilihan outfit harian adem, cantik, dan nyaman untuk kuliah/hangout.</p>
         </div>
         <div class="text-xs text-brown-700 font-medium">
           Menampilkan <span class="font-bold text-brown-900">1-30</span> dari <span class="font-bold text-brown-900">30</span> produk
@@ -123,17 +118,13 @@
     
     <!-- Filter & Sort Bar -->
     <div class="bg-white p-4 rounded-2xl border border-brown-200/80 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
-      
-      <!-- Category Pills -->
       <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none text-xs">
         <button class="px-4 py-2 rounded-xl bg-brown-900 text-white font-bold whitespace-nowrap shrink-0">Semua (30)</button>
-        <button class="px-4 py-2 rounded-xl bg-brown-100 hover:bg-brown-200/60 text-brown-900 font-medium whitespace-nowrap shrink-0">Kemeja Polos</button>
+        <button class="px-4 py-2 rounded-xl bg-brown-100 hover:bg-brown-200/60 text-brown-900 font-medium whitespace-nowrap shrink-0">Cardigan Rajut</button>
+        <button class="px-4 py-2 rounded-xl bg-brown-100 hover:bg-brown-200/60 text-brown-900 font-medium whitespace-nowrap shrink-0">Blouse Premium</button>
         <button class="px-4 py-2 rounded-xl bg-brown-100 hover:bg-brown-200/60 text-brown-900 font-medium whitespace-nowrap shrink-0">Blouse Motif</button>
-        <button class="px-4 py-2 rounded-xl bg-brown-100 hover:bg-brown-200/60 text-brown-900 font-medium whitespace-nowrap shrink-0">Oversized</button>
-        <button class="px-4 py-2 rounded-xl bg-brown-100 hover:bg-brown-200/60 text-brown-900 font-medium whitespace-nowrap shrink-0">Linen & Rayon</button>
       </div>
 
-      <!-- Sorting & Filter Controls -->
       <div class="flex items-center gap-3 w-full md:w-auto justify-end">
         <div class="flex items-center gap-2 text-xs font-medium text-brown-700">
           <i class="fa-solid fa-arrow-down-short-wide"></i>
@@ -143,33 +134,16 @@
           <option>Terpopuler (Best Seller)</option>
           <option>Harga: Terendah - Tertinggi</option>
           <option>Harga: Tertinggi - Terendah</option>
-          <option>Terbaru</option>
         </select>
       </div>
-
     </div>
 
-    <!-- 30 Products Grid -->
-    <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-      <!-- Product items dynamically generated via JS -->
-    </div>
-
-    <!-- Pagination -->
-    <div class="mt-14 flex items-center justify-center gap-2 text-xs font-semibold">
-      <button class="w-9 h-9 rounded-xl border border-brown-200 bg-white text-brown-700 hover:bg-brown-100 flex items-center justify-center">
-        <i class="fa-solid fa-chevron-left text-xs"></i>
-      </button>
-      <button class="w-9 h-9 rounded-xl bg-brown-900 text-white flex items-center justify-center">1</button>
-      <button class="w-9 h-9 rounded-xl border border-brown-200 bg-white text-brown-700 hover:bg-brown-100 flex items-center justify-center">2</button>
-      <button class="w-9 h-9 rounded-xl border border-brown-200 bg-white text-brown-700 hover:bg-brown-100 flex items-center justify-center">3</button>
-      <button class="w-9 h-9 rounded-xl border border-brown-200 bg-white text-brown-700 hover:bg-brown-100 flex items-center justify-center">
-        <i class="fa-solid fa-chevron-right text-xs"></i>
-      </button>
-    </div>
+    <!-- Products Grid -->
+    <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"></div>
 
   </main>
 
-  <!-- Toast Notification Popup -->
+  <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
     <div class="bg-brown-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-brown-700 flex items-center gap-3 text-xs font-medium">
       <div class="w-6 h-6 rounded-full bg-accentYellow text-brown-900 flex items-center justify-center font-bold">
@@ -179,89 +153,157 @@
     </div>
   </div>
 
-    <!-- Footer -->
-    <footer class="bg-white pt-16 pb-8 border-t border-brown-200/60 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-                
-                <div class="md:col-span-2">
-                    <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900 block mb-4">
-                        Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
-                    </a>
-                    <p class="text-brown-700 text-sm leading-relaxed max-w-sm mb-6">
-                        Affordable Fashion for Fancy Women. Kami menyediakan kemeja dan blouse dailywear yang nyaman, adem, dan tahan kusut dengan harga terbaik.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-brown-100 text-brown-900 flex items-center justify-center hover:bg-brown-900 hover:text-white transition-colors">
-                            <i class="fa-brands fa-tiktok"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-brown-100 text-brown-900 flex items-center justify-center hover:bg-brown-900 hover:text-white transition-colors">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-4 text-sm">Tautan Cepat</h4>
-                    <ul class="space-y-3 text-sm text-brown-700">
-                        <li><a href="#" class="hover:text-brown-900 transition-colors">Beranda</a></li>
-                        <li><a href="catalog.html" class="hover:text-brown-900 transition-colors">Katalog Produk</a></li>
-                        <li><a href="about.html" class="hover:text-brown-900 transition-colors">Tentang Kami</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-4 text-sm">Hubungi Kami</h4>
-                    <ul class="space-y-3 text-sm text-brown-700">
-                        <li class="flex items-center gap-3">
-                            <i class="fa-brands fa-whatsapp text-brown-900"></i>
-                            0896-1863-3132
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-regular fa-envelope text-brown-900"></i>
-                            yuwurishop@gmail.com
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-brown-100 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-brown-700">
-                <p>&copy; 2026 Yuwuri Shop. All rights reserved.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="hover:text-brown-900 transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-brown-900 transition-colors">Terms of Service</a>
-                </div>
-            </div>
+  <!-- Footer -->
+  <footer class="bg-white pt-16 pb-8 border-t border-brown-200/60 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div class="md:col-span-2">
+          <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900 block mb-4">
+            Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
+          </a>
+          <p class="text-brown-700 text-sm leading-relaxed max-w-sm mb-6">
+            Affordable Fashion for Fancy Women. Kami menyediakan kemeja dan blouse dailywear yang nyaman, adem, dan tahan kusut dengan harga terbaik[cite: 3].
+          </p>
         </div>
-    </footer>
+        <div>
+          <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-4 text-sm">Hubungi Kami</h4>
+          <ul class="space-y-3 text-sm text-brown-700">
+            <li class="flex items-center gap-3"><i class="fa-brands fa-whatsapp text-brown-900"></i> 0896-1863-3132</li>
+            <li class="flex items-center gap-3"><i class="fa-regular fa-envelope text-brown-900"></i> yuwurishop@gmail.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-brown-100 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-brown-700">
+        <p>&copy; 2026 Yuwuri Shop. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
-  <!-- Supabase: produk online + cart localStorage -->
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-    const supabase = createClient('https://jrsooxmoljjqtgjmkumz.supabase.co', 'sb_publishable_scpzlZ7fozc6EogEkZTTYA_rsB5cF4M');
-    let products = [];
+  <!-- Dynamic Script dengan Data Produk Real -->
+  <script>
+    const products = [
+      { id: 1, name: "Cardigan Rajut Motif Floral", colorName: "Ungu", cat: "Cardigan Rajut", rawPrice: 30000, price: "Rp 30.000", tag: "Super Hemat", tagBg: "bg-emerald-600 text-white", image: "baju1.jpg" },
+      { id: 2, name: "Cardigan Rajut Motif Floral", colorName: "Rose", cat: "Cardigan Rajut", rawPrice: 30000, price: "Rp 30.000", tag: "Best Seller", tagBg: "bg-accentYellow text-brown-900", image: "baju2.jpg" },
+      { id: 3, name: "Cardigan Rajut Motif Floral", colorName: "Hitam", cat: "Cardigan Rajut", rawPrice: 30000, price: "Rp 30.000", tag: "Favorit", tagBg: "bg-brown-900 text-white", image: "baju3.jpg" },
+      { id: 4, name: "Blouse Atasan Pisah Rompi Premium", colorName: "Sage", cat: "Blouse Premium", rawPrice: 120000, price: "Rp 120.000", tag: "Premium", tagBg: "bg-accentBlue text-brown-900", image: "baju4.jpg" },
+      { id: 5, name: "Blouse Atasan Pisah Rompi Premium", colorName: "Coklat", cat: "Blouse Premium", rawPrice: 120000, price: "Rp 120.000", tag: "Elegant", tagBg: "bg-brown-900 text-white", image: "baju5.jpg" },
+      { id: 6, name: "Blouse Atasan Pisah Rompi Premium", colorName: "Biru Muda", cat: "Blouse Premium", rawPrice: 120000, price: "Rp 120.000", tag: "Trending", tagBg: "bg-accentYellow text-brown-900", image: "baju6.jpg" },
+      { id: 7, name: "Blouse Pevita", colorName: "Orange", cat: "Blouse Daily", rawPrice: 54000, price: "Rp 54.000", tag: "New", tagBg: "bg-accentYellow text-brown-900", image: "baju7.jpg" },
+      { id: 8, name: "Blouse Pevita", colorName: "Pink", cat: "Blouse Daily", rawPrice: 54000, price: "Rp 54.000", tag: "Best Seller", tagBg: "bg-accentYellow text-brown-900", image: "baju8.jpg" },
+      { id: 9, name: "Blouse Pevita", colorName: "Hitam", cat: "Blouse Daily", rawPrice: 54000, price: "Rp 54.000", tag: "Basic", tagBg: "bg-brown-900 text-white", image: "baju9.jpg" },
+      { id: 10, name: "Blouse Pevita", colorName: "Biru", cat: "Blouse Daily", rawPrice: 54000, price: "Rp 54.000", tag: "Adem", tagBg: "bg-accentBlue text-brown-900", image: "baju10.jpg" },
+      { id: 11, name: "Blouse Pevita", colorName: "Ungu", cat: "Blouse Daily", rawPrice: 54000, price: "Rp 54.000", tag: "Cute Fit", tagBg: "bg-accentYellow text-brown-900", image: "baju11.jpg" },
+      { id: 12, name: "Blouse Polkadot Barbara", colorName: "Pink", cat: "Blouse Motif", rawPrice: 94000, price: "Rp 94.000", tag: "Chic", tagBg: "bg-accentYellow text-brown-900", image: "baju12.jpg" },
+      { id: 13, name: "Blouse Polkadot Barbara", colorName: "Coklat", cat: "Blouse Motif", rawPrice: 94000, price: "Rp 94.000", tag: "Best Seller", tagBg: "bg-brown-900 text-white", image: "baju13.jpg" },
+      { id: 14, name: "Blouse Polkadot Barbara", colorName: "Biru Muda", cat: "Blouse Motif", rawPrice: 94000, price: "Rp 94.000", tag: "Soft Color", tagBg: "bg-accentBlue text-brown-900", image: "baju14.jpg" },
+      { id: 15, name: "Blouse Polkadot Barbara", colorName: "Butter Yellow", cat: "Blouse Motif", rawPrice: 94000, price: "Rp 94.000", tag: "Trending", tagBg: "bg-accentYellow text-brown-900", image: "baju15.jpg" },
+      { id: 16, name: "Blouse Rompi Cintia", colorName: "Pink", cat: "Blouse Premium", rawPrice: 164000, price: "Rp 164.000", tag: "Exclusive", tagBg: "bg-red-500 text-white", image: "baju16.jpg" },
+      { id: 17, name: "Blouse Rompi Cintia", colorName: "Hijau", cat: "Blouse Premium", rawPrice: 164000, price: "Rp 164.000", tag: "Exclusive", tagBg: "bg-emerald-600 text-white", image: "baju17.jpg" },
+      { id: 18, name: "Cardigan Rajut Motif Floral", colorName: "Abu", cat: "Cardigan Rajut", rawPrice: 30000, price: "Rp 30.000", tag: "Super Hemat", tagBg: "bg-emerald-600 text-white", image: "baju18.jpg" },
+      { id: 19, name: "Blouse Katbol Impor", colorName: "Coklat", cat: "Blouse Import", rawPrice: 94000, price: "Rp 94.000", tag: "Import Quality", tagBg: "bg-brown-900 text-white", image: "baju19.jpg" },
+      { id: 20, name: "Blouse Katbol Impor", colorName: "Biru", cat: "Blouse Import", rawPrice: 94000, price: "Rp 94.000", tag: "Import Quality", tagBg: "bg-accentBlue text-brown-900", image: "baju20.jpg" },
+      { id: 21, name: "Blouse Katbol Impor", colorName: "Marun", cat: "Blouse Import", rawPrice: 94000, price: "Rp 94.000", tag: "Import Quality", tagBg: "bg-red-500 text-white", image: "baju21.jpg" },
+      { id: 22, name: "Cardigan Motif Salur", colorName: "Krem", cat: "Cardigan Salur", rawPrice: 30000, price: "Rp 30.000", tag: "Best Seller", tagBg: "bg-accentYellow text-brown-900", image: "baju22.jpg" },
+      { id: 23, name: "Cardigan Motif Salur", colorName: "Marun", cat: "Cardigan Salur", rawPrice: 30000, price: "Rp 30.000", tag: "Casual Fit", tagBg: "bg-red-500 text-white", image: "baju23.jpg" },
+      { id: 24, name: "Cardigan Rajut Motif Floral", colorName: "Navy", cat: "Cardigan Rajut", rawPrice: 30000, price: "Rp 30.000", tag: "Super Hemat", tagBg: "bg-emerald-600 text-white", image: "baju24.jpg" },
+      { id: 25, name: "Cardigan Rajut Motif Floral", colorName: "Dark Navy", cat: "Cardigan Rajut", rawPrice: 30000, price: "Rp 30.000", tag: "Super Hemat", tagBg: "bg-brown-900 text-white", image: "baju25.jpg" },
+      { id: 26, name: "Cardigan Motif Salur", colorName: "Coklat", cat: "Cardigan Salur", rawPrice: 30000, price: "Rp 30.000", tag: "Comfy", tagBg: "bg-accentYellow text-brown-900", image: "baju26.jpg" },
+      { id: 27, name: "Cardigan Rajut Motif Floral", colorName: "Biru", cat: "Cardigan Rajut", rawPrice: 30000, price: "Rp 30.000", tag: "Super Hemat", tagBg: "bg-accentBlue text-brown-900", image: "baju27.jpg" },
+      { id: 28, name: "Cardigan Motif Salur", colorName: "Coklat Variant B", cat: "Cardigan Salur", rawPrice: 30000, price: "Rp 30.000", tag: "Restock", tagBg: "bg-accentYellow text-brown-900", image: "baju28.jpg" },
+      { id: 29, name: "Blouse Yuyu", colorName: "Sage", cat: "Blouse Daily", rawPrice: 70000, price: "Rp 70.000", tag: "New Arrival", tagBg: "bg-emerald-600 text-white", image: "baju29.jpg" },
+      { id: 30, name: "Blouse Yuyu", colorName: "Biru", cat: "Blouse Daily", rawPrice: 70000, price: "Rp 70.000", tag: "Best Seller", tagBg: "bg-accentYellow text-brown-900", image: "baju30.jpg" }
+    ];
+
+    function getCart() {
+      return JSON.parse(localStorage.getItem('yuwuri_cart')) || [];
+    }
+
+    function updateCartBadge() {
+      const cart = getCart();
+      const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const badge = document.getElementById('cartCount');
+      if (badge) badge.innerText = totalQty;
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      toastMsg.innerText = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+
+      let cart = getCart();
+      const existingIndex = cart.findIndex(item => item.id === productId);
+
+      if (existingIndex > -1) {
+        cart[existingIndex].quantity += 1;
+      } else {
+        cart.push({
+          id: product.id,
+          name: `${product.name} - ${product.colorName}`,
+          price: product.rawPrice,
+          color: product.colorName,
+          size: "All Size",
+          quantity: 1
+        });
+      }
+
+      localStorage.setItem('yuwuri_cart', JSON.stringify(cart));
+      updateCartBadge();
+      showToast(`"${product.name}" masuk keranjang!`);
+    }
+
     const grid = document.getElementById('productGrid');
-    const rupiah = value => new Intl.NumberFormat('id-ID', {style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(value)||0);
-    function escapeHtml(value) { return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
-    function getCart() { try { return JSON.parse(localStorage.getItem('yuwuri_cart')) || []; } catch { return []; } }
-    function updateCartBadge() { const cart=getCart(); const badge=document.getElementById('cartCount'); if(badge) badge.innerText=cart.reduce((sum,item)=>sum+Number(item.quantity||0),0); }
-    function showToast(message) { const toast=document.getElementById('toast'), msg=document.getElementById('toastMsg'); if(!toast||!msg)return; msg.innerText=message; toast.classList.remove('translate-y-20','opacity-0');toast.classList.add('translate-y-0','opacity-100');setTimeout(()=>{toast.classList.remove('translate-y-0','opacity-100');toast.classList.add('translate-y-20','opacity-0');},2500); }
-    window.addToCart = function(productId) {
-      const product=products.find(p=>String(p.id)===String(productId)); if(!product)return;
-      if(Number(product.stock)<=0){showToast('Maaf, stok produk sedang habis.');return;}
-      const cart=getCart(), idx=cart.findIndex(item=>String(item.id)===String(productId));
-      if(idx>-1) cart[idx].quantity+=1; else cart.push({id:product.id,name:product.name,price:Number(product.price),color:product.color||'Cream Almond',size:'All Size',quantity:1});
-      localStorage.setItem('yuwuri_cart',JSON.stringify(cart));updateCartBadge();showToast(`"${product.name}" masuk keranjang!`);
-    };
-    function tagClass(tag) { const t=String(tag||'').toLowerCase(); if(t.includes('disc'))return 'bg-red-500 text-white';if(t.includes('adem')||t.includes('kusut'))return 'bg-accentBlue text-brown-900';if(t.includes('best')||t.includes('favorit')||t.includes('favorite'))return 'bg-accentYellow text-brown-900';return 'bg-brown-900 text-white'; }
-    function productCard(p) {
-      const color=/^#[0-9a-f]{6}$/i.test(p.color||'')?p.color:'#E3CEB1';
-      const visual=p.image_url?`<img src="${escapeHtml(p.image_url)}" alt="${escapeHtml(p.name)}" loading="lazy" class="w-full h-full object-cover">`:`<svg viewBox="0 0 100 120" class="w-24 h-28 drop-shadow-md" fill="${color}"><path d="M20 25L35 10H65L80 25L95 35L85 55L75 48V110H25V48L15 55L5 35Z" stroke="#391E10" stroke-width="2.5" stroke-linejoin="round"/><path d="M35 10L50 30L65 10" stroke="#391E10" stroke-width="2.5" fill="none"/><circle cx="50" cy="45" r="2" fill="#391E10"/><circle cx="50" cy="65" r="2" fill="#391E10"/><circle cx="50" cy="85" r="2" fill="#391E10"/></svg>`;
-      return `<div class="bg-white rounded-2xl border border-brown-200/80 overflow-hidden card-shadow flex flex-col justify-between group"><div><div class="relative w-full aspect-[4/5] flex items-center justify-center p-6 border-b border-brown-100 overflow-hidden" style="background-color:${color}15"><span class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-brown-900/10 ${tagClass(p.tag)}">${escapeHtml(p.tag||'New')}</span><button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-brown-900 flex items-center justify-center shadow-sm" aria-label="Wishlist"><i class="fa-regular fa-heart text-xs"></i></button><div class="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">${visual}</div></div><div class="p-4"><span class="text-[10px] font-bold uppercase tracking-widest text-brown-700/70">${escapeHtml(p.category)}</span><h3 class="font-serif font-bold text-sm text-brown-900 mt-0.5 line-clamp-1">${escapeHtml(p.name)}</h3><p class="text-[11px] text-brown-700/80 mt-1">${escapeHtml(p.description||'Bahan adem, nyaman untuk sehari-hari.')}</p></div></div><div class="p-4 pt-0 flex items-center justify-between gap-2 mt-2"><div><span class="text-xs text-brown-700/60 block text-[10px]">Harga</span><span class="font-bold text-brown-900 text-sm md:text-base">${rupiah(p.price)}</span><span class="block text-[10px] text-brown-700">${Number(p.stock)>0?`Stok: ${p.stock}`:'Stok habis'}</span></div><button onclick="addToCart('${String(p.id)}')" ${Number(p.stock)<=0?'disabled':''} class="w-9 h-9 rounded-xl bg-brown-900 hover:bg-brown-700 disabled:opacity-40 text-white flex items-center justify-center shadow-sm"><i class="fa-solid fa-plus text-xs"></i></button></div></div>`;
-    }
-    async function loadProducts() { grid.innerHTML='<p class="col-span-full text-center text-sm text-brown-700 py-12">Memuat katalog Yuwuri Shop...</p>'; const {data,error}=await supabase.from('products').select('id,name,category,price,stock,tag,color,pattern,image_url,description,is_active,created_at').eq('is_active',true).order('created_at',{ascending:false}); if(error){grid.innerHTML=`<p class="col-span-full text-center text-sm text-red-600 py-12">Katalog belum dapat dimuat. ${escapeHtml(error.message)}</p>`;return;} products=data||[];grid.innerHTML=products.length?products.map(productCard).join(''):'<p class="col-span-full text-center text-sm text-brown-700 py-12">Belum ada produk tersedia.</p>'; const count=document.querySelector('main + section'); const countText=document.querySelector('section .text-xs.text-brown-700.font-medium'); if(countText)countText.innerHTML=`Menampilkan <b class="text-brown-900">${products.length}</b> produk`;
-    }
-    document.addEventListener('DOMContentLoaded',()=>{updateCartBadge();loadProducts();});
+
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.className = "bg-white rounded-2xl border border-brown-200/80 overflow-hidden card-shadow flex flex-col justify-between group";
+      
+      card.innerHTML = `
+        <div>
+          <div class="relative w-full aspect-[4/5] bg-brown-100 flex items-center justify-center border-b border-brown-100 overflow-hidden">
+            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-brown-900/10 ${p.tagBg}">
+              ${p.tag}
+            </span>
+            <button class="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-brown-900 flex items-center justify-center transition-colors shadow-sm">
+              <i class="fa-regular fa-heart text-xs"></i>
+            </button>
+            <img src="${p.image}" alt="${p.name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x500/FAF5EF/391E10?text=Yuwuri+Shop';" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+          </div>
+
+          <div class="p-4">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-brown-700/70">${p.cat}</span>
+            <h3 class="font-serif font-bold text-sm text-brown-900 mt-0.5 line-clamp-1 group-hover:text-brown-700 transition-colors">
+              ${p.name}
+            </h3>
+            <p class="text-[11px] text-brown-700/80 mt-1">Warna: <span class="font-semibold text-brown-900">${p.colorName}</span></p>
+          </div>
+        </div>
+
+        <div class="p-4 pt-0 flex items-center justify-between gap-2 mt-2">
+          <div>
+            <span class="text-xs text-brown-700/60 block text-[10px]">Harga</span>
+            <span class="font-bold text-brown-900 text-sm md:text-base">${p.price}</span>
+          </div>
+          <button onclick="addToCart(${p.id})" class="w-9 h-9 rounded-xl bg-brown-900 hover:bg-brown-700 text-white flex items-center justify-center transition-colors shadow-sm active:scale-95" title="Tambah ke keranjang">
+            <i class="fa-solid fa-plus text-xs"></i>
+          </button>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+
+    document.addEventListener('DOMContentLoaded', updateCartBadge);
   </script>
 </body>
 </html>
