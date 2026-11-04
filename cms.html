@@ -57,14 +57,14 @@ function notice(message, error=false) { const el=$('statusMessage'); el.textCont
 function toast(message) { const el=$('toast'); el.textContent=message; el.classList.remove('hidden'); setTimeout(()=>el.classList.add('hidden'),2600); }
 function rupiah(n) { return new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(n)||0); }
 async function verifySession() {
- const {data:{session}} = await supabase.auth.getSession();
- if (!session) { $('loginScreen').classList.remove('hidden'); $('app').classList.add('hidden'); return; }
+ const {data:{session},error:sessionError} = await supabase.auth.getSession();
+ if (sessionError || !session) { window.location.replace('login.html?next=cms.html'); return; }
  const {data:admin,error} = await supabase.from('admin_users').select('user_id').eq('user_id',session.user.id).maybeSingle();
- if (error || !admin) { await supabase.auth.signOut(); $('loginMessage').textContent='Akun ini belum terdaftar sebagai admin. Hubungi pengelola.'; $('loginScreen').classList.remove('hidden'); $('app').classList.add('hidden'); return; }
+ if (error) { notice('Tidak bisa memverifikasi hak admin: '+error.message,true); return; }
+ if (!admin) { window.location.replace('login.html?error=not-admin'); return; }
  $('loginScreen').classList.add('hidden'); $('app').classList.remove('hidden'); $('app').classList.add('md:flex'); $('adminEmail').textContent=session.user.email||'Yuwuri Admin'; await loadProducts();
 }
-$('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginMessage').textContent='Memeriksa akun...';const {error}=await supabase.auth.signInWithPassword({email:$('loginEmail').value.trim(),password:$('loginPassword').value});if(error){$('loginMessage').textContent=error.message;return;}await verifySession();});
-$('logoutBtn').addEventListener('click',async()=>{await supabase.auth.signOut();location.reload();});
+$('logoutBtn').addEventListener('click',async()=>{await supabase.auth.signOut();window.location.href='login.html';});
 function renderMetrics() { $('totalProducts').textContent=allProducts.length; $('activeProducts').textContent=allProducts.filter(p=>p.is_active).length; $('lowStock').textContent=allProducts.filter(p=>Number(p.stock)<=5).length; $('totalStock').textContent=allProducts.reduce((s,p)=>s+Number(p.stock||0),0); }
 function renderRows() {
  const q=$('searchInput').value.toLowerCase(),cat=$('categoryFilter').value;
