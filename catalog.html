@@ -92,7 +92,7 @@
         <!-- Icon Keranjang -->
         <a href="cart.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 relative inline-flex items-center justify-center" title="Keranjang Belanja">
           <i class="fa-solid fa-bag-shopping text-lg"></i>
-          <span class="absolute top-1 sm:top-1.5 right-0 sm:right-1 w-4 h-4 bg-accentYellow text-brown-900 text-[10px] font-bold rounded-full flex items-center justify-center border border-brown-900">3</span>
+          <span id="cartCount" class="absolute top-1 sm:top-1.5 right-0 sm:right-1 w-4 h-4 bg-accentYellow text-brown-900 text-[10px] font-bold rounded-full flex items-center justify-center border border-brown-900">0</span>
         </a>
         
       </div>
@@ -235,156 +235,33 @@
         </div>
     </footer>
 
-  <!-- Dynamic Script with LocalStorage Cart -->
-  <script>
-    const products = [
-      { id: 1, name: "Almond Crop Oversize Shirt", cat: "Kemeja Polos", rawPrice: 35000, price: "Rp 35.000", tag: "Best Seller", tagBg: "bg-accentYellow text-brown-900", color: "#E3CEB1", pattern: "collar" },
-      { id: 2, name: "Soft Linen Daily Blouse", cat: "Linen & Rayon", rawPrice: 42000, price: "Rp 42.000", tag: "Anti Kusut", tagBg: "bg-accentBlue text-brown-900", color: "#C7A07A", pattern: "button" },
-      { id: 3, name: "Korean Pocket Basic Shirt", cat: "Kemeja Polos", rawPrice: 38000, price: "Rp 38.000", tag: "New", tagBg: "bg-brown-900 text-white", color: "#FAF5EF", pattern: "pocket" },
-      { id: 4, name: "Pastel Flowy Rayon Blouse", cat: "Linen & Rayon", rawPrice: 45000, price: "Rp 45.000", tag: "Favorit", tagBg: "bg-accentYellow text-brown-900", color: "#D8C4B6", pattern: "vneck" },
-      { id: 5, name: "Stripe Relaxed Oversized", cat: "Oversized", rawPrice: 49000, price: "Rp 49.000", tag: "Disc 15%", tagBg: "bg-red-500 text-white", color: "#B8A390", pattern: "stripe" },
-      { id: 6, name: "Corduroy Outer Blouse", cat: "Blouse Motif", rawPrice: 68000, price: "Rp 68.000", tag: "Best Seller", tagBg: "bg-accentYellow text-brown-900", color: "#734128", pattern: "collar" },
-      { id: 7, name: "Minimalist Linen Popover", cat: "Linen & Rayon", rawPrice: 55000, price: "Rp 55.000", tag: "Adem", tagBg: "bg-accentBlue text-brown-900", color: "#EEDCC6", pattern: "vneck" },
-      { id: 8, name: "Puff Sleeve Casual Shirt", cat: "Blouse Motif", rawPrice: 40000, price: "Rp 40.000", tag: "Trending", tagBg: "bg-brown-900 text-white", color: "#D1BBA0", pattern: "puff" },
-      { id: 9, name: "Mocha Daily Work Shirt", cat: "Kemeja Polos", rawPrice: 32000, price: "Rp 32.000", tag: "Hemat", tagBg: "bg-emerald-600 text-white", color: "#5C341F", pattern: "button" },
-      { id: 10, name: "Oversized Boyfriend Cotton", cat: "Oversized", rawPrice: 52000, price: "Rp 52.000", tag: "Restock", tagBg: "bg-accentYellow text-brown-900", color: "#E6D7C3", pattern: "pocket" },
-      { id: 11, name: "Floral Vintage Rayon Blouse", cat: "Blouse Motif", rawPrice: 48000, price: "Rp 48.000", tag: "Limited", tagBg: "bg-brown-900 text-white", color: "#C49A76", pattern: "stripe" },
-      { id: 12, name: "Crinkle Airflow Daily Shirt", cat: "Kemeja Polos", rawPrice: 36000, price: "Rp 36.000", tag: "Tanpa Setrika", tagBg: "bg-accentBlue text-brown-900", color: "#FAF0E6", pattern: "collar" },
-      { id: 13, name: "Earth Tone Plaid Shirt", cat: "Blouse Motif", rawPrice: 58000, price: "Rp 58.000", tag: "Best Seller", tagBg: "bg-accentYellow text-brown-900", color: "#8C5437", pattern: "stripe" },
-      { id: 14, name: "Mandarin Collar Rayon Shirt", cat: "Kemeja Polos", rawPrice: 44000, price: "Rp 44.000", tag: "New Arrival", tagBg: "bg-brown-900 text-white", color: "#DFD3C3", pattern: "vneck" },
-      { id: 15, name: "Chiffon Layered Daily Blouse", cat: "Blouse Motif", rawPrice: 62000, price: "Rp 62.000", tag: "Anggun", tagBg: "bg-accentBlue text-brown-900", color: "#E8D8C8", pattern: "puff" },
-      { id: 16, name: "Linen Crop Drop Shoulder", cat: "Linen & Rayon", rawPrice: 50000, price: "Rp 50.000", tag: "Hot Item", tagBg: "bg-accentYellow text-brown-900", color: "#BDA58B", pattern: "pocket" },
-      { id: 17, name: "Classic White Daily Shirt", cat: "Kemeja Polos", rawPrice: 30000, price: "Rp 30.000", tag: "Super Murah", tagBg: "bg-emerald-600 text-white", color: "#FFFFFF", pattern: "button" },
-      { id: 18, name: "Oversized Denim Light Shirt", cat: "Oversized", rawPrice: 75000, price: "Rp 75.000", tag: "Premium", tagBg: "bg-accentBlue text-brown-900", color: "#A1C9FF", pattern: "collar" },
-      { id: 19, name: "Ribbed Knit Collar Shirt", cat: "Kemeja Polos", rawPrice: 65000, price: "Rp 65.000", tag: "Comfy", tagBg: "bg-brown-900 text-white", color: "#9E7A5A", pattern: "collar" },
-      { id: 20, name: "Soft Silk Daily Blouse", cat: "Blouse Motif", rawPrice: 78000, price: "Rp 78.000", tag: "Mewah", tagBg: "bg-accentYellow text-brown-900", color: "#F7EBE1", pattern: "vneck" },
-      { id: 21, name: "Basic Pocket Linen Shirt", cat: "Linen & Rayon", rawPrice: 46000, price: "Rp 46.000", tag: "Best Seller", tagBg: "bg-accentYellow text-brown-900", color: "#D4C3B2", pattern: "pocket" },
-      { id: 22, name: "Striped Chic Daily Blouse", cat: "Blouse Motif", rawPrice: 39000, price: "Rp 39.000", tag: "Disc 10%", tagBg: "bg-red-500 text-white", color: "#AB927A", pattern: "stripe" },
-      { id: 23, name: "V-Neck Button Loose Shirt", cat: "Kemeja Polos", rawPrice: 37000, price: "Rp 37.000", tag: "Adem", tagBg: "bg-accentBlue text-brown-900", color: "#EAE0D5", pattern: "vneck" },
-      { id: 24, name: "Oversized Flannel Brown Shirt", cat: "Oversized", rawPrice: 70000, price: "Rp 70.000", tag: "Kekinian", tagBg: "bg-brown-900 text-white", color: "#633B27", pattern: "stripe" },
-      { id: 25, name: "Balloon Sleeve Linen Blouse", cat: "Linen & Rayon", rawPrice: 54000, price: "Rp 54.000", tag: "Cute Fit", tagBg: "bg-accentYellow text-brown-900", color: "#DBCBB9", pattern: "puff" },
-      { id: 26, name: "Basic Rayon Long Shirt", cat: "Linen & Rayon", rawPrice: 41000, price: "Rp 41.000", tag: "Hijab Friendly", tagBg: "bg-accentBlue text-brown-900", color: "#C2A88F", pattern: "button" },
-      { id: 27, name: "Retro Cuban Collar Shirt", cat: "Kemeja Polos", rawPrice: 59000, price: "Rp 59.000", tag: "Trendy", tagBg: "bg-brown-900 text-white", color: "#875C3D", pattern: "collar" },
-      { id: 28, name: "Short Sleeve Daily Blouse", cat: "Kemeja Polos", rawPrice: 33000, price: "Rp 33.000", tag: "Casual", tagBg: "bg-emerald-600 text-white", color: "#F3E9DD", pattern: "vneck" },
-      { id: 29, name: "Oversized Linen Outer Shirt", cat: "Oversized", rawPrice: 66000, price: "Rp 66.000", tag: "Favorite", tagBg: "bg-accentYellow text-brown-900", color: "#A88B70", pattern: "pocket" },
-      { id: 30, name: "Premium Twill Cotton Shirt", cat: "Kemeja Polos", rawPrice: 80000, price: "Rp 80.000", tag: "Top Rated", tagBg: "bg-brown-900 text-white", color: "#4A2817", pattern: "button" }
-    ];
-
-    // --- LOGIKA LOCALSTORAGE CART ---
-    function getCart() {
-      return JSON.parse(localStorage.getItem('yuwuri_cart')) || [];
-    }
-
-    function updateCartBadge() {
-      const cart = getCart();
-      const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
-      const badge = document.getElementById('cartCount');
-      if (badge) {
-        badge.innerText = totalQty;
-      }
-    }
-
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      const toastMsg = document.getElementById('toastMsg');
-      toastMsg.innerText = message;
-      
-      toast.classList.remove('translate-y-20', 'opacity-0');
-      toast.classList.add('translate-y-0', 'opacity-100');
-
-      setTimeout(() => {
-        toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-20', 'opacity-0');
-      }, 2500);
-    }
-
-    function addToCart(productId) {
-      const product = products.find(p => p.id === productId);
-      if (!product) return;
-
-      let cart = getCart();
-      const existingIndex = cart.findIndex(item => item.id === productId);
-
-      if (existingIndex > -1) {
-        cart[existingIndex].quantity += 1;
-      } else {
-        cart.push({
-          id: product.id,
-          name: product.name,
-          price: product.rawPrice,
-          color: "Cream Almond",
-          size: "All Size",
-          quantity: 1
-        });
-      }
-
-      localStorage.setItem('yuwuri_cart', JSON.stringify(cart));
-      updateCartBadge();
-      showToast(`"${product.name}" masuk keranjang!`);
-    }
-
-    // --- RENDER PRODUK KE GRID ---
+  <!-- Supabase: produk online + cart localStorage -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    const supabase = createClient('https://jrsooxmoljjqtgjmkumz.supabase.co', 'sb_publishable_scpzlZ7fozc6EogEkZTTYA_rsB5cF4M');
+    let products = [];
     const grid = document.getElementById('productGrid');
-
-    products.forEach(p => {
-      const card = document.createElement('div');
-      card.className = "bg-white rounded-2xl border border-brown-200/80 overflow-hidden card-shadow flex flex-col justify-between group";
-      
-      card.innerHTML = `
-        <div>
-          <!-- Image Box Placeholder -->
-          <div class="relative w-full aspect-[4/5] flex items-center justify-center p-6 border-b border-brown-100" style="background-color: ${p.color}15;">
-            
-            <!-- Badge -->
-            <span class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-brown-900/10 ${p.tagBg}">
-              ${p.tag}
-            </span>
-
-            <!-- Wishlist Button -->
-            <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-brown-900 flex items-center justify-center transition-colors shadow-sm">
-              <i class="fa-regular fa-heart text-xs"></i>
-            </button>
-
-            <!-- Illustrated SVG Shirt Placeholder -->
-            <div class="w-24 h-28 flex items-center justify-center relative transform group-hover:scale-105 transition-transform duration-300">
-              <svg viewBox="0 0 100 120" class="w-full h-full drop-shadow-md" fill="${p.color}">
-                <path d="M 20 25 L 35 10 L 65 10 L 80 25 L 95 35 L 85 55 L 75 48 L 75 110 L 25 110 L 25 48 L 15 55 L 5 35 Z" stroke="#391E10" stroke-width="2.5" stroke-linejoin="round" />
-                <path d="M 35 10 L 50 30 L 65 10" stroke="#391E10" stroke-width="2.5" fill="none" />
-                <circle cx="50" cy="45" r="2" fill="#391E10" />
-                <circle cx="50" cy="65" r="2" fill="#391E10" />
-                <circle cx="50" cy="85" r="2" fill="#391E10" />
-                ${p.pattern === 'pocket' ? '<rect x="58" y="42" width="12" height="15" stroke="#391E10" stroke-width="1.5" fill="none" />' : ''}
-              </svg>
-            </div>
-          </div>
-
-          <!-- Product Details -->
-          <div class="p-4">
-            <span class="text-[10px] font-bold uppercase tracking-widest text-brown-700/70">${p.cat}</span>
-            <h3 class="font-serif font-bold text-sm text-brown-900 mt-0.5 line-clamp-1 group-hover:text-brown-700 transition-colors">
-              ${p.name}
-            </h3>
-            <p class="text-[11px] text-brown-700/80 mt-1">Bahan adem, anti-kusut</p>
-          </div>
-        </div>
-
-        <!-- Price & Action Button dengan Event Click -->
-        <div class="p-4 pt-0 flex items-center justify-between gap-2 mt-2">
-          <div>
-            <span class="text-xs text-brown-700/60 block text-[10px]">Harga</span>
-            <span class="font-bold text-brown-900 text-sm md:text-base">${p.price}</span>
-          </div>
-          <button onclick="addToCart(${p.id})" class="w-9 h-9 rounded-xl bg-brown-900 hover:bg-brown-700 text-white flex items-center justify-center transition-colors shadow-sm active:scale-95" title="Tambah ke keranjang">
-            <i class="fa-solid fa-plus text-xs"></i>
-          </button>
-        </div>
-      `;
-
-      grid.appendChild(card);
-    });
-
-    // Inisialisasi angka badge saat pertama kali halaman dimuat
-    document.addEventListener('DOMContentLoaded', updateCartBadge);
+    const rupiah = value => new Intl.NumberFormat('id-ID', {style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(value)||0);
+    function escapeHtml(value) { return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch])); }
+    function getCart() { try { return JSON.parse(localStorage.getItem('yuwuri_cart')) || []; } catch { return []; } }
+    function updateCartBadge() { const cart=getCart(); const badge=document.getElementById('cartCount'); if(badge) badge.innerText=cart.reduce((sum,item)=>sum+Number(item.quantity||0),0); }
+    function showToast(message) { const toast=document.getElementById('toast'), msg=document.getElementById('toastMsg'); if(!toast||!msg)return; msg.innerText=message; toast.classList.remove('translate-y-20','opacity-0');toast.classList.add('translate-y-0','opacity-100');setTimeout(()=>{toast.classList.remove('translate-y-0','opacity-100');toast.classList.add('translate-y-20','opacity-0');},2500); }
+    window.addToCart = function(productId) {
+      const product=products.find(p=>String(p.id)===String(productId)); if(!product)return;
+      if(Number(product.stock)<=0){showToast('Maaf, stok produk sedang habis.');return;}
+      const cart=getCart(), idx=cart.findIndex(item=>String(item.id)===String(productId));
+      if(idx>-1) cart[idx].quantity+=1; else cart.push({id:product.id,name:product.name,price:Number(product.price),color:product.color||'Cream Almond',size:'All Size',quantity:1});
+      localStorage.setItem('yuwuri_cart',JSON.stringify(cart));updateCartBadge();showToast(`"${product.name}" masuk keranjang!`);
+    };
+    function tagClass(tag) { const t=String(tag||'').toLowerCase(); if(t.includes('disc'))return 'bg-red-500 text-white';if(t.includes('adem')||t.includes('kusut'))return 'bg-accentBlue text-brown-900';if(t.includes('best')||t.includes('favorit')||t.includes('favorite'))return 'bg-accentYellow text-brown-900';return 'bg-brown-900 text-white'; }
+    function productCard(p) {
+      const color=/^#[0-9a-f]{6}$/i.test(p.color||'')?p.color:'#E3CEB1';
+      const visual=p.image_url?`<img src="${escapeHtml(p.image_url)}" alt="${escapeHtml(p.name)}" loading="lazy" class="w-full h-full object-cover">`:`<svg viewBox="0 0 100 120" class="w-24 h-28 drop-shadow-md" fill="${color}"><path d="M20 25L35 10H65L80 25L95 35L85 55L75 48V110H25V48L15 55L5 35Z" stroke="#391E10" stroke-width="2.5" stroke-linejoin="round"/><path d="M35 10L50 30L65 10" stroke="#391E10" stroke-width="2.5" fill="none"/><circle cx="50" cy="45" r="2" fill="#391E10"/><circle cx="50" cy="65" r="2" fill="#391E10"/><circle cx="50" cy="85" r="2" fill="#391E10"/></svg>`;
+      return `<div class="bg-white rounded-2xl border border-brown-200/80 overflow-hidden card-shadow flex flex-col justify-between group"><div><div class="relative w-full aspect-[4/5] flex items-center justify-center p-6 border-b border-brown-100 overflow-hidden" style="background-color:${color}15"><span class="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-brown-900/10 ${tagClass(p.tag)}">${escapeHtml(p.tag||'New')}</span><button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-brown-900 flex items-center justify-center shadow-sm" aria-label="Wishlist"><i class="fa-regular fa-heart text-xs"></i></button><div class="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-300">${visual}</div></div><div class="p-4"><span class="text-[10px] font-bold uppercase tracking-widest text-brown-700/70">${escapeHtml(p.category)}</span><h3 class="font-serif font-bold text-sm text-brown-900 mt-0.5 line-clamp-1">${escapeHtml(p.name)}</h3><p class="text-[11px] text-brown-700/80 mt-1">${escapeHtml(p.description||'Bahan adem, nyaman untuk sehari-hari.')}</p></div></div><div class="p-4 pt-0 flex items-center justify-between gap-2 mt-2"><div><span class="text-xs text-brown-700/60 block text-[10px]">Harga</span><span class="font-bold text-brown-900 text-sm md:text-base">${rupiah(p.price)}</span><span class="block text-[10px] text-brown-700">${Number(p.stock)>0?`Stok: ${p.stock}`:'Stok habis'}</span></div><button onclick="addToCart('${String(p.id)}')" ${Number(p.stock)<=0?'disabled':''} class="w-9 h-9 rounded-xl bg-brown-900 hover:bg-brown-700 disabled:opacity-40 text-white flex items-center justify-center shadow-sm"><i class="fa-solid fa-plus text-xs"></i></button></div></div>`;
+    }
+    async function loadProducts() { grid.innerHTML='<p class="col-span-full text-center text-sm text-brown-700 py-12">Memuat katalog Yuwuri Shop...</p>'; const {data,error}=await supabase.from('products').select('id,name,category,price,stock,tag,color,pattern,image_url,description,is_active,created_at').eq('is_active',true).order('created_at',{ascending:false}); if(error){grid.innerHTML=`<p class="col-span-full text-center text-sm text-red-600 py-12">Katalog belum dapat dimuat. ${escapeHtml(error.message)}</p>`;return;} products=data||[];grid.innerHTML=products.length?products.map(productCard).join(''):'<p class="col-span-full text-center text-sm text-brown-700 py-12">Belum ada produk tersedia.</p>'; const count=document.querySelector('main + section'); const countText=document.querySelector('section .text-xs.text-brown-700.font-medium'); if(countText)countText.innerHTML=`Menampilkan <b class="text-brown-900">${products.length}</b> produk`;
+    }
+    document.addEventListener('DOMContentLoaded',()=>{updateCartBadge();loadProducts();});
   </script>
 </body>
 </html>
