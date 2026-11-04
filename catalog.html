@@ -304,6 +304,151 @@
     });
 
     document.addEventListener('DOMContentLoaded', updateCartBadge);
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Katalog Produk — Yuwuri Shop</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brown: {
+              50: '#FDFBF7',
+              100: '#FAF5EF',
+              200: '#E3CEB1',
+              300: '#C7A07A',
+              700: '#734128',
+              900: '#391E10',
+            },
+            accentYellow: '#FBFF5B',
+            accentBlue: '#A1C9FF',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
   </script>
+  <style>
+    .card-shadow {
+      transition: all 0.25s ease;
+    }
+    .card-shadow:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px -8px rgba(57, 30, 16, 0.12);
+    }
+  </style>
+</head>
+<body class="bg-[#FDFBF7] text-brown-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Top Promo Bar -->
+    <div class="bg-brown-900 text-brown-50 text-xs py-2 px-4 text-center flex items-center justify-center gap-2">
+        <span class="bg-accentYellow text-brown-900 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider">Promo Spesial</span>
+        <span class="font-medium">Koleksi Cardigan & Blouse Fashionable (Start Rp 30.000)</span>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header class="border-b border-brown-200/60 bg-white/90 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900">
+                Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
+            </a>
+            
+            <!-- Menu Navigasi -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="index.html" class="hover:text-brown-700 transition-colors">Home</a>
+                <a href="catalog.html" class="text-brown-700 font-semibold border-b-2 border-brown-700 pb-0.5">Catalog</a>
+                <a href="about.html" class="hover:text-brown-700 transition-colors">About Us</a>
+                <a href="contact.html" class="hover:text-brown-700 transition-colors">Contact</a>
+            </nav>
+
+            <!-- Kolom Cari, Profil & Keranjang -->
+            <div class="flex items-center gap-2 sm:gap-4">
+              <div class="relative hidden sm:block">
+                <input type="text" id="searchInput" placeholder="Cari kemeja/blouse..." class="pl-8 pr-4 py-1.5 text-xs bg-brown-100 border border-brown-200 rounded-full focus:outline-none focus:ring-1 focus:ring-brown-700 w-40 lg:w-56">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-brown-700/60"></i>
+              </div>
+
+              <a href="admin-yuwuri-secret.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 flex items-center justify-center" title="CMS Admin">
+                <i class="fa-regular fa-user text-lg"></i>
+              </a>
+
+              <a href="cart.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 relative inline-flex items-center justify-center" title="Keranjang Belanja">
+                <i class="fa-solid fa-bag-shopping text-lg"></i>
+                <span id="cartCount" class="absolute top-1 sm:top-1.5 right-0 sm:right-1 w-4 h-4 bg-accentYellow text-brown-900 text-[10px] font-bold rounded-full flex items-center justify-center border border-brown-900">0</span>
+              </a>
+            </div>
+            
+        </div>
+    </header>
+
+  <!-- Banner / Header Title -->
+  <section class="bg-brown-100/60 border-b border-brown-200/50 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span class="inline-block px-3 py-1 bg-accentYellow text-brown-900 text-[11px] font-bold tracking-wider rounded-full uppercase mb-2">
+            Daily Collection
+          </span>
+          <h1 class="text-3xl md:text-4xl font-serif font-bold text-brown-900">Katalog Cardigan & Blouse</h1>
+          <p class="text-xs sm:text-sm text-brown-700 mt-1">30 Pilihan outfit harian adem, cantik, dan nyaman untuk kuliah/hangout.</p>
+        </div>
+        <div class="text-xs text-brown-700 font-medium">
+          Menampilkan <span id="productCount" class="font-bold text-brown-900">0</span> produk
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Catalog Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 flex-grow">
+    
+    <!-- Filter & Sort Bar -->
+    <div class="bg-white p-4 rounded-2xl border border-brown-200/80 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+      <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none text-xs" id="categoryPills">
+        <button class="px-4 py-2 rounded-xl bg-brown-900 text-white font-bold whitespace-nowrap shrink-0">Semua</button>
+      </div>
+
+      <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+        <div class="flex items-center gap-2 text-xs font-medium text-brown-700">
+          <i class="fa-solid fa-arrow-down-short-wide"></i>
+          <span>Urutkan:</span>
+        </div>
+        <select id="sortSelect" class="px-3 py-2 text-xs bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-brown-700 font-medium text-brown-900 cursor-pointer">
+          <option value="newest">Terbaru</option>
+          <option value="price-asc">Harga: Terendah - Tertinggi</option>
+          <option value="price-desc">Harga: Tertinggi - Terendah</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"></div>
+
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-brown-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-brown-700 flex items-center gap-3 text-xs font-medium">
+      <div class="w-6 h-6
 </body>
 </html>
