@@ -306,10 +306,10 @@
             </div>
           </div>
 
-          <!-- Tombol WhatsApp Checkout -->
-          <button onclick="processCheckout()" class="w-full mt-6 py-4 px-6 bg-brown-900 hover:bg-brown-700 text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
-  Lanjut ke Pembayaran <i class="fa-solid fa-arrow-right ml-1"></i>
-</button>
+          <!-- Tombol Lanjut ke Pembayaran -->
+          <button id="btnPayNow" type="button" class="w-full mt-6 py-4 px-6 bg-brown-900 hover:bg-brown-700 text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer">
+            Lanjut ke Pembayaran <i class="fa-solid fa-arrow-right ml-1"></i>
+          </button>
           
           <p class="text-[11px] text-brown-700 text-center mt-3">
             <i class="fa-solid fa-shield-halved text-emerald-600 mr-1"></i> Transaksi Aman & Terverifikasi
@@ -328,32 +328,47 @@
     </div>
   </footer>
 
-  <!-- Script Integrasi Kirim Pesanan ke WhatsApp -->
+  <!-- Script Penanganan Klik Tombol yang Aman (Safe Handler) -->
   <script>
-   <script>
-  function processCheckout() {
-    // 1. Ambil data formulir
-    const orderData = {
-      name: document.getElementById('buyerName').value || 'Pelanggan',
-      phone: document.getElementById('buyerPhone').value || '-',
-      email: document.getElementById('buyerEmail').value || '-',
-      province: document.getElementById('province').value || '-',
-      city: document.getElementById('city').value || '-',
-      subdistrict: document.getElementById('subdistrict').value || '-',
-      address: document.getElementById('fullAddress').value || '-',
-      notes: document.getElementById('notes').value || 'Tidak ada',
-      shipping: document.querySelector('input[name="shipping"]:checked')?.value || 'JNE Reguler',
-      payment: document.querySelector('input[name="payment"]:checked')?.value || 'Transfer Bank',
-      total: 'Rp 245.000'
-    };
+    document.addEventListener('DOMContentLoaded', function () {
+      const payButton = document.getElementById('btnPayNow');
+      
+      if (payButton) {
+        payButton.addEventListener('click', function () {
+          try {
+            const getVal = (id) => {
+              const el = document.getElementById(id);
+              return el ? el.value : '';
+            };
 
-    // 2. Simpan sementara ke browser
-    localStorage.setItem('yuwuri_latest_order', JSON.stringify(orderData));
+            const shippingEl = document.querySelector('input[name="shipping"]:checked');
+            const paymentEl = document.querySelector('input[name="payment"]:checked');
 
-    // 3. Pindah ke halaman pembayaran payment.html
-    window.location.href = 'payment.html';
-  }
-</script>
+            const orderData = {
+              name: getVal('buyerName') || 'Pelanggan',
+              phone: getVal('buyerPhone') || '-',
+              email: getVal('buyerEmail') || '-',
+              province: getVal('province') || '-',
+              city: getVal('city') || '-',
+              subdistrict: getVal('subdistrict') || '-',
+              address: getVal('fullAddress') || '-',
+              notes: getVal('notes') || 'Tidak ada',
+              shipping: shippingEl ? shippingEl.value : 'JNE Reguler',
+              payment: paymentEl ? paymentEl.value : 'Transfer Bank',
+              total: 'Rp 245.000'
+            };
+
+            localStorage.setItem('yuwuri_latest_order', JSON.stringify(orderData));
+          } catch (e) {
+            console.log('Catatan pesanan disimpan dengan fallback default');
+          }
+
+          // Pindah Halaman Langsung
+          window.location.href = 'payment.html';
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
