@@ -331,41 +331,30 @@
 
   <!-- Script Integrasi Kirim Pesanan ke WhatsApp -->
   <script>
-    function processCheckout() {
-      const name = document.getElementById('buyerName').value || 'Pelanggan Yuwuri';
-      const phone = document.getElementById('buyerPhone').value || '-';
-      const province = document.getElementById('province').value || '-';
-      const city = document.getElementById('city').value || '-';
-      const subdistrict = document.getElementById('subdistrict').value || '-';
-      const address = document.getElementById('fullAddress').value || '-';
-      const notes = document.getElementById('notes').value || 'Tidak ada';
+   <script>
+  function processCheckout() {
+    // 1. Ambil data formulir
+    const orderData = {
+      name: document.getElementById('buyerName').value || 'Pelanggan',
+      phone: document.getElementById('buyerPhone').value || '-',
+      email: document.getElementById('buyerEmail').value || '-',
+      province: document.getElementById('province').value || '-',
+      city: document.getElementById('city').value || '-',
+      subdistrict: document.getElementById('subdistrict').value || '-',
+      address: document.getElementById('fullAddress').value || '-',
+      notes: document.getElementById('notes').value || 'Tidak ada',
+      shipping: document.querySelector('input[name="shipping"]:checked')?.value || 'JNE Reguler',
+      payment: document.querySelector('input[name="payment"]:checked')?.value || 'Transfer Bank',
+      total: 'Rp 245.000'
+    };
 
-      const shipping = document.querySelector('input[name="shipping"]:checked').value;
-      const payment = document.querySelector('input[name="payment"]:checked').value;
+    // 2. Simpan sementara ke browser
+    localStorage.setItem('yuwuri_latest_order', JSON.stringify(orderData));
 
-      // Format Pesan WhatsApp
-      let message = `*HALO YUWURI SHOP - PESANAN BARU*%0A%0A`;
-      message += `*Data Pembeli:*%0A`;
-      message += `• Nama: ${name}%0A`;
-      message += `• No. HP/WA: ${phone}%0A%0A`;
-      message += `*Alamat Pengiriman:*%0A`;
-      message += `• Alamat: ${address}%0A`;
-      message += `• Kecamatan: ${subdistrict}%0A`;
-      message += `• Kota/Provinsi: ${city}, ${province}%0A`;
-      message += `• Catatan: ${notes}%0A%0A`;
-      message += `*Detail Pesanan:*%0A`;
-      message += `1. Kemeja Oversize Linen (Cream) x2 - Rp 170.000%0A`;
-      message += `2. Daily Blouse Anti-Kusut (Mocca) x1 - Rp 75.000%0A%0A`;
-      message += `• Pengiriman: ${shipping}%0A`;
-      message += `• Pembayaran: ${payment}%0A`;
-      message += `*TOTAL PEMBAYARAN: Rp 245.000*%0A%0A`;
-      message += `Mohon diproses ya kak, terima kasih!`;
-
-      // Redirect langsung ke WA Yuwuri Shop
-      const targetWA = `https://wa.me/6289618633132?text=${message}`;
-      window.open(targetWA, '_blank');
-    }
-  </script>
+    // 3. Pindah ke halaman pembayaran payment.html
+    window.location.href = 'payment.html';
+  }
+</script>
 
 </body>
 </html>
