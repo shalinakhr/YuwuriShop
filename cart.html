@@ -26,8 +26,10 @@ function render(){
 $('checkoutBtn').addEventListener('click',async()=>{
  const {data:{session},error}=await supabase.auth.getSession();
  if(error){$('checkoutMessage').textContent='Tidak dapat memeriksa login: '+error.message;return;}
- if(!session){location.href='login.html?next=cart.html&action=checkout';return;}
- $('checkoutMessage').textContent='Kamu sudah login sebagai '+(session.user.email||'customer')+'. Tahap berikutnya adalah menghubungkan formulir alamat, pengiriman, dan pembayaran.';
+ if(!session){location.href='login.html?next=checkout.html';return;}
+ 
+ // Langsung pindah ke halaman checkout jika sudah login
+ location.href = 'checkout.html';
 });
 render();
 </script></body></html>
