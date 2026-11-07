@@ -104,7 +104,7 @@
             Daily Collection
           </span>
           <h1 class="text-3xl md:text-4xl font-serif font-bold text-brown-900">Katalog Cardigan & Blouse</h1>
-          <p class="text-xs sm:text-sm text-brown-700 mt-1">30 Pilihan outfit harian adem, cantik, dan nyaman untuk kuliah/hangout.</p>
+          <p class="text-xs sm:text-sm text-brown-700 mt-1">Pilihan outfit harian adem, cantik, dan nyaman untuk kuliah/hangout.</p>
         </div>
         <div class="text-xs text-brown-700 font-medium">
           Menampilkan <span id="productCount" class="font-bold text-brown-900">0</span> produk
@@ -165,7 +165,7 @@
         <div>
           <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-4 text-sm">Hubungi Kami</h4>
           <ul class="space-y-3 text-sm text-brown-700">
-            <li class="flex items-center gap-3"><i class="fa-brands fa-whatsapp text-brown-900"></i> 0896-1863-3132</li>
+            <li class="flex items-center gap-3"><i class="fa-brands fa-whatsapp text-brown-900"></i> 089618633132</li>
             <li class="flex items-center gap-3"><i class="fa-regular fa-envelope text-brown-900"></i> yuwurishop@gmail.com</li>
           </ul>
         </div>
@@ -176,7 +176,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT SUPABASE & LOCALSTORAGE CART INTERACTION -->
+  <!-- SCRIPT SUPABASE & LOCALSTORAGE CART INTERACTION WITH SORTING & SEARCH -->
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
@@ -231,7 +231,29 @@
       }
 
       rawProducts = products || [];
-      renderGrid(rawProducts);
+      filterAndSortProducts();
+    }
+
+    function filterAndSortProducts() {
+      let filtered = [...rawProducts];
+      const searchVal = document.getElementById('searchInput')?.value.toLowerCase().trim() || '';
+      const sortVal = document.getElementById('sortSelect')?.value || 'newest';
+
+      // 1. Filter Pencarian Nama
+      if (searchVal) {
+        filtered = filtered.filter(p => p.name && p.name.toLowerCase().includes(searchVal));
+      }
+
+      // 2. Sortir Berdasarkan Pilihan Dropdown
+      if (sortVal === 'price-asc') {
+        filtered.sort((a, b) => (Number(a.price) || 0) - (Number(b.price) || 0));
+      } else if (sortVal === 'price-desc') {
+        filtered.sort((a, b) => (Number(b.price) || 0) - (Number(a.price) || 0));
+      } else if (sortVal === 'newest') {
+        filtered.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+      }
+
+      renderGrid(filtered);
     }
 
     function renderGrid(products) {
@@ -242,7 +264,7 @@
       if (countEl) countEl.innerText = products.length;
 
       if (!products || products.length === 0) {
-        grid.innerHTML = '<div class="col-span-full text-center py-12 text-brown-700">Belum ada produk yang tersedia.</div>';
+        grid.innerHTML = '<div class="col-span-full text-center py-12 text-brown-700">Tidak ada produk yang sesuai.</div>';
         return;
       }
 
@@ -266,7 +288,7 @@
             </div>
 
             <div class="p-4">
-              <span class="text-[10px] font-bold uppercase tracking-widest text-brown-700/70">${p.category}</span>
+              <span class="text-[10px] font-bold uppercase tracking-widest text-brown-700/70">${p.category || 'General'}</span>
               <h3 class="font-serif font-bold text-sm text-brown-900 mt-0.5 line-clamp-1 group-hover:text-brown-700 transition-colors">
                 ${p.name}
               </h3>
@@ -320,6 +342,16 @@
     document.addEventListener('DOMContentLoaded', () => {
       updateCartBadge();
       fetchCatalogProducts();
+
+      const sortSelect = document.getElementById('sortSelect');
+      if (sortSelect) {
+        sortSelect.addEventListener('change', filterAndSortProducts);
+      }
+
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.addEventListener('input', filterAndSortProducts);
+      }
     });
   </script>
 </body>
