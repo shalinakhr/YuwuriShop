@@ -23,10 +23,10 @@ function render(){
  document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{cart.splice(+b.dataset.remove,1);save();});
  $('checkoutBtn').disabled=!cart.length;$('checkoutBtn').classList.toggle('opacity-50',!cart.length);
 }
-$('checkoutBtn').addEventListener('click', () => {
-  if (!cart.length) return;
-  location.href = 'checkout.html';
-});
+$('checkoutBtn').addEventListener('click',async()=>{
+ const {data:{session},error}=await supabase.auth.getSession();
+ if(error){$('checkoutMessage').textContent='Tidak dapat memeriksa login: '+error.message;return;}
+ if(!session){location.href='login.html?next=checkout.html';return;}
  
  // Langsung pindah ke halaman checkout jika sudah login
  location.href = 'checkout.html';
