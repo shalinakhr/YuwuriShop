@@ -82,7 +82,7 @@
                 <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-brown-700/60"></i>
               </div>
 
-              <a href="cms.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 flex items-center justify-center" title="CMS Admin">
+              <a href="admin-yuwuri-secret.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 flex items-center justify-center" title="CMS Admin">
                 <i class="fa-regular fa-user text-lg"></i>
               </a>
 
@@ -104,7 +104,7 @@
             Daily Collection
           </span>
           <h1 class="text-3xl md:text-4xl font-serif font-bold text-brown-900">Katalog Cardigan & Blouse</h1>
-          <p class="text-xs sm:text-sm text-brown-700 mt-1">Pilihan outfit harian adem, cantik, dan nyaman untuk kuliah/hangout.</p>
+          <p class="text-xs sm:text-sm text-brown-700 mt-1">30 Pilihan outfit harian adem, cantik, dan nyaman untuk kuliah/hangout.</p>
         </div>
         <div class="text-xs text-brown-700 font-medium">
           Menampilkan <span id="productCount" class="font-bold text-brown-900">0</span> produk
@@ -118,7 +118,7 @@
     
     <!-- Filter & Sort Bar -->
     <div class="bg-white p-4 rounded-2xl border border-brown-200/80 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
-      <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none text-xs" id="categoryPills">
+      <div class="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none text-xs">
         <button class="px-4 py-2 rounded-xl bg-brown-900 text-white font-bold whitespace-nowrap shrink-0">Semua</button>
       </div>
 
@@ -165,7 +165,7 @@
         <div>
           <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-4 text-sm">Hubungi Kami</h4>
           <ul class="space-y-3 text-sm text-brown-700">
-            <li class="flex items-center gap-3"><i class="fa-brands fa-whatsapp text-brown-900"></i> 089618633132</li>
+            <li class="flex items-center gap-3"><i class="fa-brands fa-whatsapp text-brown-900"></i> 0896-1863-3132</li>
             <li class="flex items-center gap-3"><i class="fa-regular fa-envelope text-brown-900"></i> yuwurishop@gmail.com</li>
           </ul>
         </div>
@@ -176,7 +176,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT SUPABASE & LOCALSTORAGE CART INTERACTION WITH SORTING & SEARCH -->
+  <!-- SCRIPT SUPABASE & LOCALSTORAGE CART INTERACTION WITH PRODUCT LINK -->
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
@@ -191,168 +191,4 @@
       return JSON.parse(localStorage.getItem('yuwuri_cart')) || [];
     }
 
-    function updateCartBadge() {
-      const cart = getCart();
-      const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
-      const badge = document.getElementById('cartCount');
-      if (badge) badge.innerText = totalQty;
-    }
-
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      const toastMsg = document.getElementById('toastMsg');
-      if (toast && toastMsg) {
-        toastMsg.innerText = message;
-        toast.classList.remove('translate-y-20', 'opacity-0');
-        toast.classList.add('translate-y-0', 'opacity-100');
-        setTimeout(() => {
-          toast.classList.remove('translate-y-0', 'opacity-100');
-          toast.classList.add('translate-y-20', 'opacity-0');
-        }, 2500);
-      }
-    }
-
-    async function fetchCatalogProducts() {
-      const grid = document.getElementById('productGrid');
-      if (!grid) return;
-
-      grid.innerHTML = '<div class="col-span-full text-center py-12 text-brown-700">Memuat katalog produk...</div>';
-
-      const { data: products, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('is_active', true)
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error('Gagal mengambil katalog:', error.message);
-        grid.innerHTML = '<div class="col-span-full text-center py-12 text-red-600">Gagal memuat produk. Coba refresh halaman.</div>';
-        return;
-      }
-
-      rawProducts = products || [];
-      filterAndSortProducts();
-    }
-
-    function filterAndSortProducts() {
-      let filtered = [...rawProducts];
-      const searchVal = document.getElementById('searchInput')?.value.toLowerCase().trim() || '';
-      const sortVal = document.getElementById('sortSelect')?.value || 'newest';
-
-      // 1. Filter Pencarian Nama
-      if (searchVal) {
-        filtered = filtered.filter(p => p.name && p.name.toLowerCase().includes(searchVal));
-      }
-
-      // 2. Sortir Berdasarkan Pilihan Dropdown
-      if (sortVal === 'price-asc') {
-        filtered.sort((a, b) => (Number(a.price) || 0) - (Number(b.price) || 0));
-      } else if (sortVal === 'price-desc') {
-        filtered.sort((a, b) => (Number(b.price) || 0) - (Number(a.price) || 0));
-      } else if (sortVal === 'newest') {
-        filtered.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
-      }
-
-      renderGrid(filtered);
-    }
-
-    function renderGrid(products) {
-      const grid = document.getElementById('productGrid');
-      grid.innerHTML = '';
-
-      const countEl = document.getElementById('productCount');
-      if (countEl) countEl.innerText = products.length;
-
-      if (!products || products.length === 0) {
-        grid.innerHTML = '<div class="col-span-full text-center py-12 text-brown-700">Tidak ada produk yang sesuai.</div>';
-        return;
-      }
-
-      products.forEach(p => {
-        const card = document.createElement('div');
-        card.className = "bg-white rounded-2xl border border-brown-200/80 overflow-hidden card-shadow flex flex-col justify-between group";
-        
-        const formattedPrice = 'Rp ' + (Number(p.price) || 0).toLocaleString('id-ID');
-        const imgSource = p.image_url || `baju${p.id}.png`;
-
-        card.innerHTML = `
-          <div>
-            <div class="relative w-full aspect-[4/5] bg-brown-100 flex items-center justify-center border-b border-brown-100 overflow-hidden">
-              <span class="absolute top-3 left-3 z-10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-brown-900/10 ${p.tag === 'Best Seller' ? 'bg-accentYellow text-brown-900' : 'bg-brown-900 text-white'}">
-                ${p.tag || 'New'}
-              </span>
-              <button class="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-brown-900 flex items-center justify-center transition-colors shadow-sm">
-                <i class="fa-regular fa-heart text-xs"></i>
-              </button>
-              <img src="${imgSource}" alt="${p.name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x500/FAF5EF/391E10?text=Yuwuri+Shop';" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-            </div>
-
-            <div class="p-4">
-              <span class="text-[10px] font-bold uppercase tracking-widest text-brown-700/70">${p.category || 'General'}</span>
-              <h3 class="font-serif font-bold text-sm text-brown-900 mt-0.5 line-clamp-1 group-hover:text-brown-700 transition-colors">
-                ${p.name}
-              </h3>
-              <p class="text-[11px] text-brown-700/80 mt-1">Stok: <span class="font-semibold text-brown-900">${p.stock || 0} pcs</span></p>
-            </div>
-          </div>
-
-          <div class="p-4 pt-0 flex items-center justify-between gap-2 mt-2">
-            <div>
-              <span class="text-xs text-brown-700/60 block text-[10px]">Harga</span>
-              <span class="font-bold text-brown-900 text-sm md:text-base">${formattedPrice}</span>
-            </div>
-            <button data-id="${p.id}" class="add-to-cart-btn w-9 h-9 rounded-xl bg-brown-900 hover:bg-brown-700 text-white flex items-center justify-center transition-colors shadow-sm active:scale-95" title="Tambah ke keranjang">
-              <i class="fa-solid fa-plus text-xs"></i>
-            </button>
-          </div>
-        `;
-
-        grid.appendChild(card);
-      });
-
-      document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const prodId = e.currentTarget.dataset.id;
-          const targetProd = rawProducts.find(item => String(item.id) === String(prodId));
-          if (targetProd) {
-            let cart = getCart();
-            const existingIndex = cart.findIndex(item => String(item.id) === String(prodId));
-
-            if (existingIndex > -1) {
-              cart[existingIndex].quantity += 1;
-            } else {
-              cart.push({
-                id: targetProd.id,
-                name: targetProd.name,
-                price: Number(targetProd.price),
-                color: "Default",
-                size: "All Size",
-                quantity: 1
-              });
-            }
-
-            localStorage.setItem('yuwuri_cart', JSON.stringify(cart));
-            updateCartBadge();
-            showToast(`"${targetProd.name}" masuk keranjang!`);
-          }
-        });
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      updateCartBadge();
-      fetchCatalogProducts();
-
-      const sortSelect = document.getElementById('sortSelect');
-      if (sortSelect) {
-        sortSelect.addEventListener('change', filterAndSortProducts);
-      }
-
-      const searchInput = document.getElementById('searchInput');
-      if (searchInput) {
-        searchInput.addEventListener('input', filterAndSortProducts);
-      }
-    });
-  </script>
-</body>
-</html>
+    function updateCartBadge()
