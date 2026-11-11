@@ -270,7 +270,11 @@
 
       products.forEach(p => {
         const card = document.createElement('div');
-        card.className = "bg-white rounded-2xl border border-brown-200/80 overflow-hidden card-shadow flex flex-col justify-between group";
+        card.className = "bg-white rounded-2xl border border-brown-200/80 overflow-hidden card-shadow flex flex-col justify-between group cursor-pointer";
+        card.dataset.productId = p.id;
+        card.setAttribute("role", "link");
+        card.setAttribute("tabindex", "0");
+        card.setAttribute("aria-label", `Lihat detail ${p.name || "produk"}`);
         
         const formattedPrice = 'Rp ' + (Number(p.price) || 0).toLocaleString('id-ID');
         const imgSource = p.image_url || `baju${p.id}.png`;
@@ -312,6 +316,7 @@
 
       document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
+          e.stopPropagation();
           const prodId = e.currentTarget.dataset.id;
           const targetProd = rawProducts.find(item => String(item.id) === String(prodId));
           if (targetProd) {
@@ -334,6 +339,23 @@
             localStorage.setItem('yuwuri_cart', JSON.stringify(cart));
             updateCartBadge();
             showToast(`"${targetProd.name}" masuk keranjang!`);
+          }
+        });
+      });
+
+      // Buka detail produk saat area kartu diklik, kecuali tombol aksi.
+      grid.querySelectorAll('[data-product-id]').forEach(card => {
+        const openDetail = () => {
+          window.location.href = `product-detail.html?id=${encodeURIComponent(card.dataset.productId)}`;
+        };
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('button, a')) return;
+          openDetail();
+        });
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openDetail();
           }
         });
       });
