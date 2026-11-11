@@ -9,8 +9,6 @@
 <section class="mt-7 ml-auto max-w-md bg-white border border-[#E3CEB1] rounded-2xl p-5"><div class="flex justify-between text-sm"><span>Subtotal</span><b id="subtotal">Rp0</b></div><p id="checkoutMessage" class="text-sm mt-3"></p><button id="checkoutBtn" class="mt-4 w-full bg-[#391E10] text-white rounded-xl py-3 font-bold">Lanjut Checkout</button></section>
 </main>
 <script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-const supabase=createClient('https://jrsooxmoljjqtgjmkumz.supabase.co','sb_publishable_scpzlZ7fozc6EogEkZTTYA_rsB5cF4M');
 const $=id=>document.getElementById(id);
 let cart=JSON.parse(localStorage.getItem('yuwuri_cart')||'[]');
 const money=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(n)||0);
@@ -23,13 +21,12 @@ function render(){
  document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{cart.splice(+b.dataset.remove,1);save();});
  $('checkoutBtn').disabled=!cart.length;$('checkoutBtn').classList.toggle('opacity-50',!cart.length);
 }
-$('checkoutBtn').addEventListener('click',async()=>{
- const {data:{session},error}=await supabase.auth.getSession();
- if(error){$('checkoutMessage').textContent='Tidak dapat memeriksa login: '+error.message;return;}
- if(!session){location.href='login.html?next=checkout.html';return;}
- 
- // Langsung pindah ke halaman checkout jika sudah login
- location.href = 'checkout.html';
+
+// DIPERBAIKI: Hapus pengecekan session Supabase supaya tidak dipaksa ke login.html
+$('checkoutBtn').addEventListener('click', () => {
+  if (!cart.length) return;
+  location.href = 'checkout.html';
 });
+
 render();
 </script></body></html>
