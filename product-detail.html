@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Produk — Yuwuri Shop</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brown: {
+              50: '#FDFBF7',
+              100: '#FAF5EF',
+              200: '#E3CEB1',
+              300: '#C7A07A',
+              700: '#734128',
+              900: '#391E10',
+            },
+            accentYellow: '#FBFF5B',
+            accentBlue: '#A1C9FF',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#FDFBF7] text-brown-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- Top Promo Bar -->
+  <div class="bg-brown-900 text-brown-50 text-xs py-2 px-4 text-center flex items-center justify-center gap-2">
+    <span class="bg-accentYellow text-brown-900 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider">Promo Spesial</span>
+    <span class="font-medium">Gratis Ongkir &amp; Garansi Bahan Premium Anti-Kusut</span>
+  </div>
+
+  <!-- Header / Navbar -->
+  <header class="border-b border-brown-200/60 bg-white/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900">
+        Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
+      </a>
+      
+      <!-- Menu Navigasi -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="index.html" class="hover:text-brown-700 transition-colors">Home</a>
+        <a href="catalog.html" class="text-brown-700 font-semibold border-b-2 border-brown-700 pb-0.5">Catalog</a>
+        <a href="about.html" class="hover:text-brown-700 transition-colors">About Us</a>
+        <a href="contact.html" class="hover:text-brown-700 transition-colors">Contact</a>
+      </nav>
+
+      <!-- Kolom Cari, Profil & Keranjang -->
+      <div class="flex items-center gap-2 sm:gap-4">
+        <a href="admin-yuwuri-secret.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 flex items-center justify-center" title="CMS Admin">
+          <i class="fa-regular fa-user text-lg"></i>
+        </a>
+
+        <a href="cart.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 relative inline-flex items-center justify-center" title="Keranjang Belanja">
+          <i class="fa-solid fa-bag-shopping text-lg"></i>
+          <span id="cartCount" class="absolute top-1 sm:top-1.5 right-0 sm:right-1 w-4 h-4 bg-accentYellow text-brown-900 text-[10px] font-bold rounded-full flex items-center justify-center border border-brown-900">0</span>
+        </a>
+      </div>
+      
+    </div>
+  </header>
+
+  <!-- Breadcrumb Navigation -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-xs text-brown-700">
+    <a href="index.html" class="hover:underline">Beranda</a> <span class="mx-2">/</span> 
+    <a href="catalog.html" class="hover:underline">Katalog</a> <span class="mx-2">/</span> 
+    <span id="breadcrumbTitle" class="font-bold text-brown-900">Detail Produk</span>
+  </div>
+
+  <!-- Main Product Detail Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-8 flex-grow w-full">
+    
+    <!-- State Loading -->
+    <div id="loadingState" class="bg-white p-12 rounded-3xl border border-brown-200/80 text-center text-brown-700">
+      <i class="fa-solid fa-spinner fa-spin text-2xl text-brown-900 mb-3"></i>
+      <p class="text-sm font-medium">Memuat detail produk...</p>
+    </div>
+
+    <!-- State Content Utama (Disembunyikan saat loading) -->
+    <div id="productDetailContainer" class="hidden bg-white p-6 sm:p-8 rounded-3xl border border-brown-200/80 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
+      
+      <!-- Kiri: Foto Produk & Galeri Thumbnail -->
+      <div class="md:col-span-5 space-y-4">
+        <div class="relative aspect-[4/5] bg-brown-100 rounded-2xl border border-brown-200/60 overflow-hidden flex items-center justify-center group">
+          <span id="productBadge" class="absolute top-4 left-4 z-10 px-3 py-1 text-[11px] font-bold uppercase tracking-wider rounded-lg border border-brown-900/10 bg-accentYellow text-brown-900 shadow-sm">
+            New
+          </span>
+          <img id="mainImage" src="" alt="Produk Yuwuri Shop" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+        </div>
+        
+        <!-- Thumbnail Foto Tambahan -->
+        <div class="flex gap-3 overflow-x-auto pb-1" id="thumbnailList">
+          <!-- Thumbnail di-render lewat JS -->
+        </div>
+      </div>
+
+      <!-- Kanan: Detail Informasi & Aksi Belanja -->
+      <div class="md:col-span-7 space-y-6">
+        
+        <!-- Header Info -->
+        <div>
+          <span id="productCat" class="text-xs font-bold uppercase tracking-widest text-brown-700/80 block mb-1">Kategori</span>
+          <h1 id="productTitle" class="text-2xl sm:text-3xl font-serif font-bold text-brown-900 leading-tight">Nama Produk</h1>
+          
+          <!-- Rating Dummy ala Shopee -->
+          <div class="flex items-center gap-3 mt-3 text-xs text-brown-700">
+            <div class="flex items-center text-amber-500">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star-half-stroke"></i>
+              <span class="ml-1.5 font-bold text-brown-900">4.9</span>
+            </div>
+            <span class="text-brown-300">|</span>
+            <span><strong class="text-brown-900">120+</strong> Penilaian</span>
+            <span class="text-brown-300">|</span>
+            <span><strong class="text-brown-900">300+</strong> Terjual</span>
+          </div>
+        </div>
+
+        <!-- Box Harga -->
+        <div class="bg-brown-50 p-4 sm:p-5 rounded-2xl border border-brown-100 flex items-baseline gap-3">
+          <span id="productPrice" class="text-3xl font-serif font-bold text-brown-900">Rp 0</span>
+          <span class="text-xs text-emerald-700 font-semibold bg-emerald-100 px-2.5 py-1 rounded-md">Jaminan Harga Terbaik</span>
+        </div>
+
+        <!-- Pilihan Varian Warna -->
+        <div class="space-y-2">
+          <label class="text-xs font-bold text-brown-900 uppercase tracking-wider block">Pilihan Warna:</label>
+          <div class="flex flex-wrap gap-2" id="colorOptions">
+            <button class="px-4 py-2 text-xs font-semibold rounded-xl border border-brown-900 bg-brown-900 text-white shadow-sm">Default</button>
+          </div>
+        </div>
+
+        <!-- Pilihan Ukuran -->
+        <div class="space-y-2">
+          <label class="text-xs font-bold text-brown-900 uppercase tracking-wider block">Ukuran:</label>
+          <div class="flex flex-wrap gap-2">
+            <button class="px-4 py-2 text-xs font-semibold rounded-xl border border-brown-900 bg-brown-900 text-white shadow-sm">All Size Fit to L</button>
+          </div>
+        </div>
+
+        <!-- Pengatur Kuantitas & Stok -->
+        <div class="space-y-2">
+          <label class="text-xs font-bold text-brown-900 uppercase tracking-wider block">Jumlah:</label>
+          <div class="flex items-center gap-4">
+            <div class="flex items-center border border-brown-200 rounded-xl bg-brown-50">
+              <button id="btnMinus" class="w-9 h-9 flex items-center justify-center text-brown-900 hover:bg-brown-200/50 rounded-l-xl transition-colors">
+                <i class="fa-solid fa-minus text-xs"></i>
+              </button>
+              <input id="qtyInput" type="number" value="1" min="1" readonly class="w-12 text-center bg-transparent text-xs font-bold text-brown-900 focus:outline-none">
+              <button id="btnPlus" class="w-9 h-9 flex items-center justify-center text-brown-900 hover:bg-brown-200/50 rounded-r-xl transition-colors">
+                <i class="fa-solid fa-plus text-xs"></i>
+              </button>
+            </div>
+            <span class="text-xs text-brown-700 font-medium">Tersisa <strong id="productStock" class="text-brown-900">0</strong> pcs</span>
+          </div>
+        </div>
+
+        <!-- Tombol Aksi Belanja -->
+        <div class="pt-4 flex flex-col sm:flex-row gap-3">
+          <button id="btnAddToCart" class="flex-1 py-3.5 px-6 rounded-xl border-2 border-brown-900 bg-brown-50 hover:bg-brown-100 text-brown-900 font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 active:scale-95 shadow-sm">
+            <i class="fa-solid fa-cart-plus text-base"></i> Tambah Ke Keranjang
+          </button>
+          <button id="btnBuyNow" class="flex-1 py-3.5 px-6 rounded-xl bg-brown-900 hover:bg-brown-700 text-white font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 active:scale-95 shadow-md">
+            Beli Sekarang
+          </button>
+        </div>
+
+        <hr class="border-brown-100">
+
+        <!-- Deskripsi Produk -->
+        <div class="space-y-2">
+          <h3 class="font-serif font-bold text-base text-brown-900">Deskripsi Produk:</h3>
+          <p id="productDesc" class="text-xs leading-relaxed text-brown-700 whitespace-pre-line">
+            Bahan adem, nyaman dipakai seharian, dan anti-kusut. Cocok untuk tampilan casual maupun formal harian kamu.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Toast Notification Popup -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-brown-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-brown-700 flex items-center gap-3 text-xs font-medium">
+      <div class="w-6 h-6 rounded-full bg-accentYellow text-brown-900 flex items-center justify-center font-bold">
+        <i class="fa-solid fa-check text-[10px]"></i>
+      </div>
+      <span id="toastMsg">Produk berhasil ditambahkan!</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white pt-16 pb-8 border-t border-brown-200/60 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div class="md:col-span-2">
+          <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900 block mb-4">
+            Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
+          </a>
+          <p class="text-brown-700 text-sm leading-relaxed max-w-sm mb-6">
+            Affordable Fashion for Fancy Women. Kami menyediakan kemeja dan blouse dailywear yang nyaman, adem, dan tahan kusut dengan harga terbaik.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-4 text-sm">Hubungi Kami</h4>
+          <ul class="space-y-3 text-sm text-brown-700">
+            <li class="flex items-center gap-3"><i class="fa-brands fa-whatsapp text-brown-900"></i> 0896-1863-3132</li>
+            <li class="flex items-center gap-3"><i class="fa-regular fa-envelope text-brown-900"></i> yuwurishop@gmail.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-brown-100 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-brown-700">
+        <p>&copy; 2026 Yuwuri Shop. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT SUPABASE DETAIL PRODUK -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    const supabase = createClient(
+      'https://jrsooxmoljjqtgjmkumz.supabase.co', 
+      'sb_publishable_scpzlZ7fozc6EogEkZTTYA_rsB5cF4M'
+    );
+
+    let currentProduct = null;
+    let selectedQuantity = 1;
+
+    function getCart() {
+      return JSON.parse(localStorage.getItem('yuwuri_cart')) || [];
+    }
+
+    function updateCartBadge() {
+      const cart = getCart();
+      const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const badge = document.getElementById('cartCount');
+      if (badge) badge.innerText = totalQty;
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      if (toast && toastMsg) {
+        toastMsg.innerText = message;
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+        setTimeout(() => {
+          toast.classList.remove('translate-y-0', 'opacity-100');
+          toast.classList.add('translate-y-20', 'opacity-0');
+        }, 2500);
+      }
+    }
+
+    // Ambil ID dari Query Parameter URL (misal: ?id=1)
+    function getProductIdFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id');
+    }
+
+    async function loadProductDetail() {
+      const id = getProductIdFromUrl();
+      const loadingEl = document.getElementById('loadingState');
+      const containerEl = document.getElementById('productDetailContainer');
+
+      if (!id) {
+        loadingEl.innerHTML = '<p class="text-red-600 font-bold">Produk tidak ditemukan.</p><a href="catalog.html" class="inline-block mt-4 text-xs underline">Kembali ke katalog</a>';
+        return;
+      }
+
+      // Query data dari Supabase
+      const { data: product, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error || !product) {
+        console.error('Gagal memuat produk:', error);
+        loadingEl.innerHTML = '<p class="text-red-600 font-bold">Produk tidak ditemukan atau telah dihapus.</p><a href="catalog.html" class="inline-block mt-4 text-xs underline">Kembali ke katalog</a>';
+        return;
+      }
+
+      currentProduct = product;
+      renderProductDetail(product);
+
+      loadingEl.classList.add('hidden');
+      containerEl.classList.remove('hidden');
+    }
+
+    function renderProductDetail(p) {
+      const imgSource = p.image_url || `baju${p.id}.png`;
+      
+      document.title = `${p.name} — Yuwuri Shop`;
+      document.getElementById('breadcrumbTitle').innerText = p.name;
+      document.getElementById('productTitle').innerText = p.name;
+      document.getElementById('productCat').innerText = p.category || 'Dailywear';
+      document.getElementById('productPrice').innerText = 'Rp ' + (Number(p.price) || 0).toLocaleString('id-ID');
+      document.getElementById('productStock').innerText = p.stock || 0;
+      document.getElementById('productBadge').innerText = p.tag || 'New';
+      
+      if (p.description) {
+        document.getElementById('productDesc').innerText = p.description;
+      }
+
+      const mainImg = document.getElementById('mainImage');
+      mainImg.src = imgSource;
+      mainImg.onerror = function() {
+        this.src = 'https://via.placeholder.com/400x500/FAF5EF/391E10?text=Yuwuri+Shop';
+      };
+
+      // Thumbnail foto sederhana
+      const thumbList = document.getElementById('thumbnailList');
+      thumbList.innerHTML = `
+        <button class="w-16 h-20 bg-brown-100 rounded-lg border-2 border-brown-900 overflow-hidden shrink-0">
+          <img src="${imgSource}" class="w-full h-full object-cover">
+        </button>
+      `;
+    }
+
+    // Logic Kuantitas
+    document.getElementById('btnMinus').addEventListener('click', () => {
+      if (selectedQuantity > 1) {
+        selectedQuantity--;
+        document.getElementById('qtyInput').value = selectedQuantity;
+      }
+    });
+
+    document.getElementById('btnPlus').addEventListener('click', () => {
+      const maxStock = currentProduct ? Number(currentProduct.stock || 99) : 99;
+      if (selectedQuantity < maxStock) {
+        selectedQuantity++;
+        document.getElementById('qtyInput').value = selectedQuantity;
+      }
+    });
+
+    // Logic Tambah Ke Keranjang
+    function addToCartAction(redirect = false) {
+      if (!currentProduct) return;
+
+      let cart = getCart();
+      const existingIndex = cart.findIndex(item => String(item.id) === String(currentProduct.id));
+
+      if (existingIndex > -1) {
+        cart[existingIndex].quantity += selectedQuantity;
+      } else {
+        cart.push({
+          id: currentProduct.id,
+          name: currentProduct.name,
+          price: Number(currentProduct.price),
+          color: "Default",
+          size: "All Size",
+          quantity: selectedQuantity
+        });
+      }
+
+      localStorage.setItem('yuwuri_cart', JSON.stringify(cart));
+      updateCartBadge();
+
+      if (redirect) {
+        window.location.href = "cart.html";
+      } else {
+        showToast(`"${currentProduct.name}" (${selectedQuantity}x) masuk keranjang!`);
+      }
+    }
+
+    document.getElementById('btnAddToCart').addEventListener('click', () => addToCartAction(false));
+    document.getElementById('btnBuyNow').addEventListener('click', () => addToCartAction(true));
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCartBadge();
+      loadProductDetail();
+    });
+  </script>
+</body>
+</html>
