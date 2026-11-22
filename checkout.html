@@ -72,7 +72,7 @@
   </header>
   
   <!-- Main Content -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-grow">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-grow w-full">
     
     <h1 class="text-2xl md:text-3xl font-serif font-bold text-brown-900 mb-8">
       Checkout Pesanan
@@ -169,7 +169,7 @@
           <div class="space-y-3">
             <label class="flex items-center justify-between p-4 bg-brown-50 border border-brown-200 rounded-xl cursor-pointer hover:border-brown-700 transition-all">
               <div class="flex items-center gap-3">
-                <input type="radio" name="shipping" value="JNE Reguler" checked class="w-4 h-4 text-brown-900 focus:ring-brown-700">
+                <input type="radio" name="shipping" value="JNE Reguler" data-cost="15000" checked class="w-4 h-4 text-brown-900 focus:ring-brown-700">
                 <div>
                   <span class="font-semibold text-sm block">JNE / J&T Reguler</span>
                   <span class="text-xs text-brown-700">Estimasi 2 - 4 hari kerja</span>
@@ -180,7 +180,7 @@
 
             <label class="flex items-center justify-between p-4 bg-brown-50 border border-brown-200 rounded-xl cursor-pointer hover:border-brown-700 transition-all">
               <div class="flex items-center gap-3">
-                <input type="radio" name="shipping" value="SiCepat Express" class="w-4 h-4 text-brown-900 focus:ring-brown-700">
+                <input type="radio" name="shipping" value="SiCepat Express" data-cost="22000" class="w-4 h-4 text-brown-900 focus:ring-brown-700">
                 <div>
                   <span class="font-semibold text-sm block">SiCepat BEST / Next Day</span>
                   <span class="text-xs text-brown-700">Estimasi 1 - 2 hari kerja</span>
@@ -191,7 +191,7 @@
 
             <label class="flex items-center justify-between p-4 bg-brown-50 border border-brown-200 rounded-xl cursor-pointer hover:border-brown-700 transition-all">
               <div class="flex items-center gap-3">
-                <input type="radio" name="shipping" value="Instant / Sameday" class="w-4 h-4 text-brown-900 focus:ring-brown-700">
+                <input type="radio" name="shipping" value="Instant / Sameday" data-cost="35000" class="w-4 h-4 text-brown-900 focus:ring-brown-700">
                 <div>
                   <span class="font-semibold text-sm block">Gojek / Grab Instant</span>
                   <span class="text-xs text-brown-700">Sampai di hari yang sama</span>
@@ -247,70 +247,41 @@
         <div class="bg-white p-6 md:p-8 rounded-2xl border border-brown-200 shadow-sm">
           <h2 class="font-serif text-xl font-bold mb-6 pb-4 border-b border-brown-200">Ringkasan Pesanan</h2>
 
-          <!-- Item List -->
-          <div class="space-y-4 mb-6">
-            
-            <!-- Item 1 -->
-            <div class="flex items-center justify-between gap-4">
-              <div class="flex items-center gap-3">
-                <div class="w-14 h-14 bg-brown-100 rounded-xl overflow-hidden shrink-0 border border-brown-200 flex items-center justify-center text-brown-700">
-                  <i class="fa-solid fa-shirt text-2xl"></i>
-                </div>
-                <div>
-                  <h4 class="font-bold text-sm text-brown-900">Kemeja Oversize Linen</h4>
-                  <p class="text-xs text-brown-700">Warna: Cream | Qty: 2</p>
-                </div>
-              </div>
-              <span class="font-bold text-sm text-brown-900">Rp 170.000</span>
-            </div>
-
-            <!-- Item 2 -->
-            <div class="flex items-center justify-between gap-4">
-              <div class="flex items-center gap-3">
-                <div class="w-14 h-14 bg-brown-100 rounded-xl overflow-hidden shrink-0 border border-brown-200 flex items-center justify-center text-brown-700">
-                  <i class="fa-solid fa-shirt text-2xl"></i>
-                </div>
-                <div>
-                  <h4 class="font-bold text-sm text-brown-900">Daily Blouse Anti-Kusut</h4>
-                  <p class="text-xs text-brown-700">Warna: Mocca | Qty: 1</p>
-                </div>
-              </div>
-              <span class="font-bold text-sm text-brown-900">Rp 75.000</span>
-            </div>
-
+          <!-- Item List Dinamis dari Keranjang -->
+          <div id="checkoutItems" class="space-y-4 mb-6">
+            <p class="text-xs text-brown-700">Memuat produk keranjang...</p>
           </div>
 
           <!-- Voucher Input -->
           <div class="flex gap-2 mb-6">
             <input type="text" placeholder="Kode Diskon / Voucher" class="w-full px-3 py-2 text-xs bg-brown-50 border border-brown-200 rounded-lg focus:outline-none focus:border-brown-700">
-            <button class="px-4 py-2 bg-brown-900 text-white text-xs font-semibold rounded-lg hover:bg-brown-700 transition-colors shrink-0">Gunakan</button>
+            <button type="button" class="px-4 py-2 bg-brown-900 text-white text-xs font-semibold rounded-lg hover:bg-brown-700 transition-colors shrink-0">Gunakan</button>
           </div>
 
           <!-- Total Calculation -->
           <div class="space-y-3 pt-4 border-t border-brown-200 text-sm">
             <div class="flex justify-between text-brown-700">
               <span>Subtotal Produk</span>
-              <span class="font-semibold text-brown-900">Rp 245.000</span>
+              <span id="checkoutSubtotal" class="font-semibold text-brown-900">Rp 0</span>
             </div>
             <div class="flex justify-between text-brown-700">
               <span>Biaya Pengiriman</span>
-              <span class="font-semibold text-brown-900">Rp 15.000</span>
+              <span id="checkoutShipping" class="font-semibold text-brown-900">Rp 15.000</span>
             </div>
-            <div class="flex justify-between text-emerald-700">
+            <div id="discountRow" class="hidden justify-between text-emerald-700">
               <span>Diskon Ongkir</span>
-              <span class="font-semibold">-Rp 15.000</span>
+              <span id="checkoutDiscount" class="font-semibold">-Rp 0</span>
             </div>
             <div class="flex justify-between text-base font-bold text-brown-900 pt-3 border-t border-brown-200">
               <span>Total Pembayaran</span>
-              <span class="text-lg text-brown-900">Rp 245.000</span>
+              <span id="checkoutTotal" class="text-lg text-brown-900">Rp 0</span>
             </div>
           </div>
 
           <!-- Tombol Lanjut ke Pembayaran -->
-<!-- YANG BARU: -->
-<a href="payment.html" id="btnPayNow" class="w-full mt-6 py-4 px-6 bg-brown-900 hover:bg-brown-700 text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 text-center cursor-pointer">
-  Lanjut ke Pembayaran <i class="fa-solid fa-arrow-right ml-1"></i>
-</a>
+          <button type="button" id="btnPayNow" class="w-full mt-6 py-4 px-6 bg-brown-900 hover:bg-brown-700 text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 text-center cursor-pointer">
+            Lanjut ke Pembayaran <i class="fa-solid fa-arrow-right ml-1"></i>
+          </button>
           
           <p class="text-[11px] text-brown-700 text-center mt-3">
             <i class="fa-solid fa-shield-halved text-emerald-600 mr-1"></i> Transaksi Aman & Terverifikasi
@@ -329,42 +300,122 @@
     </div>
   </footer>
 
-  <!-- Script Penanganan Klik Tombol yang Aman (Safe Handler) -->
+  <!-- Script Sinkronisasi Keranjang & Checkout -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      const cart = JSON.parse(localStorage.getItem('yuwuri_cart') || '[]');
+      const itemsContainer = document.getElementById('checkoutItems');
+      const subtotalEl = document.getElementById('checkoutSubtotal');
+      const shippingEl = document.getElementById('checkoutShipping');
+      const discountRow = document.getElementById('discountRow');
+      const discountEl = document.getElementById('checkoutDiscount');
+      const totalEl = document.getElementById('checkoutTotal');
       const payButton = document.getElementById('btnPayNow');
-      
+
+      const formatRp = (num) => 'Rp ' + (Number(num) || 0).toLocaleString('id-ID');
+      const escapeHtml = (str) => String(str || '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+
+      let subtotal = 0;
+      let currentGrandTotal = 0;
+
+      // 1. Render Item dari LocalStorage yuwuri_cart
+      if (!cart.length) {
+        itemsContainer.innerHTML = `
+          <div class="p-4 bg-brown-50 border border-brown-200 rounded-xl text-center">
+            <p class="text-xs text-brown-700 mb-2">Keranjang belanjamu masih kosong.</p>
+            <a href="catalog.html" class="text-xs font-bold underline text-brown-900">Kembali ke Katalog</a>
+          </div>
+        `;
+        payButton.disabled = true;
+        payButton.classList.add('opacity-50', 'cursor-not-allowed');
+      } else {
+        itemsContainer.innerHTML = cart.map(item => {
+          const price = Number(item.price) || 0;
+          const qty = Number(item.quantity) || 1;
+          const itemTotal = price * qty;
+          subtotal += itemTotal;
+
+          return `
+            <div class="flex items-center justify-between gap-4">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-14 h-14 bg-brown-100 rounded-xl overflow-hidden shrink-0 border border-brown-200 flex items-center justify-center text-brown-700">
+                  <i class="fa-solid fa-shirt text-2xl"></i>
+                </div>
+                <div class="min-w-0">
+                  <h4 class="font-bold text-sm text-brown-900 truncate">${escapeHtml(item.name || 'Produk')}</h4>
+                  <p class="text-xs text-brown-700">Warna: ${escapeHtml(item.color || 'Default')} | Qty: ${qty}</p>
+                </div>
+              </div>
+              <span class="font-bold text-sm text-brown-900 shrink-0">${formatRp(itemTotal)}</span>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 2. Hitung Total & Ongkir Dinamis
+      function updateTotals() {
+        const selectedShipping = document.querySelector('input[name="shipping"]:checked');
+        const shippingCost = cart.length ? (Number(selectedShipping?.dataset.cost) || 15000) : 0;
+        
+        // Promo gratis ongkir jika belanja >= Rp 150.000
+        const shippingDiscount = (cart.length && subtotal >= 150000) ? shippingCost : 0;
+        currentGrandTotal = subtotal + shippingCost - shippingDiscount;
+
+        subtotalEl.textContent = formatRp(subtotal);
+        shippingEl.textContent = formatRp(shippingCost);
+
+        if (shippingDiscount > 0) {
+          discountRow.classList.remove('hidden');
+          discountRow.classList.add('flex');
+          discountEl.textContent = '-' + formatRp(shippingDiscount);
+        } else {
+          discountRow.classList.add('hidden');
+          discountRow.classList.remove('flex');
+        }
+
+        totalEl.textContent = formatRp(currentGrandTotal);
+      }
+
+      // Dengarkan perubahan pilihan kurir
+      document.querySelectorAll('input[name="shipping"]').forEach(radio => {
+        radio.addEventListener('change', updateTotals);
+      });
+
+      updateTotals();
+
+      // 3. Simpan Pesanan Asli & Lanjut ke payment.html
       if (payButton) {
         payButton.addEventListener('click', function () {
-          try {
-            const getVal = (id) => {
-              const el = document.getElementById(id);
-              return el ? el.value : '';
-            };
+          if (!cart.length) return;
 
-            const shippingEl = document.querySelector('input[name="shipping"]:checked');
-            const paymentEl = document.querySelector('input[name="payment"]:checked');
+          const getVal = (id) => {
+            const el = document.getElementById(id);
+            return el ? el.value.trim() : '';
+          };
 
-            const orderData = {
-              name: getVal('buyerName') || 'Pelanggan',
-              phone: getVal('buyerPhone') || '-',
-              email: getVal('buyerEmail') || '-',
-              province: getVal('province') || '-',
-              city: getVal('city') || '-',
-              subdistrict: getVal('subdistrict') || '-',
-              address: getVal('fullAddress') || '-',
-              notes: getVal('notes') || 'Tidak ada',
-              shipping: shippingEl ? shippingEl.value : 'JNE Reguler',
-              payment: paymentEl ? paymentEl.value : 'Transfer Bank',
-              total: 'Rp 245.000'
-            };
+          const shippingElInput = document.querySelector('input[name="shipping"]:checked');
+          const paymentElInput = document.querySelector('input[name="payment"]:checked');
 
-            localStorage.setItem('yuwuri_latest_order', JSON.stringify(orderData));
-          } catch (e) {
-            console.log('Catatan pesanan disimpan dengan fallback default');
-          }
+          const orderData = {
+            name: getVal('buyerName') || 'Pelanggan',
+            phone: getVal('buyerPhone') || '-',
+            email: getVal('buyerEmail') || '-',
+            province: getVal('province') || '-',
+            city: getVal('city') || '-',
+            subdistrict: getVal('subdistrict') || '-',
+            postalCode: getVal('postalCode') || '-',
+            address: getVal('fullAddress') || '-',
+            notes: getVal('notes') || 'Tidak ada',
+            shipping: shippingElInput ? shippingElInput.value : 'JNE Reguler',
+            payment: paymentElInput ? paymentElInput.value : 'Transfer Bank',
+            items: cart,
+            subtotal: formatRp(subtotal),
+            total: formatRp(currentGrandTotal)
+          };
 
-          // Pindah Halaman Langsung
+          localStorage.setItem('yuwuri_latest_order', JSON.stringify(orderData));
           window.location.href = 'payment.html';
         });
       }
