@@ -24,7 +24,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         origin_postal_code: ORIGIN_POSTAL_CODE,
         destination_postal_code: Number(destination_postal_code),
-        couriers: 'jne,jnt,sicepat,anteraja,pos',
+        couriers: 'jne,jnt,sicepat,anteraja,pos,tiki,ninja,lion',
         items: [
           {
             name: 'Kemeja / Blouse Yuwuri',
@@ -38,7 +38,16 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
-    return res.status(response.status).json(data);
+
+    if (!response.ok || !data.success) {
+      return res.status(response.status || 400).json({
+        success: false,
+        error: data.error || data.message || `Biteship menolak permintaan (HTTP ${response.status})`,
+        raw: data
+      });
+    }
+
+    return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({
       success: false,
