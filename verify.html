@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verifikasi Email — Yuwuri Shop</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Plus Jakarta Sans',sans-serif}.serif{font-family:'Playfair Display',serif}
+</style>
+</head>
+<body class="min-h-screen bg-[#FDFBF7] text-[#391E10] flex items-center justify-center p-4">
+<main class="w-full max-w-lg bg-white border border-[#E3CEB1] rounded-[2rem] shadow-sm p-7 sm:p-10 text-center">
+  <a href="index.html" class="serif text-4xl sm:text-5xl font-bold tracking-tight inline-block">Yuwuri<span class="italic font-normal text-[#734128]">.shop</span></a>
+  <p class="mt-3 text-[#734128]">Verifikasi Akun Customer</p>
+
+  <div class="mt-7 rounded-2xl bg-[#F7F3ED] border border-[#E3CEB1] p-6">
+    <div id="statusBadge" class="inline-block px-3 py-1 rounded-full bg-[#E3CEB1]/50 text-[#391E10] text-xs font-bold mb-3">
+      Memproses Verifikasi
+    </div>
+    <h1 id="statusTitle" class="serif text-2xl font-bold text-[#391E10]">Mohon tunggu sebentar...</h1>
+    <p id="statusDesc" class="mt-2 text-sm text-[#734128] leading-relaxed">
+      Kami sedang mengonfirmasi alamat email kamu agar akun bisa langsung digunakan.
+    </p>
+  </div>
+
+  <div id="actionArea" class="mt-6 hidden">
+    <a id="primaryBtn" href="index.html" class="block w-full rounded-xl bg-[#391E10] text-white py-4 font-bold hover:bg-[#734128] transition">
+      Mulai Belanja Sekarang
+    </a>
+  </div>
+
+  <div class="mt-7 border-t border-[#F7F3ED] pt-5 text-xs text-[#734128] leading-relaxed">
+    <p>Jika halaman tidak berpindah otomatis, silakan klik tombol di atas atau kembali ke halaman masuk.</p>
+    <a href="login.html" class="inline-block mt-3 font-bold underline">Kembali ke halaman Masuk / Daftar</a>
+  </div>
+</main>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const supabase = createClient('https://jrsooxmoljjqtgjmkumz.supabase.co', 'sb_publishable_scpzlZ7fozc6EogEkZTTYA_rsB5cF4M');
+const $ = id => document.getElementById(id);
+
+const params = new URLSearchParams(location.search);
+const hashParams = new URLSearchParams(location.hash.substring(1));
+
+function setSuccess(email = '') {
+  $('statusBadge').textContent = 'Verifikasi Berhasil';
+  $('statusBadge').className = 'inline-block px-3 py-1 rounded-full bg-green-100 text-green-800 text-xs font-bold mb-3';
+  $('statusTitle').textContent = 'Email Berhasil Dikonfirmasi!';
+  $('statusDesc').textContent = email
+    ? `Akun ${email} sudah aktif. Kamu akan diarahkan ke toko dalam beberapa detik...`
+    : 'Akun kamu sudah aktif. Kamu akan diarahkan ke toko dalam beberapa detik...';
+  $('primaryBtn').textContent = 'Lanjut ke Toko';
+  $('primaryBtn').href = 'index.html';
+  $('actionArea').classList.remove('hidden');
+
+  setTimeout(() => {
+    location.replace('index.html');
+  }, 2500);
+}
+
+function setError(reason) {
+  $('statusBadge').textContent = 'Verifikasi Gagal';
+  $('statusBadge').className = 'inline-block px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold mb-3';
+  $('statusTitle').textContent = 'Tautan Tidak Valid atau Kedaluwarsa';
+  $('statusDesc').textContent = reason || 'Silakan coba daftar ulang atau masuk menggunakan akun kamu.';
+  $('primaryBtn').textContent = 'Kembali ke Halaman Login';
+  $('primaryBtn').href = 'login.html';
+  $('actionArea').classList.remove('hidden');
+}
+
+// 1. Cek jika URL membawa parameter error dari Supabase
+if (hashParams.get('error_description') || params.get('error_description')) {
+  const err = hashParams.get('error_description') || params.get('error_description');
+  setError(decodeURIComponent(err.replace(/\+/g, ' ')));
+} else {
+  // 2. Tangkap event saat token verifikasi dari email selesai diproses Supabase
+  supabase.auth.onAuthStateChange((event, session) => {
+    if ((event === 'SIGNED_IN' || event === 'USER_UPDATED') && session?.user) {
+      setSuccess(session.user.email);
+    }
+  });
+
+  // 3. Cek sesi aktif (jika token langsung terverifikasi saat halaman dimuat)
+  const { data: { session }, error } = await supabase.auth.getSession();
+  if (error) {
+    setError(error.message);
+  } else if (session?.user) {
+    setSuccess(session.user.email);
+  } else {
+    // Jika dibuka langsung tanpa token dari email
+    setTimeout(async () => {
+      const { data: { session: retrySession } } = await supabase.auth.getSession();
+      if (retrySession?.user) {
+        setSuccess(retrySession.user.email);
+      } else {
+        setError('Tidak ada token verifikasi yang ditemukan. Pastikan kamu membuka halaman ini melalui tombol di email konfirmasi.');
+      }
+    }, 2000);
+  }
+}
+</script>
+</body></html>
