@@ -182,7 +182,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT SUPABASE & LOCALSTORAGE CART INTERACTION WITH SORTING & SEARCH -->
+  <!-- SCRIPT SUPABASE & LOCALSTORAGE CART INTERACTION WITH SORTING, SEARCH & STOCK LIMIT -->
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
@@ -245,12 +245,10 @@
       const searchVal = document.getElementById('searchInput')?.value.toLowerCase().trim() || '';
       const sortVal = document.getElementById('sortSelect')?.value || 'newest';
 
-      // 1. Filter Pencarian Nama
       if (searchVal) {
         filtered = filtered.filter(p => p.name && p.name.toLowerCase().includes(searchVal));
       }
 
-      // 2. Sortir Berdasarkan Pilihan Dropdown
       if (sortVal === 'price-asc') {
         filtered.sort((a, b) => (Number(a.price) || 0) - (Number(b.price) || 0));
       } else if (sortVal === 'price-desc') {
@@ -284,6 +282,8 @@
         
         const formattedPrice = 'Rp ' + (Number(p.price) || 0).toLocaleString('id-ID');
         const imgSource = p.image_url || `baju${p.id}.png`;
+        const availableStock = Number(p.stock) || 0;
+        const isOutOfStock = availableStock <= 0;
 
         card.innerHTML = `
           <div>
@@ -294,7 +294,7 @@
               <button class="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-brown-900 flex items-center justify-center transition-colors shadow-sm">
                 <i class="fa-regular fa-heart text-xs"></i>
               </button>
-              <img src="${imgSource}" alt="${p.name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x500/FAF5EF/391E10?text=Yuwuri+Shop';" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <img src="${imgSource}" alt="${p.name}" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x500/FAF5EF/391E10?text=Yuwuri+Shop';" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${isOutOfStock ? 'opacity-50 grayscale' : ''}">
             </div>
 
             <div class="p-4">
@@ -302,7 +302,7 @@
               <h3 class="font-serif font-bold text-sm text-brown-900 mt-0.5 line-clamp-1 group-hover:text-brown-700 transition-colors">
                 ${p.name}
               </h3>
-              <p class="text-[11px] text-brown-700/80 mt-1">Stok: <span class="font-semibold text-brown-900">${p.stock || 0} pcs</span></p>
+              <p class="text-[11px] text-brown-700/80 mt-1">Stok: <span class="font-semibold ${isOutOfStock ? 'text-red-600' : 'text-brown-900'}">${availableStock} pcs</span></p>
             </div>
           </div>
 
@@ -311,8 +311,8 @@
               <span class="text-xs text-brown-700/60 block text-[10px]">Harga</span>
               <span class="font-bold text-brown-900 text-sm md:text-base">${formattedPrice}</span>
             </div>
-            <button data-id="${p.id}" class="add-to-cart-btn w-9 h-9 rounded-xl bg-brown-900 hover:bg-brown-700 text-white flex items-center justify-center transition-colors shadow-sm active:scale-95" title="Tambah ke keranjang">
-              <i class="fa-solid fa-plus text-xs"></i>
+            <button data-id="${p.id}" ${isOutOfStock ? 'disabled' : ''} class="add-to-cart-btn ${isOutOfStock ? 'px-3 h-9 bg-brown-200 text-brown-700 cursor-not-allowed text-[11px] font-bold' : 'w-9 h-9 bg-brown-900 hover:bg-brown-700 text-white active:scale-95'} rounded-xl flex items-center justify-center transition-colors shadow-sm" title="${isOutOfStock ? 'Stok habis' : 'Tambah ke keranjang'}">
+              ${isOutOfStock ? 'Habis' : '<i class="fa-solid fa-plus text-xs"></i>'}
             </button>
           </div>
         `;
@@ -325,31 +325,42 @@
           e.stopPropagation();
           const prodId = e.currentTarget.dataset.id;
           const targetProd = rawProducts.find(item => String(item.id) === String(prodId));
-          if (targetProd) {
-            let cart = getCart();
-            const existingIndex = cart.findIndex(item => String(item.id) === String(prodId));
+          if (!targetProd) return;
 
-            if (existingIndex > -1) {
-              cart[existingIndex].quantity += 1;
-            } else {
-              cart.push({
-                id: targetProd.id,
-                name: targetProd.name,
-                price: Number(targetProd.price),
-                color: "Default",
-                size: "All Size",
-                quantity: 1
-              });
-            }
-
-            localStorage.setItem('yuwuri_cart', JSON.stringify(cart));
-            updateCartBadge();
-            showToast(`"${targetProd.name}" masuk keranjang!`);
+          const maxStock = Number(targetProd.stock) || 0;
+          if (maxStock <= 0) {
+            showToast(`Maaf, stok "${targetProd.name}" sudah habis!`);
+            return;
           }
+
+          let cart = getCart();
+          const existingIndex = cart.findIndex(item => String(item.id) === String(prodId));
+
+          if (existingIndex > -1) {
+            if (cart[existingIndex].quantity >= maxStock) {
+              showToast(`Stok "${targetProd.name}" cuma tersedia ${maxStock} pcs!`);
+              return;
+            }
+            cart[existingIndex].quantity += 1;
+            cart[existingIndex].stock = maxStock;
+          } else {
+            cart.push({
+              id: targetProd.id,
+              name: targetProd.name,
+              price: Number(targetProd.price),
+              color: "Default",
+              size: "All Size",
+              quantity: 1,
+              stock: maxStock
+            });
+          }
+
+          localStorage.setItem('yuwuri_cart', JSON.stringify(cart));
+          updateCartBadge();
+          showToast(`"${targetProd.name}" masuk keranjang!`);
         });
       });
 
-      // Buka detail produk saat area kartu diklik, kecuali tombol aksi.
       grid.querySelectorAll('[data-product-id]').forEach(card => {
         const openDetail = () => {
           window.location.href = `product-detail.html?id=${encodeURIComponent(card.dataset.productId)}`;
