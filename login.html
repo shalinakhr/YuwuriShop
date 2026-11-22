@@ -21,8 +21,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif}.serif{font-family:'Playfair Dis
   <a href="index.html" class="serif text-4xl sm:text-5xl font-bold tracking-tight">Yuwuri<span class="italic font-normal text-[#734128]">.shop</span></a>
   <p class="mt-3 text-[#734128]">Selamat datang di Yuwuri Shop</p>
   <div class="mt-7 grid grid-cols-2 rounded-xl bg-[#F7F3ED] p-1 text-sm font-semibold">
-    <button id="loginTab" class="rounded-lg bg-[#391E10] text-white py-3">Masuk</button>
-    <button id="signupTab" class="rounded-lg text-[#734128] py-3">Buat akun</button>
+    <button type="button" id="loginTab" class="rounded-lg bg-[#391E10] text-white py-3">Masuk</button>
+    <button type="button" id="signupTab" class="rounded-lg text-[#734128] py-3">Buat akun</button>
   </div>
   <form id="authForm" class="mt-6 space-y-4">
     <div id="nameWrap" class="hidden">
@@ -53,7 +53,13 @@ let mode = 'login';
 const params = new URLSearchParams(location.search);
 const requestedNext = params.get('next') || 'index.html';
 const allowedNext = /^(index|catalog|cart)\.html$/.test(requestedNext) ? requestedNext : 'index.html';
-function message(text, error=false) { $('message').textContent=text; $('message').className='mt-4 text-sm leading-relaxed '+(error?'text-red-600':'text-green-700'); }
+const verifyRedirectUrl = new URL('verify.html', window.location.href).href;
+
+function message(text, error=false) {
+  $('message').textContent=text;
+  $('message').className='mt-4 text-sm leading-relaxed '+(error?'text-red-600':'text-green-700');
+}
+
 function setMode(next) {
   mode=next;
   $('loginTab').className=next==='login'?'rounded-lg bg-[#391E10] text-white py-3':'rounded-lg text-[#734128] py-3';
@@ -64,29 +70,52 @@ function setMode(next) {
   $('submitBtn').textContent=next==='signup'?'Buat Akun':'Masuk';
   message('');
 }
+
 async function routeByRole(user) {
   const {data:admin,error}=await supabase.from('admin_users').select('user_id').eq('user_id',user.id).maybeSingle();
   if(error) { message('Login berhasil, tetapi role belum dapat diverifikasi. Periksa policy SELECT pada admin_users: '+error.message,true); return; }
   if(admin) { location.replace('cms.html'); return; }
   location.replace(allowedNext);
 }
+
 $('loginTab').addEventListener('click',()=>setMode('login'));
 $('signupTab').addEventListener('click',()=>setMode('signup'));
+
 $('authForm').addEventListener('submit',async e=>{
-  e.preventDefault(); $('submitBtn').disabled=true; $('submitBtn').textContent='Memproses...'; message('');
+  e.preventDefault();
+  $('submitBtn').disabled=true;
+  $('submitBtn').textContent='Memproses...';
+  message('');
   const email=$('email').value.trim(), password=$('password').value;
+
   if(mode==='signup') {
-    const {data,error}=await supabase.auth.signUp({email,password,options:{data:{full_name:$('fullName').value.trim(),role:'customer'}}});
+    const {data,error}=await supabase.auth.signUp({
+      email,
+      password,
+      options:{
+        emailRedirectTo: verifyRedirectUrl,
+        data:{full_name:$('fullName').value.trim(),role:'customer'}
+      }
+    });
     if(error) message(error.message,true);
     else if(data.session && data.user) { message('Akun berhasil dibuat. Mengarahkan ke toko...'); await routeByRole(data.user); }
-    else message('Pendaftaran berhasil. Silakan cek email untuk verifikasi, lalu masuk ke akunmu.');
+    else message('Pendaftaran berhasil! Silakan cek kotak masuk atau folder spam email kamu dan klik tombol verifikasi.');
   } else {
     const {data,error}=await supabase.auth.signInWithPassword({email,password});
-    if(error) message(error.message,true);
-    else if(data.user) await routeByRole(data.user);
+    if(error) {
+      if(error.message.includes('Email not confirmed')) {
+        message('Email belum diverifikasi. Silakan cek email kamu dan klik tautan konfirmasi terlebih dahulu.',true);
+      } else {
+        message(error.message,true);
+      }
+    } else if(data.user) {
+      await routeByRole(data.user);
+    }
   }
-  $('submitBtn').disabled=false; $('submitBtn').textContent=mode==='signup'?'Buat Akun':'Masuk';
+  $('submitBtn').disabled=false;
+  $('submitBtn').textContent=mode==='signup'?'Buat Akun':'Masuk';
 });
+
 const {data:{session}}=await supabase.auth.getSession();
 if(session) await routeByRole(session.user);
 if(params.get('error')==='not-admin') message('Akun ini bukan admin. Kamu tetap bisa menggunakan akun sebagai customer.',true);
