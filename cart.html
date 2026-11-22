@@ -17,18 +17,77 @@
 <script type="module">
 const $=id=>document.getElementById(id);
 let cart=JSON.parse(localStorage.getItem('yuwuri_cart')||'[]');
+
+// Pastikan data lama yang sudah ada di keranjang tidak melebihi stok (default maks 1)
+let adjusted = false;
+cart = cart.map(item => {
+  const maxStock = Math.max(1, Number(item.stock) || 1);
+  if ((Number(item.quantity) || 1) > maxStock) {
+    adjusted = true;
+    return { ...item, quantity: maxStock, stock: maxStock };
+  }
+  return { ...item, stock: maxStock };
+});
+if (adjusted) localStorage.setItem('yuwuri_cart', JSON.stringify(cart));
+
 const money=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(n)||0);
 function save(){localStorage.setItem('yuwuri_cart',JSON.stringify(cart));render();}
-function render(){
- $('cartItems').innerHTML=cart.length?cart.map((p,i)=>`<div class="bg-white border border-[#E3CEB1] rounded-xl p-4 flex items-center gap-3"><div class="flex-1 min-w-0"><b class="block truncate">${String(p.name||'Produk').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}</b><span class="text-xs text-[#734128]">${money(p.price)}</span></div><button data-minus="${i}" class="border rounded-lg px-3 py-1">−</button><span>${p.quantity||1}</span><button data-plus="${i}" class="border rounded-lg px-3 py-1">+</button><button data-remove="${i}" class="text-red-600 ml-2" aria-label="Hapus">×</button></div>`).join(''):'<div class="bg-white border border-[#E3CEB1] rounded-xl p-8 text-center text-sm">Keranjangmu masih kosong.</div>';
- $('subtotal').textContent=money(cart.reduce((sum,p)=>sum+(Number(p.price)||0)*(Number(p.quantity)||1),0));
- document.querySelectorAll('[data-minus]').forEach(b=>b.onclick=()=>{let i=+b.dataset.minus;cart[i].quantity=Math.max(1,(cart[i].quantity||1)-1);save();});
- document.querySelectorAll('[data-plus]').forEach(b=>b.onclick=()=>{let i=+b.dataset.plus;cart[i].quantity=(cart[i].quantity||1)+1;save();});
- document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{cart.splice(+b.dataset.remove,1);save();});
- $('checkoutBtn').disabled=!cart.length;$('checkoutBtn').classList.toggle('opacity-50',!cart.length);
+
+function showNotice(msg) {
+  const el = $('checkoutMessage');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3';
+  clearTimeout(window._cartMsgTimer);
+  window._cartMsgTimer = setTimeout(() => { el.textContent = ''; el.className = 'text-sm mt-3'; }, 2500);
 }
 
-// DIPERBAIKI: Hapus pengecekan session Supabase supaya tidak dipaksa ke login.html
+function render(){
+ $('cartItems').innerHTML=cart.length?cart.map((p,i)=>{
+   const qty = Number(p.quantity)||1;
+   const maxStock = Math.max(1, Number(p.stock)||1);
+   const isMax = qty >= maxStock;
+   return `<div class="bg-white border border-[#E3CEB1] rounded-xl p-4 flex items-center gap-3">
+     <div class="flex-1 min-w-0">
+       <b class="block truncate">${String(p.name||'Produk').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}</b>
+       <span class="text-xs text-[#734128]">${money(p.price)} &bull; Stok tersedia: ${maxStock} pcs</span>
+     </div>
+     <button data-minus="${i}" class="border border-[#E3CEB1] rounded-lg px-3 py-1 hover:bg-[#FDFBF7]">−</button>
+     <span class="font-semibold text-sm min-w-[1.25rem] text-center">${qty}</span>
+     <button data-plus="${i}" ${isMax ? 'disabled' : ''} class="border border-[#E3CEB1] rounded-lg px-3 py-1 ${isMax ? 'opacity-40 cursor-not-allowed bg-gray-100' : 'hover:bg-[#FDFBF7]'}" title="${isMax ? 'Maksimal stok tersedia' : 'Tambah jumlah'}">+</button>
+     <button data-remove="${i}" class="text-red-600 ml-2 font-bold px-1" aria-label="Hapus">×</button>
+   </div>`;
+ }).join(''):'<div class="bg-white border border-[#E3CEB1] rounded-xl p-8 text-center text-sm">Keranjangmu masih kosong.</div>';
+
+ $('subtotal').textContent=money(cart.reduce((sum,p)=>sum+(Number(p.price)||0)*(Number(p.quantity)||1),0));
+
+ document.querySelectorAll('[data-minus]').forEach(b=>b.onclick=()=>{
+   let i=+b.dataset.minus;
+   cart[i].quantity=Math.max(1,(cart[i].quantity||1)-1);
+   save();
+ });
+
+ document.querySelectorAll('[data-plus]').forEach(b=>b.onclick=()=>{
+   let i=+b.dataset.plus;
+   const maxStock = Math.max(1, Number(cart[i].stock) || 1);
+   const currentQty = Number(cart[i].quantity) || 1;
+   if (currentQty >= maxStock) {
+     showNotice(`Stok "${cart[i].name}" hanya tersedia ${maxStock} pcs.`);
+     return;
+   }
+   cart[i].quantity = currentQty + 1;
+   save();
+ });
+
+ document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{
+   cart.splice(+b.dataset.remove,1);
+   save();
+ });
+
+ $('checkoutBtn').disabled=!cart.length;
+ $('checkoutBtn').classList.toggle('opacity-50',!cart.length);
+}
+
 $('checkoutBtn').addEventListener('click', () => {
   if (!cart.length) return;
   location.href = 'checkout.html';
