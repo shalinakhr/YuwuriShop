@@ -60,9 +60,9 @@
       <div class="hidden sm:flex items-center gap-3 text-xs font-medium">
         <span class="text-brown-700/60">Keranjang</span>
         <i class="fa-solid fa-chevron-right text-[10px] text-brown-300"></i>
-        <span class="text-brown-900 font-bold border-b-2 border-brown-700 pb-0.5">Pengiriman & Pembayaran</span>
+        <span class="text-brown-900 font-bold border-b-2 border-brown-700 pb-0.5">Pengiriman</span>
         <i class="fa-solid fa-chevron-right text-[10px] text-brown-300"></i>
-        <span class="text-brown-700/60">Selesai</span>
+        <span class="text-brown-700/60">Pembayaran QRIS</span>
       </div>
 
       <a href="cart.html" class="text-xs font-semibold text-brown-700 hover:text-brown-900 flex items-center gap-1.5">
@@ -80,7 +80,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       
-      <!-- Left Column: Form Pengiriman & Pembayaran -->
+      <!-- Left Column: Form Pengiriman (7 Kolom) -->
       <div class="lg:col-span-7 space-y-8">
         
         <!-- Section 1: Informasi Pembeli -->
@@ -202,7 +202,9 @@
           </div>
         </div>
 
-      <!-- Right Column: Ringkasan Pesanan (Order Summary) -->
+      </div> <!-- Penutup Kolom Kiri (lg:col-span-7) -->
+
+      <!-- Right Column: Ringkasan Pesanan (5 Kolom di Samping Kanan) -->
       <div class="lg:col-span-5 sticky top-24 space-y-6">
         
         <div class="bg-white p-6 md:p-8 rounded-2xl border border-brown-200 shadow-sm">
@@ -241,15 +243,15 @@
 
           <!-- Tombol Lanjut ke Pembayaran -->
           <button type="button" id="btnPayNow" class="w-full mt-6 py-4 px-6 bg-brown-900 hover:bg-brown-700 text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 text-center cursor-pointer">
-            Lanjut ke Pembayaran <i class="fa-solid fa-arrow-right ml-1"></i>
+            Lanjut ke Pembayaran QRIS <i class="fa-solid fa-arrow-right ml-1"></i>
           </button>
           
           <p class="text-[11px] text-brown-700 text-center mt-3">
-            <i class="fa-solid fa-shield-halved text-emerald-600 mr-1"></i> Transaksi Aman & Terverifikasi
+            <i class="fa-solid fa-shield-halved text-emerald-600 mr-1"></i> Pembayaran QRIS Otomatis & Terverifikasi
           </p>
         </div>
 
-      </div>
+      </div> <!-- Penutup Kolom Kanan (lg:col-span-5) -->
 
     </div>
   </main>
@@ -318,70 +320,3 @@
       // 2. Hitung Total & Ongkir Dinamis
       function updateTotals() {
         const selectedShipping = document.querySelector('input[name="shipping"]:checked');
-        const shippingCost = cart.length ? (Number(selectedShipping?.dataset.cost) || 15000) : 0;
-        
-        // Promo gratis ongkir jika belanja >= Rp 150.000
-        const shippingDiscount = (cart.length && subtotal >= 150000) ? shippingCost : 0;
-        currentGrandTotal = subtotal + shippingCost - shippingDiscount;
-
-        subtotalEl.textContent = formatRp(subtotal);
-        shippingEl.textContent = formatRp(shippingCost);
-
-        if (shippingDiscount > 0) {
-          discountRow.classList.remove('hidden');
-          discountRow.classList.add('flex');
-          discountEl.textContent = '-' + formatRp(shippingDiscount);
-        } else {
-          discountRow.classList.add('hidden');
-          discountRow.classList.remove('flex');
-        }
-
-        totalEl.textContent = formatRp(currentGrandTotal);
-      }
-
-      // Dengarkan perubahan pilihan kurir
-      document.querySelectorAll('input[name="shipping"]').forEach(radio => {
-        radio.addEventListener('change', updateTotals);
-      });
-
-      updateTotals();
-
-      // 3. Simpan Pesanan Asli & Lanjut ke payment.html
-      if (payButton) {
-        payButton.addEventListener('click', function () {
-          if (!cart.length) return;
-
-          const getVal = (id) => {
-            const el = document.getElementById(id);
-            return el ? el.value.trim() : '';
-          };
-
-          const shippingElInput = document.querySelector('input[name="shipping"]:checked');
-          const paymentElInput = document.querySelector('input[name="payment"]:checked');
-
-          const orderData = {
-            name: getVal('buyerName') || 'Pelanggan',
-            phone: getVal('buyerPhone') || '-',
-            email: getVal('buyerEmail') || '-',
-            province: getVal('province') || '-',
-            city: getVal('city') || '-',
-            subdistrict: getVal('subdistrict') || '-',
-            postalCode: getVal('postalCode') || '-',
-            address: getVal('fullAddress') || '-',
-            notes: getVal('notes') || 'Tidak ada',
-            shipping: shippingElInput ? shippingElInput.value : 'JNE Reguler',
-            payment: paymentElInput ? paymentElInput.value : 'Transfer Bank',
-            items: cart,
-            subtotal: formatRp(subtotal),
-            total: formatRp(currentGrandTotal)
-          };
-
-          localStorage.setItem('yuwuri_latest_order', JSON.stringify(orderData));
-          window.location.href = 'payment.html';
-        });
-      }
-    });
-  </script>
-
-</body>
-</html>
