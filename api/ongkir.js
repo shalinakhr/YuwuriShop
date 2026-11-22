@@ -15,10 +15,13 @@ export default async function handler(req, res) {
     const { destination_postal_code, weight_gram } = req.body;
     const ORIGIN_POSTAL_CODE = 50275; // Tembalang, Semarang
 
+    // Bersihkan spasi atau prefix "Bearer " jika ada
+    const apiKey = process.env.BITESHIP_API_KEY.replace(/^Bearer\s+/i, '').trim();
+
     const response = await fetch('https://api.biteship.com/v1/rates/couriers', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.BITESHIP_API_KEY.trim()}`,
+        'Authorization': apiKey,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
