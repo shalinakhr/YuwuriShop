@@ -227,7 +227,7 @@
       const formatRp = (num) => 'Rp ' + (Number(num) || 0).toLocaleString('id-ID');
       const escapeHtml = (str) => String(str || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-      let subtotal = 0, totalQty = 0, currentGrandTotal = 0;
+      let subtotal = 0, totalQty = 0, currentGrandTotal = 0, currentShippingCost = 0;
 
       if (!cart || !cart.length) {
         if (itemsContainer) itemsContainer.innerHTML = '<div class="p-4 bg-brown-50 border border-brown-200 rounded-xl text-center"><p class="text-xs text-brown-700 mb-2">Keranjang belanjamu masih kosong.</p><a href="catalog.html" class="text-xs font-bold underline text-brown-900">Kembali ke Katalog</a></div>';
@@ -246,12 +246,12 @@
 
       function updateTotals() {
         const selectedShipping = document.querySelector('input[name="shipping"]:checked');
-        const shippingCost = (cart.length && selectedShipping) ? (Number(selectedShipping.dataset.cost) || 0) : 0;
-        const shippingDiscount = (cart.length && subtotal >= 150000 && shippingCost > 0) ? Math.min(shippingCost, 10000) : 0;
-        currentGrandTotal = subtotal + shippingCost - shippingDiscount;
+        currentShippingCost = (cart.length && selectedShipping) ? (Number(selectedShipping.dataset.cost) || 0) : 0;
+        const shippingDiscount = (cart.length && subtotal >= 150000 && currentShippingCost > 0) ? Math.min(currentShippingCost, 10000) : 0;
+        currentGrandTotal = subtotal + currentShippingCost - shippingDiscount;
 
         if (subtotalEl) subtotalEl.textContent = formatRp(subtotal);
-        if (shippingEl) shippingEl.textContent = selectedShipping ? formatRp(shippingCost) : 'Pilih kurir';
+        if (shippingEl) shippingEl.textContent = selectedShipping ? formatRp(currentShippingCost) : 'Pilih kurir';
         if (discountRow && discountEl) {
           if (shippingDiscount > 0) {
             discountRow.classList.remove('hidden');
@@ -375,12 +375,14 @@
               buyer_email: getVal('buyerEmail') || 'customer@yuwuri.shop',
               shipping_address: alamatLengkap,
               shipping_method: shippingElInput.value,
+              shipping_cost: currentShippingCost,
               notes: getVal('notes') || 'Tidak ada',
               items: cart,
               subtotal: formatRp(subtotal),
               total_amount: formatRp(currentGrandTotal),
               payment_method: 'midtrans',
-              status: 'pending'
+              status: 'Menunggu Pembayaran',
+              resi: ''
             };
 
             // 1. Simpan pesanan ke tabel 'orders' di Supabase
@@ -404,7 +406,13 @@
 
             // 3. Tampilkan pop-up Midtrans Snap
             window.snap.pay(payData.token, {
-              onSuccess: function () {
+              onSuccess: async function () {
+                // Otomatis update status di Supabase jadi Siap Diproses
+                await supabaseClient
+                  .from('orders')
+                  .update({ status: 'Sudah Dibayar (Siap Diproses)' })
+                  .eq('order_code', orderCode);
+
                 localStorage.removeItem('yuwuri_cart');
                 alert('Pembayaran berhasil! Pesanan ' + orderCode + ' sedang diproses.');
                 window.location.href = 'index.html';
