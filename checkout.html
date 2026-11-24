@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkout - Yuwuri Shop</title>
   <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K9WG4VMC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-</script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +29,9 @@
       }
     }
   </script>
+  <!-- Supabase & Midtrans Snap Client Key -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="Mid-client-iRhSIYseva2UWpbd"></script>
 </head>
 <body class="bg-[#FDFBF7] text-brown-900 font-sans antialiased min-h-screen flex flex-col justify-between">
 
@@ -332,8 +335,14 @@
 
       updateTotals();
 
+      // Inisialisasi Supabase Client
+      const supabaseClient = window.supabase.createClient(
+        'https://jrsooxmoljjqtgjmkumz.supabase.co',
+        'sb_publishable_scpzlZ7fozc6EogEkZTTYA_rsB5cF4M'
+      );
+
       if (payButton) {
-        payButton.addEventListener('click', function () {
+        payButton.addEventListener('click', async function () {
           if (!cart.length) return;
           const shippingElInput = document.querySelector('input[name="shipping"]:checked');
           if (!shippingElInput) {
@@ -341,16 +350,82 @@
             postalInput.focus();
             return;
           }
+
           const getVal = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
-          const orderData = {
-            name: getVal('buyerName') || 'Pelanggan', phone: getVal('buyerPhone') || '-', email: getVal('buyerEmail') || '-',
-            province: getVal('province') || '-', city: getVal('city') || '-', subdistrict: getVal('subdistrict') || '-',
-            postalCode: getVal('postalCode') || '-', address: getVal('fullAddress') || '-', notes: getVal('notes') || 'Tidak ada',
-            shipping: shippingElInput.value, payment: 'QRIS',
-            items: cart, subtotal: formatRp(subtotal), total: formatRp(currentGrandTotal)
-          };
-          localStorage.setItem('yuwuri_latest_order', JSON.stringify(orderData));
-          window.location.href = 'payment.html';
+          const buyerName = getVal('buyerName');
+          const buyerPhone = getVal('buyerPhone');
+          const fullAddress = getVal('fullAddress');
+
+          if (!buyerName || !buyerPhone || !fullAddress) {
+            alert('Mohon lengkapi Nama Lengkap, Nomor WhatsApp, dan Alamat Lengkap terlebih dahulu.');
+            return;
+          }
+
+          payButton.disabled = true;
+          payButton.innerHTML = 'Memproses Pembayaran...';
+
+          try {
+            const orderCode = 'YWR-' + Date.now();
+            const alamatLengkap = `${fullAddress}, Kec. ${getVal('subdistrict')}, ${getVal('city')}, ${getVal('province')} ${getVal('postalCode')}`;
+
+            const dbOrderData = {
+              order_code: orderCode,
+              buyer_name: buyerName,
+              buyer_phone: buyerPhone,
+              buyer_email: getVal('buyerEmail') || 'customer@yuwuri.shop',
+              shipping_address: alamatLengkap,
+              shipping_method: shippingElInput.value,
+              notes: getVal('notes') || 'Tidak ada',
+              items: cart,
+              subtotal: formatRp(subtotal),
+              total_amount: formatRp(currentGrandTotal),
+              payment_method: 'midtrans',
+              status: 'pending'
+            };
+
+            // 1. Simpan pesanan ke tabel 'orders' di Supabase
+            const { error: dbError } = await supabaseClient.from('orders').insert([dbOrderData]);
+            if (dbError) throw new Error('Gagal menyimpan pesanan: ' + dbError.message);
+
+            // 2. Panggil Edge Function untuk mendapatkan Snap Token Midtrans
+            const { data: payData, error: funcError } = await supabaseClient.functions.invoke('create-midtrans-token', {
+              body: {
+                order_code: orderCode,
+                total_amount: currentGrandTotal,
+                buyer_name: buyerName,
+                buyer_email: getVal('buyerEmail') || 'customer@yuwuri.shop',
+                buyer_phone: buyerPhone
+              }
+            });
+
+            if (funcError || !payData?.token) {
+              throw new Error('Gagal memuat token pembayaran Midtrans.');
+            }
+
+            // 3. Tampilkan pop-up Midtrans Snap
+            window.snap.pay(payData.token, {
+              onSuccess: function () {
+                localStorage.removeItem('yuwuri_cart');
+                alert('Pembayaran berhasil! Pesanan ' + orderCode + ' sedang diproses.');
+                window.location.href = 'index.html';
+              },
+              onPending: function () {
+                localStorage.removeItem('yuwuri_cart');
+                alert('Pesanan dibuat! Segera selesaikan pembayaran sesuai instruksi.');
+                window.location.href = 'index.html';
+              },
+              onError: function () {
+                alert('Pembayaran gagal, silakan coba lagi.');
+              }
+            });
+
+          } catch (err) {
+            console.error(err);
+            alert(err.message);
+          } finally {
+            payButton.disabled = false;
+            payButton.innerHTML = 'Lanjut ke Pembayaran QRIS <i class="fa-solid fa-arrow-right ml-1"></i>';
+          }
         });
       }
     })();
