@@ -1,97 +1,237 @@
 <!DOCTYPE html>
-<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Keranjang — Yuwuri Shop</title>
- <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K9WG4VMC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-</script>
-<script src="https://cdn.tailwindcss.com"></script><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>body{font-family:'Plus Jakarta Sans',sans-serif}.serif{font-family:'Playfair Display',serif}</style></head>
-<body class="min-h-screen bg-[#FDFBF7] text-[#391E10]">
-<header class="bg-white border-b border-[#E3CEB1] px-5 py-4"><div class="max-w-5xl mx-auto flex justify-between items-center"><a href="catalog.html" class="serif text-2xl font-bold">Yuwuri<span class="italic font-normal text-[#734128]">.shop</span></a><a href="catalog.html" class="text-sm underline">Lanjut belanja</a></div></header>
-<main class="max-w-5xl mx-auto p-5 sm:p-8"><h1 class="serif text-3xl font-bold">Keranjang Belanja</h1><p class="text-sm text-[#734128] mt-2">Periksa kembali produk pilihanmu sebelum checkout.</p>
-<div id="cartItems" class="mt-7 space-y-3"></div>
-<section class="mt-7 ml-auto max-w-md bg-white border border-[#E3CEB1] rounded-2xl p-5"><div class="flex justify-between text-sm"><span>Subtotal</span><b id="subtotal">Rp0</b></div><p id="checkoutMessage" class="text-sm mt-3"></p><button id="checkoutBtn" class="mt-4 w-full bg-[#391E10] text-white rounded-xl py-3 font-bold">Lanjut Checkout</button></section>
-</main>
-<script type="module">
-const $=id=>document.getElementById(id);
-let cart=JSON.parse(localStorage.getItem('yuwuri_cart')||'[]');
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keranjang — Yuwuri Shop</title>
 
-// Pastikan data lama yang sudah ada di keranjang tidak melebihi stok (default maks 1)
-let adjusted = false;
-cart = cart.map(item => {
-  const maxStock = Math.max(1, Number(item.stock) || 1);
-  if ((Number(item.quantity) || 1) > maxStock) {
-    adjusted = true;
-    return { ...item, quantity: maxStock, stock: maxStock };
-  }
-  return { ...item, stock: maxStock };
-});
-if (adjusted) localStorage.setItem('yuwuri_cart', JSON.stringify(cart));
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K9WG4VMC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
 
-const money=n=>new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(n)||0);
-function save(){localStorage.setItem('yuwuri_cart',JSON.stringify(cart));render();}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/yuwuri.css">
+</head>
+<body>
 
-function showNotice(msg) {
-  const el = $('checkoutMessage');
-  if (!el) return;
-  el.textContent = msg;
-  el.className = 'text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mt-3';
-  clearTimeout(window._cartMsgTimer);
-  window._cartMsgTimer = setTimeout(() => { el.textContent = ''; el.className = 'text-sm mt-3'; }, 2500);
-}
+  <div class="yw-announce" data-announce>
+    <button class="yw-announce__nav" data-announce-nav="prev" aria-label="Promo sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
+    <p class="yw-announce__text"><span data-announce-item>Promo Spesial — Koleksi Cardigan &amp; Blouse Fashionable (Start Rp 30.000)</span></p>
+    <button class="yw-announce__nav" data-announce-nav="next" aria-label="Promo berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
+  </div>
 
-function render(){
- $('cartItems').innerHTML=cart.length?cart.map((p,i)=>{
-   const qty = Number(p.quantity)||1;
-   const maxStock = Math.max(1, Number(p.stock)||1);
-   const isMax = qty >= maxStock;
-   return `<div class="bg-white border border-[#E3CEB1] rounded-xl p-4 flex items-center gap-3">
-     <div class="flex-1 min-w-0">
-       <b class="block truncate">${String(p.name||'Produk').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}</b>
-       <span class="text-xs text-[#734128]">${money(p.price)} &bull; Stok tersedia: ${maxStock} pcs</span>
-     </div>
-     <button data-minus="${i}" class="border border-[#E3CEB1] rounded-lg px-3 py-1 hover:bg-[#FDFBF7]">−</button>
-     <span class="font-semibold text-sm min-w-[1.25rem] text-center">${qty}</span>
-     <button data-plus="${i}" ${isMax ? 'disabled' : ''} class="border border-[#E3CEB1] rounded-lg px-3 py-1 ${isMax ? 'opacity-40 cursor-not-allowed bg-gray-100' : 'hover:bg-[#FDFBF7]'}" title="${isMax ? 'Maksimal stok tersedia' : 'Tambah jumlah'}">+</button>
-     <button data-remove="${i}" class="text-red-600 ml-2 font-bold px-1" aria-label="Hapus">×</button>
-   </div>`;
- }).join(''):'<div class="bg-white border border-[#E3CEB1] rounded-xl p-8 text-center text-sm">Keranjangmu masih kosong.</div>';
+  <header class="yw-header">
+    <div class="yw-wrap">
+      <div class="yw-header__bar">
+        <div class="yw-header__left">
+          <button class="yw-icon-btn yw-menu-btn" data-menu-toggle aria-label="Buka menu" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+        <a href="index.html" class="yw-logo">Yuwuri<span>.shop</span></a>
+        <div class="yw-actions">
+          <nav class="yw-nav" aria-label="Navigasi utama">
+            <a href="index.html">Home</a>
+            <a href="catalog.html">Catalog</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+          <a href="cms.html" class="yw-icon-btn" title="CMS Admin" aria-label="Masuk atau profil"><i class="fa-regular fa-user"></i></a>
+          <a href="cart.html" class="yw-icon-btn yw-cart-link" title="Keranjang Belanja" aria-label="Keranjang belanja">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="yw-cart-count" data-cart-count>0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
 
- $('subtotal').textContent=money(cart.reduce((sum,p)=>sum+(Number(p.price)||0)*(Number(p.quantity)||1),0));
+  <div class="yw-mobile" data-menu>
+    <div class="yw-mobile__panel">
+      <div class="yw-mobile__top">
+        <a href="index.html" class="yw-logo" style="justify-self:start">Yuwuri<span>.shop</span></a>
+        <button class="yw-icon-btn" data-menu-close aria-label="Tutup menu"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <nav class="yw-mobile__nav" aria-label="Navigasi mobile">
+        <a href="index.html">Home</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="cart.html">Keranjang</a>
+        <a href="cms.html">Admin / Profil</a>
+      </nav>
+      <div class="yw-mobile__foot">
+        <p>yuwurishop@gmail.com</p>
+        <p>0896 1863 3132</p>
+      </div>
+    </div>
+  </div>
 
- document.querySelectorAll('[data-minus]').forEach(b=>b.onclick=()=>{
-   let i=+b.dataset.minus;
-   cart[i].quantity=Math.max(1,(cart[i].quantity||1)-1);
-   save();
- });
+  <main>
+    <section class="yw-section yw-section--tight">
+      <div class="yw-wrap">
+        <nav class="yw-breadcrumb" aria-label="Breadcrumb">
+          <a href="catalog.html">Catalog</a><span>/</span><span>Keranjang</span>
+        </nav>
+        <h1 style="font-size:clamp(1.8rem,3.4vw,2.75rem)">Keranjang Belanja</h1>
+        <p class="yw-tiny" style="margin-top:.6rem">Periksa kembali produk pilihanmu sebelum checkout.</p>
 
- document.querySelectorAll('[data-plus]').forEach(b=>b.onclick=()=>{
-   let i=+b.dataset.plus;
-   const maxStock = Math.max(1, Number(cart[i].stock) || 1);
-   const currentQty = Number(cart[i].quantity) || 1;
-   if (currentQty >= maxStock) {
-     showNotice(`Stok "${cart[i].name}" hanya tersedia ${maxStock} pcs.`);
-     return;
-   }
-   cart[i].quantity = currentQty + 1;
-   save();
- });
+        <div class="yw-cart" style="margin-top:clamp(1.75rem,4vw,2.75rem)">
+          <div>
+            <div id="cartItems"></div>
+            <a href="catalog.html" class="yw-btn yw-btn--ghost yw-btn--sm" style="margin-top:1.5rem">
+              <i class="fa-solid fa-arrow-left" style="margin-right:.5rem"></i>Lanjut belanja
+            </a>
+          </div>
 
- document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{
-   cart.splice(+b.dataset.remove,1);
-   save();
- });
+          <aside class="yw-summary">
+            <h2 class="yw-eyebrow" style="color:var(--ink)">Ringkasan</h2>
+            <div class="yw-summary__row" style="margin-top:1rem">
+              <span>Subtotal</span>
+              <b id="subtotal">Rp0</b>
+            </div>
+            <div class="yw-summary__row">
+              <span>Pengiriman</span>
+              <span>Dihitung saat checkout</span>
+            </div>
+            <div class="yw-summary__row yw-summary__total">
+              <span>Total</span>
+              <b id="grandTotal">Rp0</b>
+            </div>
+            <p id="checkoutMessage" class="yw-tiny" style="color:var(--danger)"></p>
+            <button id="checkoutBtn" class="yw-btn" style="width:100%;margin-top:1.25rem">Lanjut Checkout</button>
+            <p class="yw-note">Pembayaran dikonfirmasi manual oleh admin melalui WhatsApp setelah pesanan dibuat.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
 
- $('checkoutBtn').disabled=!cart.length;
- $('checkoutBtn').classList.toggle('opacity-50',!cart.length);
-}
+  <footer class="yw-footer">
+    <div class="yw-wrap">
+      <div class="yw-footer__bottom" style="border-top:0">
+        <span>&copy; 2026 Yuwuri Shop. All rights reserved.</span>
+        <span>Indonesia</span>
+      </div>
+    </div>
+  </footer>
 
-$('checkoutBtn').addEventListener('click', () => {
-  if (!cart.length) return;
-  location.href = 'checkout.html';
-});
+  <script src="js/yuwuri-ui.js"></script>
 
-render();
-</script></body></html>
+  <script>
+    const $ = id => document.getElementById(id);
+    let cart = JSON.parse(localStorage.getItem('yuwuri_cart') || '[]');
+
+    /* data lama tidak boleh melebihi stok */
+    let adjusted = false;
+    cart = cart.map(item => {
+      const maxStock = Math.max(1, Number(item.stock) || 1);
+      if ((Number(item.quantity) || 1) > maxStock) {
+        adjusted = true;
+        return { ...item, quantity: maxStock, stock: maxStock };
+      }
+      return { ...item, stock: maxStock };
+    });
+    if (adjusted) localStorage.setItem('yuwuri_cart', JSON.stringify(cart));
+
+    const money = n => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(Number(n) || 0);
+    const esc = s => String(s || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    function save() {
+      localStorage.setItem('yuwuri_cart', JSON.stringify(cart));
+      render();
+    }
+
+    function showNotice(msg) {
+      const el = $('checkoutMessage');
+      if (!el) return;
+      el.textContent = msg;
+      clearTimeout(window._cartMsgTimer);
+      window._cartMsgTimer = setTimeout(() => { el.textContent = ''; }, 2600);
+    }
+
+    function updateBadge() {
+      const total = cart.reduce((sum, p) => sum + (Number(p.quantity) || 1), 0);
+      document.querySelectorAll('[data-cart-count]').forEach(el => {
+        el.textContent = total > 99 ? '99+' : total;
+        el.style.display = total > 0 ? '' : 'none';
+      });
+    }
+
+    function render() {
+      $('cartItems').innerHTML = cart.length ? cart.map((p, i) => {
+        const qty = Number(p.quantity) || 1;
+        const maxStock = Math.max(1, Number(p.stock) || 1);
+        const isMax = qty >= maxStock;
+        const thumb = p.image_url || `baju${p.id}.png`;
+        return `<div class="yw-cart-row">
+          <img class="yw-cart-row__thumb" src="${esc(thumb)}" alt="${esc(p.name)}" loading="lazy"
+               onerror="this.onerror=null;this.src='https://via.placeholder.com/160x200/EEF0F1/000000?text=Yuwuri';">
+          <div>
+            <p class="yw-cart-row__name">${esc(p.name || 'Produk')}</p>
+            <p class="yw-cart-row__meta">${esc(p.color || 'Default')} &middot; ${esc(p.size || 'All Size')} &middot; Stok ${maxStock} pcs</p>
+            <p class="yw-cart-row__meta" style="color:var(--ink);margin-top:.35rem">${money(p.price)}</p>
+          </div>
+          <div class="yw-cart-row__side">
+            <div class="yw-qty yw-qty--sm">
+              <button data-minus="${i}" type="button" aria-label="Kurangi jumlah">&minus;</button>
+              <input type="text" value="${qty}" readonly aria-label="Jumlah">
+              <button data-plus="${i}" type="button" ${isMax ? 'disabled' : ''} aria-label="Tambah jumlah" title="${isMax ? 'Maksimal stok tersedia' : 'Tambah jumlah'}">+</button>
+            </div>
+            <button data-remove="${i}" class="yw-link-remove" type="button">Hapus</button>
+          </div>
+        </div>`;
+      }).join('') : `<div class="yw-empty">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <h3>Keranjangmu masih kosong</h3>
+          <p class="yw-tiny">Yuk pilih kemeja atau blouse favoritmu dulu.</p>
+          <a href="catalog.html" class="yw-btn yw-btn--sm">Lihat Katalog</a>
+        </div>`;
+
+      const total = cart.reduce((sum, p) => sum + (Number(p.price) || 0) * (Number(p.quantity) || 1), 0);
+      $('subtotal').textContent = money(total);
+      $('grandTotal').textContent = money(total);
+
+      document.querySelectorAll('[data-minus]').forEach(b => b.onclick = () => {
+        const i = +b.dataset.minus;
+        cart[i].quantity = Math.max(1, (cart[i].quantity || 1) - 1);
+        save();
+      });
+
+      document.querySelectorAll('[data-plus]').forEach(b => b.onclick = () => {
+        const i = +b.dataset.plus;
+        const maxStock = Math.max(1, Number(cart[i].stock) || 1);
+        const currentQty = Number(cart[i].quantity) || 1;
+        if (currentQty >= maxStock) {
+          showNotice(`Stok "${cart[i].name}" hanya tersedia ${maxStock} pcs.`);
+          return;
+        }
+        cart[i].quantity = currentQty + 1;
+        save();
+      });
+
+      document.querySelectorAll('[data-remove]').forEach(b => b.onclick = () => {
+        cart.splice(+b.dataset.remove, 1);
+        save();
+      });
+
+      $('checkoutBtn').disabled = !cart.length;
+      $('checkoutBtn').style.opacity = cart.length ? '' : '.45';
+      updateBadge();
+    }
+
+    $('checkoutBtn').addEventListener('click', () => {
+      if (!cart.length) return;
+      location.href = 'checkout.html';
+    });
+
+    render();
+  </script>
+</body>
+</html>

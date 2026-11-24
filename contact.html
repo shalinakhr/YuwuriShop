@@ -3,279 +3,216 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us - Yuwuri Shop</title>
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <title>Contact Us — Yuwuri Shop</title>
+
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K9WG4VMC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            // Earthy Almond Brown Palette Lengkap
-            brown: {
-              50: '#FDFBF7',
-              100: '#F5EBE0',
-              200: '#E3CEB1',
-              300: '#C7A07A',
-              400: '#A87C55',
-              500: '#8D5B36',
-              600: '#7B4A2A',
-              700: '#734128',
-              800: '#522C1A',
-              900: '#391E10',
-            },
-            accentYellow: '#FBFF5B',
-            accentBlue: '#A1C9FF',
-          },
-          fontFamily: {
-            serif: ['Playfair Display', 'serif'],
-            sans: ['Plus Jakarta Sans', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="css/yuwuri.css">
 </head>
-<body class="bg-[#FDFBF7] text-brown-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+<body>
 
-  <!-- Top Promo Bar -->
-  <div class="bg-brown-900 text-brown-50 text-xs py-2 px-4 text-center flex items-center justify-center gap-2">
-    <span class="bg-accentYellow text-brown-900 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider">Promo Spesial</span>
-    <span class="font-medium">Gratis Ongkir untuk Koleksi Kemeja Anti-Kusut (Start Rp 30.000)</span>
+  <div class="yw-announce" data-announce>
+    <button class="yw-announce__nav" data-announce-nav="prev" aria-label="Promo sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
+    <p class="yw-announce__text"><span data-announce-item>Promo Spesial — Gratis Ongkir untuk Koleksi Kemeja Anti-Kusut (Start Rp 30.000)</span></p>
+    <button class="yw-announce__nav" data-announce-nav="next" aria-label="Promo berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
   </div>
-  
-  <!-- Header / Navbar -->
-  <header class="border-b border-brown-200 bg-white/90 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-      
-      <!-- Logo (Kiri) -->
-      <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900">
-        Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
-      </a>
-      
-      <!-- Menu Navigasi (Tengah) -->
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
-        <a href="index.html" class="hover:text-brown-700 transition-colors">Home</a>
-        <a href="catalog.html" class="hover:text-brown-700 transition-colors">Catalog</a>
-        <a href="about.html" class="hover:text-brown-700 transition-colors">About Us</a>
-        <a href="contact.html" class="text-brown-700 font-semibold border-b-2 border-brown-700 pb-0.5">Contact</a>
-      </nav>
 
-      <!-- Kolom Cari, Profil & Keranjang (Kanan) -->
-      <div class="flex items-center gap-2 sm:gap-4">
-        
-        <!-- Pencarian -->
-        <div class="relative hidden sm:block">
-          <input type="text" placeholder="Cari kemeja/blouse..." class="pl-8 pr-4 py-1.5 text-xs bg-brown-100 border border-brown-200 rounded-full focus:outline-none focus:ring-1 focus:ring-brown-700 w-40 lg:w-56">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-brown-700/60"></i>
+  <header class="yw-header">
+    <div class="yw-wrap">
+      <div class="yw-header__bar">
+        <div class="yw-header__left">
+          <button class="yw-icon-btn yw-menu-btn" data-menu-toggle aria-label="Buka menu" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+          </button>
         </div>
-
-        <!-- Icon Profil / Login -->
-        <a href="cms.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 flex items-center justify-center" title="Masuk / Profil">
-          <i class="fa-regular fa-user text-lg"></i>
-        </a>
-
-        <!-- Icon Keranjang -->
-        <a href="cart.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 relative inline-flex items-center justify-center" title="Keranjang Belanja">
-          <i class="fa-solid fa-bag-shopping text-lg"></i>
-          <span class="absolute top-1 sm:top-1.5 right-0 sm:right-1 w-4 h-4 bg-accentYellow text-brown-900 text-[10px] font-bold rounded-full flex items-center justify-center border border-brown-900">3</span>
-        </a>
-        
+        <a href="index.html" class="yw-logo">Yuwuri<span>.shop</span></a>
+        <div class="yw-actions">
+          <nav class="yw-nav" aria-label="Navigasi utama">
+            <a href="index.html">Home</a>
+            <a href="catalog.html">Catalog</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html" class="is-active">Contact</a>
+          </nav>
+          <a href="cart.html" class="yw-icon-btn yw-cart-link" title="Keranjang Belanja" aria-label="Keranjang belanja">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="yw-cart-count" data-cart-count>0</span>
+          </a>
+        </div>
       </div>
-      
     </div>
   </header>
-  
-  <!-- Main Content -->
-  <main class="max-w-6xl mx-auto px-6 py-12 lg:py-16 flex-grow">
-    
-    <!-- Hero Banner Text -->
-    <div class="text-center max-w-2xl mx-auto mb-14">
-      <span class="inline-block px-3 py-1 bg-accentYellow text-brown-900 text-xs font-semibold tracking-wider rounded-full uppercase mb-3">
-        Customer Care
-      </span>
-      <h1 class="text-3xl md:text-5xl font-serif font-bold text-brown-900 mb-4">
-        Ada Yang Bisa Kami Bantu?
-      </h1>
-      <p class="text-brown-700 text-sm md:text-base leading-relaxed">
-        Punya pertanyaan seputar ukuran, bahan kemeja, atau pengiriman? Tim Yuwuri Shop siap bantu jawab pesan kamu!
-      </p>
+
+  <div class="yw-mobile" data-menu>
+    <div class="yw-mobile__panel">
+      <div class="yw-mobile__top">
+        <a href="index.html" class="yw-logo" style="justify-self:start">Yuwuri<span>.shop</span></a>
+        <button class="yw-icon-btn" data-menu-close aria-label="Tutup menu"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <nav class="yw-mobile__nav" aria-label="Navigasi mobile">
+        <a href="index.html">Home</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="cart.html">Keranjang</a>
+      </nav>
+      <div class="yw-mobile__foot">
+        <p>yuwurishop@gmail.com</p>
+        <p>0896 1863 3132</p>
+      </div>
     </div>
+  </div>
 
-    <!-- 2 Column Section: Contact Details & Form -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-      
-      <!-- Left Column: Quick Info Cards -->
-      <div class="lg:col-span-5 space-y-6">
-        
-        <div class="bg-white p-6 md:p-8 rounded-2xl border border-brown-200 shadow-sm hover:shadow-md transition-shadow">
-          <h2 class="font-serif text-xl font-bold mb-2">Hubungi Langsung</h2>
-          <p class="text-sm text-brown-700 mb-6">Pilih saluran komunikasi yang paling nyaman buat kamu.</p>
-
-          <div class="space-y-6">
-            <!-- WhatsApp -->
-            <div class="flex items-start gap-4">
-              <a href="https://wa.me/6289618633132?text=Halo%20Yuwuri%20Shop,%20saya%20ingin%20bertanya%20seputar%20produk" target="_blank" class="w-12 h-12 rounded-xl bg-emerald-100 hover:bg-emerald-200 flex items-center justify-center text-emerald-700 shrink-0 mt-1 transition-colors">
-                <i class="fa-brands fa-whatsapp text-2xl"></i>
-              </a>
-              <div>
-                <span class="text-xs font-semibold text-brown-700 uppercase tracking-wider block">WhatsApp Official</span>
-                <a href="https://wa.me/6289618633132?text=Halo%20Yuwuri%20Shop,%20saya%20ingin%20bertanya%20seputar%20produk" target="_blank" class="font-bold text-brown-900 text-base md:text-lg hover:text-emerald-700 transition-colors">
-                  089618633132
-                </a>
-                <p class="text-xs text-brown-700/80 mt-0.5">Senin - Sabtu: 09.00 - 18.00 WIB</p>
-              </div>
-            </div>
-
-            <!-- Email -->
-            <div class="flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-accentBlue/40 flex items-center justify-center text-brown-900 shrink-0 mt-1">
-                <i class="fa-regular fa-envelope text-xl"></i>
-              </div>
-              <div>
-                <span class="text-xs font-semibold text-brown-700 uppercase tracking-wider block">Email Support</span>
-                <a href="mailto:yuwurishop@gmail.com" class="font-bold text-brown-900 text-base md:text-lg hover:text-brown-700 transition-colors">
-                  yuwurishop@gmail.com
-                </a>
-                <p class="text-xs text-brown-700/80 mt-0.5">Dibalas dalam 1x24 jam kerja</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Banner Note -->
-        <div class="bg-brown-900 text-white p-6 md:p-8 rounded-2xl relative overflow-hidden">
-          <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-accentYellow/20 rounded-full blur-xl"></div>
-          <h3 class="font-serif font-bold text-lg mb-2">Daily Blouse & Shirt</h3>
-          <p class="text-xs md:text-sm text-brown-200 leading-relaxed">
-            Kemeja & blouse all-size siap menemani aktivitas harian kamu dengan bahan yang tetap adem dan nggak gampang kusut.
+  <main>
+    <section class="yw-section yw-section--tight" style="padding-top:clamp(2.5rem,6vw,4rem)">
+      <div class="yw-wrap">
+        <div style="text-align:center;max-width:640px;margin:0 auto clamp(1.75rem,4vw,2.75rem)">
+          <span class="yw-eyebrow">Customer Care</span>
+          <h1 style="font-size:clamp(1.9rem,4vw,3rem);margin:.85rem 0 .85rem">Ada Yang Bisa Kami Bantu?</h1>
+          <p class="yw-lead" style="margin-inline:auto">
+            Punya pertanyaan seputar ukuran, bahan kemeja, atau pengiriman? Tim Yuwuri Shop siap bantu jawab pesan kamu!
           </p>
         </div>
 
-      </div>
-
-      <!-- Right Column: Contact Form & Direct WhatsApp Button -->
-      <div class="lg:col-span-7 bg-white p-6 md:p-10 rounded-2xl border border-brown-200 shadow-sm">
-        <h2 class="font-serif text-2xl font-bold mb-2">Kirim Pesan</h2>
-        <p class="text-sm text-brown-700 mb-8">Isi formulir di bawah ini, tim Yuwuri Shop akan segera merespons.</p>
-
-        <!-- Form Lengkap -->
-        <form id="contactForm" onsubmit="event.preventDefault(); alert('Pesan kamu berhasil terkirim!');" class="space-y-5">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Nama Lengkap</label>
-              <input type="text" required placeholder="Contoh: Sabrina" class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brown-700 transition-all">
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Nomor WhatsApp</label>
-              <input type="tel" required placeholder="08xxxxxxxxxx" class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brown-700 transition-all">
-            </div>
-          </div>
-
+        <div class="yw-contact">
           <div>
-            <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Topik Pertanyaan</label>
-            <select class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brown-700 transition-all">
-              <option>Pertanyaan Stok / Restock</option>
-              <option>Konsultasi Ukuran (Size Chart)</option>
-              <option>Kendala Pengiriman / Pesanan</option>
-              <option>Retur & Penukaran Produk</option>
-              <option>Lainnya</option>
-            </select>
+            <div class="yw-panel">
+              <h2 style="font-size:1.15rem">Hubungi Langsung</h2>
+              <p class="yw-tiny" style="margin:.4rem 0 1.5rem">Pilih saluran komunikasi yang paling nyaman buat kamu.</p>
+
+              <div class="yw-channel">
+                <span class="yw-channel__icon"><i class="fa-brands fa-whatsapp"></i></span>
+                <div>
+                  <span class="yw-channel__label">WhatsApp Official</span>
+                  <a href="https://wa.me/6289618633132?text=Halo%20Yuwuri%20Shop,%20saya%20ingin%20bertanya%20seputar%20produk" target="_blank" rel="noopener" class="yw-channel__value">089618633132</a>
+                  <p class="yw-channel__note">Senin - Sabtu: 09.00 - 18.00 WIB</p>
+                </div>
+              </div>
+
+              <div class="yw-channel">
+                <span class="yw-channel__icon"><i class="fa-regular fa-envelope"></i></span>
+                <div>
+                  <span class="yw-channel__label">Email Support</span>
+                  <a href="mailto:yuwurishop@gmail.com" class="yw-channel__value">yuwurishop@gmail.com</a>
+                  <p class="yw-channel__note">Dibalas dalam 1x24 jam kerja</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="yw-note-card" style="margin-top:1rem">
+              <h3>Daily Blouse &amp; Shirt</h3>
+              <p>Kemeja &amp; blouse all-size siap menemani aktivitas harian kamu dengan bahan yang tetap adem dan nggak gampang kusut.</p>
+            </div>
           </div>
 
-          <div>
-            <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Pesan Kamu</label>
-            <textarea rows="4" required placeholder="Tuliskan pertanyaan atau kendala kamu secara rinci di sini..." class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brown-700 transition-all resize-none"></textarea>
+          <div class="yw-panel">
+            <h2 style="font-size:1.35rem">Kirim Pesan</h2>
+            <p class="yw-tiny" style="margin:.4rem 0 1.5rem">Isi formulir di bawah ini, tim Yuwuri Shop akan segera merespons.</p>
+
+            <form id="contactForm" class="yw-form-grid yw-form-grid--2">
+              <div class="yw-field">
+                <label for="cName">Nama Lengkap</label>
+                <input id="cName" type="text" required placeholder="Contoh: Sabrina" class="yw-input">
+              </div>
+              <div class="yw-field">
+                <label for="cPhone">Nomor WhatsApp</label>
+                <input id="cPhone" type="tel" required placeholder="08xxxxxxxxxx" class="yw-input">
+              </div>
+              <div class="yw-field yw-field--full">
+                <label for="cTopic">Topik Pertanyaan</label>
+                <select id="cTopic" class="yw-select">
+                  <option>Pertanyaan Stok / Restock</option>
+                  <option>Konsultasi Ukuran (Size Chart)</option>
+                  <option>Kendala Pengiriman / Pesanan</option>
+                  <option>Retur &amp; Penukaran Produk</option>
+                  <option>Lainnya</option>
+                </select>
+              </div>
+              <div class="yw-field yw-field--full">
+                <label for="cMessage">Pesan Kamu</label>
+                <textarea id="cMessage" rows="4" required placeholder="Tuliskan pertanyaan atau kendala kamu secara rinci di sini..." class="yw-input" style="resize:none"></textarea>
+              </div>
+              <div class="yw-field yw-field--full">
+                <button type="submit" class="yw-btn" style="width:100%">Kirim Pesan Sekarang</button>
+              </div>
+            </form>
+
+            <div class="yw-divider">atau respon lebih cepat</div>
+
+            <a href="https://wa.me/6289618633132?text=Halo%20Yuwuri%20Shop,%20saya%20ingin%20bertanya%20seputar%20produk" target="_blank" rel="noopener" class="yw-btn yw-btn--ghost" style="width:100%">
+              <i class="fa-brands fa-whatsapp" style="margin-right:.55rem;font-size:1rem"></i>Chat via WhatsApp (089618633132)
+            </a>
           </div>
-
-          <button type="submit" class="w-full py-3.5 px-6 bg-brown-900 hover:bg-brown-700 text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200">
-            Kirim Pesan Sekarang
-          </button>
-        </form>
-
-        <!-- Pemisah / Separator -->
-        <div class="relative my-6 text-center">
-          <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-brown-200"></div></div>
-          <span class="relative bg-white px-3 text-xs font-medium text-brown-700">atau respon lebih cepat</span>
         </div>
-
-        <!-- Tombol Direct WhatsApp -->
-        <a href="https://wa.me/6289618633132?text=Halo%20Yuwuri%20Shop,%20saya%20ingin%20bertanya%20seputar%20produk" target="_blank" class="w-full py-3.5 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
-          <i class="fa-brands fa-whatsapp text-lg"></i>
-          Chat via WhatsApp (089618633132)
-        </a>
       </div>
-
-    </div>
+    </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-white pt-16 pb-8 border-t border-brown-200 mt-auto">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-        
-        <div class="md:col-span-2">
-          <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900 block mb-4">
-            Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
-          </a>
-          <p class="text-brown-700 text-sm leading-relaxed max-w-sm mb-6">
-            Affordable Fashion for Fancy Women. Kami menyediakan kemeja dan blouse dailywear yang nyaman, adem, dan tahan kusut dengan harga terbaik.
-          </p>
-          <div class="flex gap-4">
-            <a href="#" class="w-10 h-10 rounded-full bg-brown-100 text-brown-900 flex items-center justify-center hover:bg-brown-900 hover:text-white transition-colors">
-              <i class="fa-brands fa-tiktok"></i>
-            </a>
-            <a href="#" class="w-10 h-10 rounded-full bg-brown-100 text-brown-900 flex items-center justify-center hover:bg-brown-900 hover:text-white transition-colors">
-              <i class="fa-brands fa-instagram"></i>
-            </a>
+  <footer class="yw-footer">
+    <div class="yw-wrap">
+      <div class="yw-footer__grid">
+        <div class="yw-footer__brand">
+          <a href="index.html" class="yw-logo" style="justify-self:start;display:inline-block">Yuwuri<span>.shop</span></a>
+          <p>Affordable Fashion for Fancy Women. Kami menyediakan kemeja dan blouse dailywear yang nyaman, adem, dan tahan kusut dengan harga terbaik.</p>
+          <div class="yw-social">
+            <a href="https://wa.me/6289618633132" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
           </div>
         </div>
 
         <div>
-          <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-4 text-sm">Tautan Cepat</h4>
-          <ul class="space-y-3 text-sm text-brown-700">
-            <li><a href="#" class="hover:text-brown-900 transition-colors">Beranda</a></li>
-            <li><a href="catalog.html" class="hover:text-brown-900 transition-colors">Katalog Produk</a></li>
-            <li><a href="about.html" class="hover:text-brown-900 transition-colors">Tentang Kami</a></li>
+          <h4>Belanja</h4>
+          <ul>
+            <li><a href="catalog.html">Katalog</a></li>
+            <li><a href="product-detail.html">Best Seller</a></li>
+            <li><a href="cart.html">Keranjang</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
           </ul>
         </div>
 
         <div>
-          <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-4 text-sm">Hubungi Kami</h4>
-          <ul class="space-y-3 text-sm text-brown-700">
-            <li>
-              <a href="https://wa.me/6289618633132?text=Halo%20Yuwuri%20Shop,%20saya%20ingin%20bertanya%20seputar%20produk" target="_blank" class="flex items-center gap-3 hover:text-emerald-600 transition-colors">
-                <i class="fa-brands fa-whatsapp text-brown-900"></i>
-                089618633132
-              </a>
-            </li>
-            <li class="flex items-center gap-3">
-              <i class="fa-regular fa-envelope text-brown-900"></i>
-              yuwurishop@gmail.com
-            </li>
+          <h4>Informasi</h4>
+          <ul>
+            <li><a href="about.html">Tentang Kami</a></li>
+            <li><a href="contact.html">Kontak</a></li>
+            <li><a href="login.html">Masuk</a></li>
+            <li><a href="cms.html">Admin</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Hubungi</h4>
+          <ul>
+            <li><a href="mailto:yuwurishop@gmail.com">yuwurishop@gmail.com</a></li>
+            <li><a href="https://wa.me/6289618633132">089618633132</a></li>
+            <li><a href="https://wa.me/6289618633132">WhatsApp</a></li>
           </ul>
         </div>
       </div>
-      
-      <div class="border-t border-brown-100 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-brown-700">
-        <p>&copy; 2026 Yuwuri Shop. All rights reserved.</p>
-        <div class="flex gap-6">
-          <a href="#" class="hover:text-brown-900 transition-colors">Privacy Policy</a>
-          <a href="#" class="hover:text-brown-900 transition-colors">Terms of Service</a>
-        </div>
+
+      <div class="yw-footer__bottom">
+        <span>&copy; 2026 Yuwuri Shop. All rights reserved.</span>
+        <span>Indonesia</span>
       </div>
     </div>
   </footer>
 
+  <script src="js/yuwuri-ui.js"></script>
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (window.ywToast) window.ywToast('<i class="fa-solid fa-circle-check"></i> Pesan kamu berhasil terkirim!', 'ok', 4000);
+      this.reset();
+    });
+  </script>
 </body>
 </html>

@@ -4,162 +4,112 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pembayaran QRIS — Yuwuri Shop</title>
+
   <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K9WG4VMC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-</script>
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brown: {
-              50: '#FDFBF7',
-              100: '#FAF5EF',
-              200: '#E3CEB1',
-              300: '#C7A07A',
-              700: '#734128',
-              900: '#391E10',
-            },
-            accentYellow: '#FBFF5B',
-            accentBlue: '#A1C9FF',
-          },
-          fontFamily: {
-            serif: ['Playfair Display', 'serif'],
-            sans: ['Plus Jakarta Sans', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="css/yuwuri.css">
 </head>
-<body class="bg-[#FDFBF7] text-brown-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+<body>
 
-  <!-- Header / Navbar -->
-  <header class="border-b border-brown-200/60 bg-[#FDFBF7]/90 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="catalog.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900">
-        Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
-      </a>
-      <div class="flex items-center gap-2 text-xs text-brown-700 font-medium">
-        <i class="fa-solid fa-lock text-green-600"></i>
-        <span>Pembayaran Aman via QRIS</span>
+  <header class="yw-header">
+    <div class="yw-wrap">
+      <div class="yw-header__bar">
+        <div class="yw-header__left">
+          <a href="cart.html" class="yw-icon-btn" aria-label="Kembali ke keranjang"><i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+        <a href="index.html" class="yw-logo">Yuwuri<span>.shop</span></a>
+        <div class="yw-actions">
+          <span class="yw-tiny" style="display:inline-flex;align-items:center;gap:.4rem">
+            <i class="fa-solid fa-lock" style="color:var(--ok)"></i> Pembayaran aman via QRIS
+          </span>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-12 flex-grow w-full">
-    
-    <!-- Timer Banner -->
-    <div class="bg-brown-900 text-white p-4 rounded-2xl mb-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left shadow-md">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-accentYellow text-brown-900 flex items-center justify-center text-lg font-bold">
-          <i class="fa-solid fa-clock"></i>
-        </div>
-        <div>
-          <h2 class="font-semibold text-sm">Selesaikan Pembayaran Dalam</h2>
-          <p class="text-xs text-brown-200">Scan QRIS sebelum batas waktu berakhir</p>
-        </div>
-      </div>
-      <div class="bg-brown-700 px-4 py-2 rounded-xl border border-brown-300/30">
-        <span id="countdown" class="font-mono font-bold text-lg text-accentYellow tracking-wider">15:00</span>
-      </div>
-    </div>
+  <main>
+    <section class="yw-section yw-section--tight">
+      <div class="yw-wrap" style="max-width:1120px">
+        <nav class="yw-breadcrumb" aria-label="Langkah checkout">
+          <a href="cart.html">Keranjang</a><span>/</span><span>Pengiriman</span><span>/</span><span>Pembayaran QRIS</span>
+        </nav>
 
-    <!-- Main Payment Container -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-
-    <!-- QRIS Display Box -->
-      <div class="md:col-span-7 bg-white p-6 md:p-8 rounded-2xl border border-brown-200/80 shadow-sm text-center">
-        
-      
-        <!-- Merchant Info -->
-        <div class="text-center mb-6">
-          <span class="font-serif font-bold text-base md:text-lg text-brown-900 block leading-tight mt-0.5">QRIS YUWURI SHOP, FASHION</span>
-        </div>
-
-        <!-- Universal QR Code Generator Link (Selalu Aktif) -->
-        <div class="relative inline-block p-4 bg-white border-2 border-brown-900/10 rounded-2xl shadow-inner mb-4">
-          <img src="qris.jpeg" alt="QRIS YUWURI SHOP" class="w-52 h-52 md:w-60 md:h-60 mx-auto object-contain">
-        </div>
-
-        <p class="text-xs text-brown-700 mb-4 font-medium">Bisa di-scan menggunakan semua aplikasi e-Wallet & m-Banking:</p>
-        
-        <!-- e-Wallet Supported Icons -->
-        <div class="flex flex-wrap items-center justify-center gap-2 text-[10px] text-brown-700 font-bold mb-6">
-          <span class="px-2.5 py-1 bg-brown-50 border border-brown-200 rounded-md">GoPay</span>
-          <span class="px-2.5 py-1 bg-brown-50 border border-brown-200 rounded-md">OVO</span>
-          <span class="px-2.5 py-1 bg-brown-50 border border-brown-200 rounded-md">DANA</span>
-          <span class="px-2.5 py-1 bg-brown-50 border border-brown-200 rounded-md">BCA Mobile</span>
-          <span class="px-2.5 py-1 bg-brown-50 border border-brown-200 rounded-md">Livin' Mandiri</span>
-        </div>
-
-        <!-- Action Button -->
-        <button onclick="checkPaymentStatus()" class="w-full py-3.5 bg-brown-900 hover:bg-brown-700 text-white font-semibold text-xs md:text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
-          <i class="fa-solid fa-circle-check text-accentYellow"></i> Saya Sudah Bayar / Cek Status
-        </button>
-
-      </div>
-
-      <!-- Order Detail & Guide -->
-      <div class="md:col-span-5 space-y-6">
-        
-        <!-- Amount Card -->
-        <div class="bg-white p-6 rounded-2xl border border-brown-200/80 shadow-sm">
-          <span class="text-xs text-brown-700 uppercase tracking-wider font-semibold block mb-1">Total Yang Harus Dibayar</span>
-          <div class="text-2xl md:text-3xl font-serif font-bold text-brown-900 mb-4" id="paymentTotalAmount">
-            Rp 0
+        <div class="yw-timer" style="margin-bottom:clamp(1.25rem,3vw,2rem)">
+          <div>
+            <p class="yw-timer__label"><i class="fa-regular fa-clock" style="margin-right:.5rem"></i>Selesaikan pembayaran dalam</p>
+            <p class="yw-timer__sub">Scan QRIS sebelum batas waktu berakhir</p>
           </div>
-          <div class="pt-3 border-t border-brown-100 flex justify-between text-xs text-brown-700">
-            <span>Jumlah Pesanan:</span>
-            <span class="font-bold text-brown-900" id="paymentItemCount">0 Item</span>
+          <div class="yw-timer__clock" id="countdown">15:00</div>
+        </div>
+
+        <div class="yw-checkout">
+          <div class="yw-qris">
+            <p class="yw-eyebrow" style="color:var(--ink)">QRIS YUWURI SHOP, FASHION</p>
+            <img src="qris.jpeg" alt="QRIS YUWURI SHOP">
+            <p class="yw-tiny" style="margin-top:1rem">Bisa di-scan menggunakan semua aplikasi e-Wallet &amp; m-Banking:</p>
+            <div class="yw-paytags">
+              <span>GoPay</span>
+              <span>OVO</span>
+              <span>DANA</span>
+              <span>BCA Mobile</span>
+              <span>Livin' Mandiri</span>
+            </div>
+            <button onclick="checkPaymentStatus()" class="yw-btn" style="width:100%">
+              <i class="fa-solid fa-circle-check" style="margin-right:.5rem"></i>Saya Sudah Bayar / Cek Status
+            </button>
           </div>
+
+          <aside class="yw-checkout__aside">
+            <div class="yw-panel">
+              <span class="yw-eyebrow">Total yang harus dibayar</span>
+              <div id="paymentTotalAmount" style="font-size:clamp(1.6rem,3vw,2.2rem);margin-top:.4rem">Rp 0</div>
+              <div class="yw-summary__row" style="border-top:1px solid var(--line);margin-top:1rem;padding-top:.9rem">
+                <span>Jumlah pesanan</span>
+                <span id="paymentItemCount">0 Item</span>
+              </div>
+            </div>
+
+            <div class="yw-panel">
+              <h3 class="yw-eyebrow" style="color:var(--ink);margin-bottom:1rem">Panduan pembayaran</h3>
+              <ol class="yw-steps-list">
+                <li>Buka aplikasi <strong>BCA Mobile, Livin, GoPay, OVO, atau DANA</strong>.</li>
+                <li>Pilih menu <strong>Scan / Bayar / QRIS</strong>.</li>
+                <li>Arahkan kamera HP ke gambar QR Code di samping.</li>
+                <li>Pastikan nama penerima tertera: <strong>YUWURI SHOP, FASHION</strong>.</li>
+                <li>Tekan <strong>Bayar</strong>.</li>
+              </ol>
+            </div>
+
+            <a href="cart.html" class="yw-btn yw-btn--ghost yw-btn--sm" style="width:100%">
+              <i class="fa-solid fa-arrow-left" style="margin-right:.5rem"></i>Kembali ke Keranjang
+            </a>
+          </aside>
         </div>
-
-        <!-- Step Guide Card -->
-        <div class="bg-white p-6 rounded-2xl border border-brown-200/80 shadow-sm text-xs">
-          <h3 class="font-serif font-bold text-sm text-brown-900 mb-3">Panduan Pembayaran:</h3>
-          <ol class="space-y-2.5 text-brown-700 list-decimal pl-4">
-            <li>Buka aplikasi <strong>BCA Mobile, Livin, GoPay, OVO, atau DANA</strong>.</li>
-            <li>Pilih menu <strong>Scan / Bayar / QRIS</strong>.</li>
-            <li>Arahkan kamera HP kamu ke gambar QR Code di sebelah kiri.</li>
-            <li>Pastikan nama penerima tertera: <strong>YUWURI SHOP, FASHION</strong>.</li>
-            <li>Tekan <strong>Bayar</strong>.</li>
-          </ol>
-        </div>
-
-        <!-- Back Button -->
-        <a href="cart.html" class="inline-flex items-center justify-center w-full py-2.5 border border-brown-200 bg-white hover:bg-brown-50 rounded-xl text-xs font-semibold transition-colors gap-2 text-brown-900">
-          <i class="fa-solid fa-arrow-left text-[10px]"></i> Kembali ke Keranjang
-        </a>
-
       </div>
-
-    </div>
-
+    </section>
   </main>
 
-  <!-- Footer -->
-  <footer class="border-t border-brown-200/60 bg-white py-6 mt-12 text-center text-xs text-brown-700">
-    <p>&copy; 2026 Yuwuri Shop. Payment Powered by QRIS Standar Nasional.</p>
+  <footer class="yw-footer">
+    <div class="yw-wrap">
+      <div class="yw-footer__bottom" style="border-top:0">
+        <span>&copy; 2026 Yuwuri Shop. Payment powered by QRIS Standar Nasional.</span>
+        <span>Indonesia</span>
+      </div>
+    </div>
   </footer>
 
-  <!-- Script Synchronize LocalStorage & Countdown -->
+  <script src="js/yuwuri-ui.js"></script>
+  <script src="js/wa-config.js"></script>
+  <script src="js/wa-notify.js"></script>
   <script>
     function getCart() {
       return JSON.parse(localStorage.getItem('yuwuri_cart')) || [];
@@ -171,11 +121,11 @@
 
     function loadOrderDetails() {
       const cart = getCart();
-      const totalQty = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const totalQty = cart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
       let subtotal = 0;
 
       cart.forEach(item => {
-        subtotal += (item.price || 35000) * item.quantity;
+        subtotal += (Number(item.price) || 35000) * (Number(item.quantity) || 1);
       });
 
       const shippingFee = subtotal > 0 ? 10000 : 0;
@@ -191,22 +141,47 @@
       setInterval(function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.textContent = minutes + ":" + seconds;
-
-        if (--timer < 0) {
-          timer = duration;
-        }
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+        display.textContent = minutes + ':' + seconds;
+        if (--timer < 0) timer = duration;
       }, 1000);
     }
 
-    function checkPaymentStatus() {
-      alert("Pembayaran Berhasil Diverifikasi! Terima kasih sudah berbelanja di Yuwuri Shop.");
+    function getLatestOrder() {
+      try { return JSON.parse(localStorage.getItem('yuwuri_latest_order') || 'null'); } catch (e) { return null; }
+    }
+
+    function showToast(html, tone) {
+      if (window.ywToast) window.ywToast(html, tone === 'error' ? 'error' : 'ok', 8000);
+      else console.log(html);
+    }
+
+    async function checkPaymentStatus() {
+      const btn = document.querySelector('button[onclick="checkPaymentStatus()"]');
+      if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim konfirmasi...'; }
+
+      const order = getLatestOrder();
+      let result = { ok: false, reason: 'data pesanan tidak ditemukan' };
+
+      if (order && window.YuwuriWA) {
+        try { result = await window.YuwuriWA.notifyOrder(order, 'paid'); } catch (e) { result = { ok: false, reason: String(e && e.message) }; }
+      }
+
+      if (result.ok) {
+        showToast('<i class="fa-solid fa-circle-check"></i> Pembayaran dikonfirmasi. Notifikasi WhatsApp sudah dikirim ke toko.');
+      } else {
+        const waLink = (window.YuwuriWA && order) ? window.YuwuriWA.waMeLink(order, 'paid') : null;
+        showToast(
+          '<i class="fa-brands fa-whatsapp"></i> Notifikasi otomatis belum aktif. ' +
+            (waLink ? '<a href="' + waLink + '" target="_blank" rel="noopener" style="text-decoration:underline">Kirim konfirmasi ke WhatsApp toko</a>' : 'Hubungi toko via WhatsApp.') +
+            (result.reason ? '<br><span style="opacity:.7">(' + result.reason + ')</span>' : ''),
+          'error'
+        );
+      }
+
       localStorage.removeItem('yuwuri_cart');
-      window.location.href = "catalog.html";
+      setTimeout(function () { window.location.href = 'catalog.html'; }, 1800);
     }
 
     document.addEventListener('DOMContentLoaded', function () {

@@ -4,233 +4,195 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tentang Kami — Yuwuri Shop</title>
+
   <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K9WG4VMC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-</script>
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brown: {
-              50: '#FDFBF7',
-              100: '#F7F3ED',
-              200: '#E3CEB1',
-              300: '#C7A07A',
-              700: '#734128',
-              900: '#391E10',
-            },
-            accentYellow: '#FBFF5B',
-            accentBlue: '#A1C9FF',
-          },
-          fontFamily: {
-            serif: ['Playfair Display', 'serif'],
-            sans: ['Plus Jakarta Sans', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="css/yuwuri.css">
 </head>
-<body class="bg-brown-50 text-brown-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+<body>
 
-  <!-- Top Promo Bar -->
-    <div class="bg-brown-900 text-brown-50 text-xs py-2 px-4 text-center flex items-center justify-center gap-2">
-        <span class="bg-accentYellow text-brown-900 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider">Promo Spesial</span>
-        <span class="font-medium">Gratis Ongkir untuk Koleksi Kemeja Anti-Kusut (Start Rp 30.000)</span>
-    </div>
-  
-    <!-- Header / Navbar -->
-    <header class="border-b border-brown-200/60 bg-white/90 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-            
-            <!-- Logo (Kiri) -->
-            <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900">
-                Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
-            </a>
-            
-            <!-- Menu Navigasi (Tengah) -->
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a href="index.html" class="hover:text-brown-700 transition-colors">Home</a>
-                <a href="catalog.html" class="hover:text-brown-700 transition-colors">Catalog</a>
-                <a href="about.html" class="text-brown-700 font-semibold border-b-2 border-brown-700 pb-0.5">About Us</a>
-                <a href="contact.html" class="hover:text-brown-700 transition-colors">Contact</a>
-            </nav>
+  <div class="yw-announce" data-announce>
+    <button class="yw-announce__nav" data-announce-nav="prev" aria-label="Promo sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
+    <p class="yw-announce__text"><span data-announce-item>Promo Spesial — Gratis Ongkir untuk Koleksi Kemeja Anti-Kusut (Start Rp 30.000)</span></p>
+    <button class="yw-announce__nav" data-announce-nav="next" aria-label="Promo berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
+  </div>
 
-            <!-- Kolom Cari, Profil & Keranjang (Kanan) -->
-      <div class="flex items-center gap-2 sm:gap-4">
-        
-        <!-- Pencarian -->
-        <div class="relative hidden sm:block">
-          <input type="text" placeholder="Cari kemeja/blouse..." class="pl-8 pr-4 py-1.5 text-xs bg-brown-100 border border-brown-200 rounded-full focus:outline-none focus:ring-1 focus:ring-brown-700 w-40 lg:w-56">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-brown-700/60"></i>
+  <header class="yw-header">
+    <div class="yw-wrap">
+      <div class="yw-header__bar">
+        <div class="yw-header__left">
+          <button class="yw-icon-btn yw-menu-btn" data-menu-toggle aria-label="Buka menu" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+          </button>
         </div>
-
-        <!-- Icon Profil / Login -->
-        <a href="cms.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 flex items-center justify-center" title="Masuk / Profil">
-          <i class="fa-regular fa-user text-lg"></i>
-        </a>
-
-        <!-- Icon Keranjang -->
-        <a href="cart.html" class="w-9 h-9 sm:w-10 sm:h-10 hover:bg-brown-100 rounded-full transition-colors text-brown-900 relative inline-flex items-center justify-center" title="Keranjang Belanja">
-          <i class="fa-solid fa-bag-shopping text-lg"></i>
-          <span class="absolute top-1 sm:top-1.5 right-0 sm:right-1 w-4 h-4 bg-accentYellow text-brown-900 text-[10px] font-bold rounded-full flex items-center justify-center border border-brown-900">3</span>
-        </a>
-        
+        <a href="index.html" class="yw-logo">Yuwuri<span>.shop</span></a>
+        <div class="yw-actions">
+          <nav class="yw-nav" aria-label="Navigasi utama">
+            <a href="index.html">Home</a>
+            <a href="catalog.html">Catalog</a>
+            <a href="about.html" class="is-active">About Us</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+          <a href="cart.html" class="yw-icon-btn yw-cart-link" title="Keranjang Belanja" aria-label="Keranjang belanja">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="yw-cart-count" data-cart-count>0</span>
+          </a>
+        </div>
       </div>
-            
-        </div>
-    </header>
+    </div>
+  </header>
 
-  <!-- Hero Section -->
-  <section class="py-16 md:py-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div>
-          <span class="inline-block px-4 py-1.5 bg-accentYellow text-brown-900 text-xs font-bold tracking-wider rounded-full uppercase mb-4">
-            Customer Care
-          </span>
-          <h1 class="text-4xl md:text-5xl font-serif font-bold text-brown-900 leading-tight mb-6">
-            Kenyamanan Anggun untuk Setiap Aktivitas
-          </h1>
-          <p class="text-brown-700 text-base leading-relaxed">
-            Yuwuri hadir menyediakan koleksi kemeja dan blouse pilihan yang dirancang khusus untuk wanita aktif dan berhijab, memadukan gaya modis dengan material adem anti kusut.
+  <div class="yw-mobile" data-menu>
+    <div class="yw-mobile__panel">
+      <div class="yw-mobile__top">
+        <a href="index.html" class="yw-logo" style="justify-self:start">Yuwuri<span>.shop</span></a>
+        <button class="yw-icon-btn" data-menu-close aria-label="Tutup menu"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <nav class="yw-mobile__nav" aria-label="Navigasi mobile">
+        <a href="index.html">Home</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="cart.html">Keranjang</a>
+      </nav>
+      <div class="yw-mobile__foot">
+        <p>yuwurishop@gmail.com</p>
+        <p>0896 1863 3132</p>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section class="yw-hero yw-hero--split" style="min-height:auto">
+      <div class="yw-wrap">
+        <div class="yw-hero__grid">
+          <div class="yw-hero__text reveal">
+            <span class="yw-hero__tag">Customer Care</span>
+            <h1>Kenyamanan Anggun untuk Setiap Aktivitas</h1>
+            <p class="yw-lead">
+              Yuwuri hadir menyediakan koleksi kemeja dan blouse pilihan yang dirancang khusus untuk wanita aktif dan berhijab, memadukan gaya modis dengan material adem anti kusut.
+            </p>
+            <div class="yw-hero__cta">
+              <a href="catalog.html" class="yw-btn">Lihat Koleksi <i class="fa-solid fa-arrow-right" style="margin-left:.5rem"></i></a>
+              <a href="contact.html" class="yw-btn yw-btn--ghost">Hubungi Kami</a>
+            </div>
+          </div>
+          <div class="yw-hero__media">
+            <img src="Pitch Deck E-Commerce (1).png" alt="Yuwuri Store Front">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="yw-section" style="background:var(--paper)">
+      <div class="yw-wrap">
+        <div class="yw-story reveal">
+          <span class="yw-eyebrow">Tentang Yuwuri</span>
+          <h2 style="font-size:clamp(1.5rem,3vw,2.4rem);margin:.85rem 0 1.25rem">Filosofi &amp; Komitmen Kami</h2>
+          <p>
+            Kami memahami bahwa mencari pakaian kerja atau kuliah harian yang pas di iklim tropis seringkali menjadi tantangan tersendiri. Oleh karena itu, Yuwuri berfokus menghadirkan pakaian berstandar kualitas tinggi yang ringan, tidak mudah gerah, serta tetap sopan, elegan, dan dikurasi dengan teliti untuk memastikan Anda tetap tampil percaya diri sepanjang hari tanpa mengorbankan kenyamanan.
           </p>
         </div>
-        <div class="w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-[8px_8px_0px_#E3CEB1]">
-          <img src="Pitch Deck E-Commerce (1).png" alt="Yuwuri Store Front" class="w-full h-full object-cover object-top">
+      </div>
+    </section>
+
+    <section class="yw-section">
+      <div class="yw-wrap">
+        <div style="text-align:center;max-width:620px;margin:0 auto clamp(1.75rem,4vw,2.75rem)">
+          <span class="yw-eyebrow">Keunggulan Yuwuri</span>
+          <h2 style="font-size:clamp(1.4rem,2.6vw,2rem);margin-top:.75rem">Tiga prinsip utama kami</h2>
+          <p class="yw-tiny" style="margin-top:.6rem">Tiga prinsip utama yang selalu kami pegang dalam menghadirkan produk terbaik.</p>
+        </div>
+
+        <div class="yw-values">
+          <article class="yw-value reveal">
+            <span class="yw-value__num">01</span>
+            <h3>Bahan Berkualitas</h3>
+            <p>Menggunakan material kain pilihan yang adem di kulit, ringan, dan tidak mudah kusut untuk aktivitas padat seharian.</p>
+          </article>
+          <article class="yw-value reveal">
+            <span class="yw-value__num">02</span>
+            <h3>Desain Ramah Hijab</h3>
+            <p>Potongan dan model lengan panjang yang sopan, rapi, serta tetap <i>stylish</i> mengikuti tren mode terkini.</p>
+          </article>
+          <article class="yw-value reveal">
+            <span class="yw-value__num">03</span>
+            <h3>Harga Terjangkau</h3>
+            <p>Memberikan kualitas butik dengan rentang harga ramah di kantong untuk berbagai kalangan wanita.</p>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Brand Story Section -->
-  <section class="bg-white py-16 md:py-24 border-y border-brown-100/50">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl md:text-4xl font-serif font-bold text-brown-900 mb-6">Filosofi & Komitmen Kami</h2>
-      <p class="text-brown-700 text-base md:text-lg leading-relaxed">
-        Kami memahami bahwa mencari pakaian kerja atau kuliah harian yang pas di iklim tropis seringkali menjadi tantangan tersendiri. Oleh karena itu, Yuwuri berfokus menghadirkan pakaian berstandar kualitas tinggi yang ringan, tidak mudah gerah, serta tetap sopan, elegan, dan dikurasi dengan teliti untuk memastikan Anda tetap tampil percaya diri sepanjang hari tanpa mengorbankan kenyamanan.
-      </p>
-    </div>
-  </section>
-
-  <!-- Pillars / Values -->
-  <section class="py-16 md:py-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-2xl mx-auto mb-16">
-        <h2 class="text-3xl md:text-4xl font-serif font-bold text-brown-900 mb-4">Keunggulan Yuwuri</h2>
-        <p class="text-brown-700">Tiga prinsip utama yang selalu kami pegang dalam menghadirkan produk terbaik.</p>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        
-        <div class="bg-white border border-brown-200/50 rounded-2xl p-8 hover:-translate-y-2 hover:shadow-[0_12px_24px_-8px_rgba(57,30,16,0.12)] transition-all duration-300">
-          <span class="inline-block bg-brown-50 text-brown-700 font-bold text-sm px-3 py-1 rounded-lg mb-6">01</span>
-          <h3 class="text-xl font-bold text-brown-900 mb-3">Bahan Berkualitas</h3>
-          <p class="text-brown-700 text-sm leading-relaxed">Menggunakan material kain pilihan yang adem di kulit, ringan, dan tidak mudah kusut untuk aktivitas padat seharian.</p>
-        </div>
-        
-        <div class="bg-white border border-brown-200/50 rounded-2xl p-8 hover:-translate-y-2 hover:shadow-[0_12px_24px_-8px_rgba(57,30,16,0.12)] transition-all duration-300">
-          <span class="inline-block bg-brown-50 text-brown-700 font-bold text-sm px-3 py-1 rounded-lg mb-6">02</span>
-          <h3 class="text-xl font-bold text-brown-900 mb-3">Desain Ramah Hijab</h3>
-          <p class="text-brown-700 text-sm leading-relaxed">Potongan dan model lengan panjang yang sopan, rapi, serta tetap <i>stylish</i> mengikuti tren mode terkini.</p>
-        </div>
-        
-        <div class="bg-white border border-brown-200/50 rounded-2xl p-8 hover:-translate-y-2 hover:shadow-[0_12px_24px_-8px_rgba(57,30,16,0.12)] transition-all duration-300">
-          <span class="inline-block bg-brown-50 text-brown-700 font-bold text-sm px-3 py-1 rounded-lg mb-6">03</span>
-          <h3 class="text-xl font-bold text-brown-900 mb-3">Harga Terjangkau</h3>
-          <p class="text-brown-700 text-sm leading-relaxed">Memberikan kualitas butik dengan rentang harga ramah di kantong untuk berbagai kalangan wanita.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Visual Showcase -->
-  <section class="pb-16 md:pb-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="w-full aspect-[16/11] rounded-2xl overflow-hidden shadow-[6px_6px_0px_#A1C9FF]">
-          <img src="store.jpe" alt="Koleksi Yuwuri Store" class="w-full h-full object-cover object-[center_20%]">
-        </div>
-        <div class="w-full aspect-[16/11] rounded-2xl overflow-hidden shadow-[6px_6px_0px_#FBFF5B]">
-          <img src="pink.png" alt="Koleksi Yuwuri Pink" class="w-full h-full object-cover object-[center_30%]">
+    <section class="yw-section yw-section--tight" style="padding-bottom:clamp(2.5rem,6vw,4.5rem)">
+      <div class="yw-wrap">
+        <div class="yw-duo reveal">
+          <figure><img src="store.jpe" alt="Koleksi Yuwuri Store" style="object-position:center 20%"></figure>
+          <figure><img src="pink.png" alt="Koleksi Yuwuri Pink" style="object-position:center 30%"></figure>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-    <!-- Footer -->
-    <footer class="bg-white pt-16 pb-8 border-t border-brown-200/60 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-                
-                <div class="md:col-span-2">
-                    <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900 block mb-4">
-                        Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
-                    </a>
-                    <p class="text-brown-700 text-sm leading-relaxed max-w-sm mb-6">
-                        Affordable Fashion for Fancy Women. Kami menyediakan kemeja dan blouse dailywear yang nyaman, adem, dan tahan kusut dengan harga terbaik.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-brown-100 text-brown-900 flex items-center justify-center hover:bg-brown-900 hover:text-white transition-colors">
-                            <i class="fa-brands fa-tiktok"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-brown-100 text-brown-900 flex items-center justify-center hover:bg-brown-900 hover:text-white transition-colors">
-                            <i class="fa-brands fa-instagram"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-4 text-sm">Tautan Cepat</h4>
-                    <ul class="space-y-3 text-sm text-brown-700">
-                        <li><a href="#" class="hover:text-brown-900 transition-colors">Beranda</a></li>
-                        <li><a href="catalog.html" class="hover:text-brown-900 transition-colors">Katalog Produk</a></li>
-                        <li><a href="about.html" class="hover:text-brown-900 transition-colors">Tentang Kami</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold text-brown-900 uppercase tracking-wider mb-4 text-sm">Hubungi Kami</h4>
-                    <ul class="space-y-3 text-sm text-brown-700">
-                        <li class="flex items-center gap-3">
-                            <i class="fa-brands fa-whatsapp text-brown-900"></i>
-                            0896-1863-3132
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fa-regular fa-envelope text-brown-900"></i>
-                            yuwurishop@gmail.com
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-brown-100 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-brown-700">
-                <p>&copy; 2026 Yuwuri Shop. All rights reserved.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="hover:text-brown-900 transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-brown-900 transition-colors">Terms of Service</a>
-                </div>
-            </div>
+  <footer class="yw-footer">
+    <div class="yw-wrap">
+      <div class="yw-footer__grid">
+        <div class="yw-footer__brand">
+          <a href="index.html" class="yw-logo" style="justify-self:start;display:inline-block">Yuwuri<span>.shop</span></a>
+          <p>Affordable Fashion for Fancy Women. Kami menyediakan kemeja dan blouse dailywear yang nyaman, adem, dan tahan kusut dengan harga terbaik.</p>
+          <div class="yw-social">
+            <a href="https://wa.me/6289618633132" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          </div>
         </div>
-    </footer>
 
+        <div>
+          <h4>Belanja</h4>
+          <ul>
+            <li><a href="catalog.html">Katalog</a></li>
+            <li><a href="product-detail.html">Best Seller</a></li>
+            <li><a href="cart.html">Keranjang</a></li>
+            <li><a href="checkout.html">Checkout</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Informasi</h4>
+          <ul>
+            <li><a href="about.html">Tentang Kami</a></li>
+            <li><a href="contact.html">Kontak</a></li>
+            <li><a href="login.html">Masuk</a></li>
+            <li><a href="cms.html">Admin</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Hubungi</h4>
+          <ul>
+            <li><a href="mailto:yuwurishop@gmail.com">yuwurishop@gmail.com</a></li>
+            <li><a href="tel:+6289618633132">0896 1863 3132</a></li>
+            <li><a href="https://wa.me/6289618633132">WhatsApp</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="yw-footer__bottom">
+        <span>&copy; 2026 Yuwuri Shop. All rights reserved.</span>
+        <span>Indonesia</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/yuwuri-ui.js"></script>
 </body>
 </html>
-
