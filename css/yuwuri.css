@@ -2459,6 +2459,7 @@ html.js .reveal.is-in {
 @media (min-width: 1100px) {
   .yw-admin__grid--2-1 {
     grid-template-columns: 1.8fr 1fr;
+  align-items: start;
   }
   .yw-admin__grid--1-1 {
     grid-template-columns: 1fr 1fr;
@@ -2818,4 +2819,45 @@ html.js .reveal.is-in {
   height: 28px;
   min-height: 28px;
   padding: 0 0.55rem;
+}
+
+/* kolom aksi tabel: header & isi rata kanan, jarak konsisten */
+.yw-admin .yw-table th:last-child,
+.yw-admin .yw-table td:last-child { text-align: right; }
+
+.yw-admin .yw-table__actions { justify-content: flex-end; gap: 0.45rem; }
+
+.yw-admin .yw-table th:last-child { padding-right: 0.9rem; text-align: right !important; }
+
+/* --- tinggi field & tombol seragam (checkout, login, kontak) --- */
+input.yw-input,
+select.yw-select { height: 44px; padding-block: 0; }
+
+.yw-voucher input { height: 44px; }
+.yw-voucher .yw-btn { height: 44px; }
+.yw-checkout .yw-field .yw-btn { height: 44px; }
+
+/* tabel bisa digeser di layar kecil */
+.yw-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.yw-scroll-hint { display: none; }
+
+@media (max-width: 900px) {
+  .yw-scroll-hint {
+    display: block;
+    margin: 0.7rem 1.35rem 0;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+}
+
+/* baris input + tombol: turun baris di layar sempit */
+@media (max-width: 520px) {
+  .yw-inline { flex-wrap: wrap; }
+  .yw-inline .yw-btn,
+  .yw-voucher .yw-btn { width: 100%; }
+  .yw-voucher { flex-wrap: wrap; }
 }
