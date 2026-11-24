@@ -3,218 +3,233 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout - Yuwuri Shop</title>
+  <title>Checkout — Yuwuri Shop</title>
+
   <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K9WG4VMC"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
   </script>
-  <script src="https://cdn.tailwindcss.com"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brown: { 50: '#FDFBF7', 100: '#F5EBE0', 200: '#E3CEB1', 300: '#C7A07A', 700: '#734128', 900: '#391E10' },
-            accentYellow: '#FBFF5B',
-            accentBlue: '#A1C9FF',
-          },
-          fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Plus Jakarta Sans', 'sans-serif'] }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="css/yuwuri.css">
+
   <!-- Supabase & Midtrans Snap Client Key -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="Mid-client-iRhSIYseva2UWpbd"></script>
 </head>
-<body class="bg-[#FDFBF7] text-brown-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+<body>
 
-  <div class="bg-brown-900 text-brown-50 text-xs py-2 px-4 text-center flex items-center justify-center gap-2">
-    <span class="bg-accentYellow text-brown-900 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider">Promo Spesial</span>
-    <span class="font-medium">Gratis Ongkir s.d Rp10.000 Minimal Pembelian Rp 150.000!</span>
+  <div class="yw-announce" data-announce>
+    <button class="yw-announce__nav" data-announce-nav="prev" aria-label="Promo sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
+    <p class="yw-announce__text"><span data-announce-item>Gratis Ongkir s.d Rp10.000 Minimal Pembelian Rp 150.000!</span></p>
+    <button class="yw-announce__nav" data-announce-nav="next" aria-label="Promo berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
   </div>
-  
-  <header class="border-b border-brown-200 bg-white/90 backdrop-blur-md sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-      <a href="index.html" class="text-2xl font-serif font-bold tracking-tight text-brown-900">
-        Yuwuri<span class="text-brown-700 font-normal italic">.shop</span>
-      </a>
-      <div class="hidden sm:flex items-center gap-3 text-xs font-medium">
-        <span class="text-brown-700/60">Keranjang</span>
-        <i class="fa-solid fa-chevron-right text-[10px] text-brown-300"></i>
-        <span class="text-brown-900 font-bold border-b-2 border-brown-700 pb-0.5">Pengiriman</span>
-        <i class="fa-solid fa-chevron-right text-[10px] text-brown-300"></i>
-        <span class="text-brown-700/60">Pembayaran QRIS</span>
+
+  <header class="yw-header">
+    <div class="yw-wrap">
+      <div class="yw-header__bar">
+        <div class="yw-header__left">
+          <button class="yw-icon-btn yw-menu-btn" data-menu-toggle aria-label="Buka menu" aria-expanded="false">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+        <a href="index.html" class="yw-logo">Yuwuri<span>.shop</span></a>
+        <div class="yw-actions">
+          <nav class="yw-nav" aria-label="Navigasi utama">
+            <a href="index.html">Home</a>
+            <a href="catalog.html">Catalog</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+          <a href="cart.html" class="yw-icon-btn yw-cart-link" title="Keranjang Belanja" aria-label="Keranjang belanja">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="yw-cart-count" data-cart-count>0</span>
+          </a>
+        </div>
       </div>
-      <a href="cart.html" class="text-xs font-semibold text-brown-700 hover:text-brown-900 flex items-center gap-1.5">
-        <i class="fa-solid fa-arrow-left"></i> Kembali ke Keranjang
-      </a>
     </div>
   </header>
-  
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 flex-grow w-full">
-    <h1 class="text-2xl md:text-3xl font-serif font-bold text-brown-900 mb-8">Checkout Pesanan</h1>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      <div class="lg:col-span-7 space-y-8">
-        
-        <!-- Section 1 -->
-        <div class="bg-white p-6 md:p-8 rounded-2xl border border-brown-200 shadow-sm">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="w-8 h-8 rounded-full bg-brown-900 text-white flex items-center justify-center text-sm font-bold">1</span>
-            <h2 class="font-serif text-xl font-bold">Informasi Pembeli</h2>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="md:col-span-2">
-              <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Nama Lengkap *</label>
-              <input type="text" id="buyerName" required placeholder="Contoh: Sabrina Ayu" class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:border-brown-700 transition-all">
-            </div>
-            <div class="md:col-span-2">
-              <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Nomor WhatsApp Aktif *</label>
-              <input type="tel" id="buyerPhone" inputmode="numeric" required placeholder="Contoh: 081234567890" class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:border-brown-700 transition-all">
-              <p class="text-[11px] text-brown-700 mt-1.5 flex items-center gap-1.5">
-                <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i>
-                <span>Wajib nomor WhatsApp aktif (diawali <strong>08...</strong>) untuk kami mengabari status pesanan & mengirim nomor resi.</span>
-              </p>
-            </div>
-            <div class="md:col-span-2">
-              <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Alamat Email (Opsional)</label>
-              <input type="email" id="buyerEmail" placeholder="nama@email.com" class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:border-brown-700 transition-all">
-            </div>
-          </div>
-        </div>
+  <div class="yw-mobile" data-menu>
+    <div class="yw-mobile__panel">
+      <div class="yw-mobile__top">
+        <a href="index.html" class="yw-logo" style="justify-self:start">Yuwuri<span>.shop</span></a>
+        <button class="yw-icon-btn" data-menu-close aria-label="Tutup menu"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <nav class="yw-mobile__nav" aria-label="Navigasi mobile">
+        <a href="index.html">Home</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="cart.html">Keranjang</a>
+      </nav>
+      <div class="yw-mobile__foot">
+        <p>yuwurishop@gmail.com</p>
+        <p>0896 1863 3132</p>
+      </div>
+    </div>
+  </div>
 
-        <!-- Section 2 -->
-        <div class="bg-white p-6 md:p-8 rounded-2xl border border-brown-200 shadow-sm">
-          <div class="flex items-center gap-3 mb-6">
-            <span class="w-8 h-8 rounded-full bg-brown-900 text-white flex items-center justify-center text-sm font-bold">2</span>
-            <h2 class="font-serif text-xl font-bold">Alamat Pengiriman</h2>
-          </div>
-          <div class="space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Provinsi *</label>
-                <select id="province" class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:border-brown-700 transition-all">
-                  <option value="">Pilih Provinsi</option>
-                  <option value="Jawa Barat">Jawa Barat</option>
-                  <option value="Jawa Tengah">Jawa Tengah</option>
-                  <option value="Jawa Timur">Jawa Timur</option>
-                  <option value="DKI Jakarta">DKI Jakarta</option>
-                  <option value="Banten">Banten</option>
-                  <option value="DI Yogyakarta">DI Yogyakarta</option>
-                  <option value="Luar Pulau Jawa">Luar Pulau Jawa</option>
-                </select>
+  <main>
+    <section class="yw-section yw-section--tight">
+      <div class="yw-wrap">
+        <nav class="yw-breadcrumb" aria-label="Langkah checkout">
+          <a href="cart.html">Keranjang</a><span>/</span><span>Pengiriman</span><span>/</span><span>Pembayaran QRIS</span>
+        </nav>
+        <h1 style="font-size:clamp(1.8rem,3.4vw,2.75rem)">Checkout Pesanan</h1>
+        <p class="yw-tiny" style="margin-top:.6rem">Lengkapi data pengiriman, lalu lanjut ke pembayaran QRIS.</p>
+
+        <div class="yw-checkout" style="margin-top:clamp(1.75rem,4vw,2.75rem)">
+          <div>
+            <div class="yw-panel">
+              <div class="yw-panel__head">
+                <span class="yw-step-num">1</span>
+                <h2>Informasi Pembeli</h2>
               </div>
-              <div>
-                <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Kota / Kabupaten *</label>
-                <input type="text" id="city" placeholder="Contoh: Bandung" class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:border-brown-700 transition-all">
-              </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Kecamatan *</label>
-                <input type="text" id="subdistrict" placeholder="Contoh: Coblong" class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:border-brown-700 transition-all">
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Kode Pos *</label>
-                <div class="flex gap-2">
-                  <input type="text" id="postalCode" maxlength="5" inputmode="numeric" placeholder="40132" class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:border-brown-700 transition-all">
-                  <button type="button" id="btnCheckOngkir" class="px-4 py-3 bg-brown-900 hover:bg-brown-700 text-white text-xs font-bold rounded-xl transition-colors shrink-0">
-                    Cek Ongkir
-                  </button>
+              <div class="yw-form-grid yw-form-grid--2">
+                <div class="yw-field yw-field--full">
+                  <label for="buyerName">Nama Lengkap *</label>
+                  <input type="text" id="buyerName" required placeholder="Contoh: Sabrina Ayu" class="yw-input">
+                </div>
+                <div class="yw-field">
+                  <label for="buyerPhone">Nomor WhatsApp *</label>
+                  <input type="tel" id="buyerPhone" inputmode="numeric" required placeholder="08xxxxxxxxxx" class="yw-input">
+                  <span class="yw-tiny" style="margin-top:.4rem;display:block">
+                    <i class="fa-brands fa-whatsapp" style="color:var(--ok);margin-right:.3rem"></i>Nomor aktif (diawali 08) untuk kabar status pesanan &amp; nomor resi.
+                  </span>
+                </div>
+                <div class="yw-field">
+                  <label for="buyerEmail">Alamat Email (Opsional)</label>
+                  <input type="email" id="buyerEmail" placeholder="nama@email.com" class="yw-input">
                 </div>
               </div>
             </div>
-            <div>
-              <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Alamat Lengkap (Nama Jalan, No. Rumah, RT/RW) *</label>
-              <textarea id="fullAddress" rows="3" placeholder="Jl. Dipatiukur No. 45, RT 02/RW 05, Kel. Lebakgede" class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:border-brown-700 transition-all resize-none"></textarea>
-            </div>
-            <div>
-              <label class="block text-xs font-semibold text-brown-900 uppercase tracking-wider mb-2">Catatan untuk Kurir / Toko (Opsional)</label>
-              <input type="text" id="notes" placeholder="Contoh: Titipkan di satpam / Pilih kemeja warna Olive" class="w-full px-4 py-3 text-sm bg-brown-50 border border-brown-200 rounded-xl focus:outline-none focus:border-brown-700 transition-all">
-            </div>
-          </div>
-        </div>
 
-        <!-- Section 3 -->
-        <div class="bg-white p-6 md:p-8 rounded-2xl border border-brown-200 shadow-sm">
-          <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-3">
-              <span class="w-8 h-8 rounded-full bg-brown-900 text-white flex items-center justify-center text-sm font-bold">3</span>
-              <h2 class="font-serif text-xl font-bold">Ekspedisi Pengiriman</h2>
+            <div class="yw-panel">
+              <div class="yw-panel__head">
+                <span class="yw-step-num">2</span>
+                <h2>Alamat Pengiriman</h2>
+              </div>
+              <div class="yw-form-grid yw-form-grid--2">
+                <div class="yw-field">
+                  <label for="province">Provinsi *</label>
+                  <select id="province" class="yw-select">
+                    <option value="">Pilih Provinsi</option>
+                    <option value="Jawa Barat">Jawa Barat</option>
+                    <option value="Jawa Tengah">Jawa Tengah</option>
+                    <option value="Jawa Timur">Jawa Timur</option>
+                    <option value="DKI Jakarta">DKI Jakarta</option>
+                    <option value="Banten">Banten</option>
+                    <option value="DI Yogyakarta">DI Yogyakarta</option>
+                    <option value="Luar Pulau Jawa">Luar Pulau Jawa</option>
+                  </select>
+                </div>
+                <div class="yw-field">
+                  <label for="city">Kota / Kabupaten *</label>
+                  <input type="text" id="city" placeholder="Contoh: Bandung" class="yw-input">
+                </div>
+                <div class="yw-field">
+                  <label for="subdistrict">Kecamatan *</label>
+                  <input type="text" id="subdistrict" placeholder="Contoh: Coblong" class="yw-input">
+                </div>
+                <div class="yw-field">
+                  <label for="postalCode">Kode Pos *</label>
+                  <div style="display:flex;gap:.65rem;align-items:stretch">
+                    <input type="text" id="postalCode" maxlength="5" inputmode="numeric" placeholder="40132" class="yw-input" style="flex:1;min-width:0">
+                    <button type="button" id="btnCheckOngkir" class="yw-btn yw-btn--sm" style="flex-shrink:0">Cek Ongkir</button>
+                  </div>
+                </div>
+                <div class="yw-field yw-field--full">
+                  <label for="fullAddress">Alamat Lengkap (Nama Jalan, No. Rumah, RT/RW) *</label>
+                  <textarea id="fullAddress" rows="3" placeholder="Jl. Dipatiukur No. 45, RT 02/RW 05, Kel. Lebakgede" class="yw-input" style="resize:none"></textarea>
+                </div>
+                <div class="yw-field yw-field--full">
+                  <label for="notes">Catatan untuk Kurir / Toko (Opsional)</label>
+                  <input type="text" id="notes" placeholder="Contoh: Titipkan di satpam / Pilih kemeja warna Olive" class="yw-input">
+                </div>
+              </div>
             </div>
-            <span id="weightInfo" class="text-xs text-brown-700 bg-brown-50 px-3 py-1 rounded-full border border-brown-200">Estimasi berat: 250g</span>
-          </div>
-          
-          <p id="shippingHelper" class="text-xs text-brown-700 mb-3">
-            Masukkan 5 digit <strong>Kode Pos</strong> di atas lalu klik <strong>Cek Ongkir</strong> untuk melihat tarif kurir asli.
-          </p>
 
-          <div id="shippingOptions" class="space-y-3">
-            <div class="p-4 bg-brown-50 border border-brown-200 rounded-xl text-xs text-brown-700 text-center">
-              Tarif ekspedisi akan muncul otomatis setelah kamu memasukkan kode pos tujuan.
+            <div class="yw-panel">
+              <div class="yw-panel__head" style="justify-content:space-between">
+                <span style="display:flex;align-items:center;gap:.75rem">
+                  <span class="yw-step-num">3</span>
+                  <h2>Ekspedisi Pengiriman</h2>
+                </span>
+                <span id="weightInfo" class="yw-tag">Estimasi berat: 250g</span>
+              </div>
+              <p id="shippingHelper" class="yw-tiny" style="margin-bottom:1rem">
+                Masukkan 5 digit <strong>Kode Pos</strong> di atas lalu klik <strong>Cek Ongkir</strong> untuk melihat tarif kurir asli.
+              </p>
+              <div id="shippingOptions" style="display:grid;gap:.65rem"></div>
             </div>
           </div>
+
+          <aside class="yw-checkout__aside">
+            <div class="yw-panel">
+              <h2 style="font-size:1rem;padding-bottom:1rem;border-bottom:1px solid var(--line);margin-bottom:.5rem">Ringkasan Pesanan</h2>
+              <div id="checkoutItems">
+                <p class="yw-tiny" style="padding-block:1rem">Memuat produk keranjang...</p>
+              </div>
+
+              <div class="yw-voucher">
+                <input type="text" placeholder="Kode Diskon / Voucher" aria-label="Kode voucher">
+                <button type="button" class="yw-btn yw-btn--sm">Gunakan</button>
+              </div>
+
+              <div style="border-top:1px solid var(--line);padding-top:.75rem">
+                <div class="yw-summary__row">
+                  <span>Subtotal Produk</span>
+                  <span id="checkoutSubtotal">Rp 0</span>
+                </div>
+                <div class="yw-summary__row">
+                  <span>Biaya Pengiriman</span>
+                  <span id="checkoutShipping">Pilih kurir</span>
+                </div>
+                <div id="discountRow" class="yw-summary__row hidden" style="color:var(--ok)">
+                  <span style="color:var(--ok)">Subsidi Ongkir (maks Rp10.000)</span>
+                  <span id="checkoutDiscount">-Rp 0</span>
+                </div>
+                <div class="yw-summary__row yw-summary__total">
+                  <span>Total Pembayaran</span>
+                  <b id="checkoutTotal">Rp 0</b>
+                </div>
+              </div>
+
+              <button type="button" id="btnPayNow" class="yw-btn" style="width:100%;margin-top:1.5rem">
+                Lanjut ke Pembayaran QRIS <i class="fa-solid fa-arrow-right" style="margin-left:.5rem"></i>
+              </button>
+              <p class="yw-note" style="text-align:center">
+                <i class="fa-solid fa-shield-halved" style="margin-right:.35rem;color:var(--ok)"></i>Pembayaran QRIS otomatis &amp; terverifikasi
+              </p>
+            </div>
+          </aside>
         </div>
       </div>
-
-      <!-- Right Column: Ringkasan Pesanan -->
-      <div class="lg:col-span-5 sticky top-24 space-y-6">
-        <div class="bg-white p-6 md:p-8 rounded-2xl border border-brown-200 shadow-sm">
-          <h2 class="font-serif text-xl font-bold mb-6 pb-4 border-b border-brown-200">Ringkasan Pesanan</h2>
-          <div id="checkoutItems" class="space-y-4 mb-6">
-            <p class="text-xs text-brown-700">Memuat produk keranjang...</p>
-          </div>
-          <div class="flex gap-2 mb-6">
-            <input type="text" placeholder="Kode Diskon / Voucher" class="w-full px-3 py-2 text-xs bg-brown-50 border border-brown-200 rounded-lg focus:outline-none focus:border-brown-700">
-            <button type="button" class="px-4 py-2 bg-brown-900 text-white text-xs font-semibold rounded-lg hover:bg-brown-700 transition-colors shrink-0">Gunakan</button>
-          </div>
-          <div class="space-y-3 pt-4 border-t border-brown-200 text-sm">
-            <div class="flex justify-between text-brown-700">
-              <span>Subtotal Produk</span>
-              <span id="checkoutSubtotal" class="font-semibold text-brown-900">Rp 0</span>
-            </div>
-            <div class="flex justify-between text-brown-700">
-              <span>Biaya Pengiriman</span>
-              <span id="checkoutShipping" class="font-semibold text-brown-900">Rp 0</span>
-            </div>
-            <div id="discountRow" class="hidden justify-between text-emerald-700">
-              <span>Subsidi Ongkir (Max Rp10.000)</span>
-              <span id="checkoutDiscount" class="font-semibold">-Rp 0</span>
-            </div>
-            <div class="flex justify-between text-base font-bold text-brown-900 pt-3 border-t border-brown-200">
-              <span>Total Pembayaran</span>
-              <span id="checkoutTotal" class="text-lg text-brown-900">Rp 0</span>
-            </div>
-          </div>
-          <button type="button" id="btnPayNow" class="w-full mt-6 py-4 px-6 bg-brown-900 hover:bg-brown-700 text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 text-center cursor-pointer">
-            Lanjut ke Pembayaran QRIS <i class="fa-solid fa-arrow-right ml-1"></i>
-          </button>
-          <p class="text-[11px] text-brown-700 text-center mt-3">
-            <i class="fa-solid fa-shield-halved text-emerald-600 mr-1"></i> Pembayaran QRIS Otomatis & Terverifikasi
-          </p>
-        </div>
-      </div>
-
-    </div>
+    </section>
   </main>
 
-  <footer class="bg-white pt-12 pb-8 border-t border-brown-200 mt-auto">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-brown-700">
-      <p>&copy; 2026 Yuwuri Shop. All rights reserved.</p>
+  <footer class="yw-footer">
+    <div class="yw-wrap">
+      <div class="yw-footer__bottom" style="border-top:0">
+        <span>&copy; 2026 Yuwuri Shop. All rights reserved.</span>
+        <span>Indonesia</span>
+      </div>
     </div>
   </footer>
+
+  <script src="js/yuwuri-ui.js"></script>
 
   <script>
     (function () {
       let cart = [];
       try { cart = JSON.parse(localStorage.getItem('yuwuri_cart') || '[]'); } catch (e) { cart = []; }
+
       const itemsContainer = document.getElementById('checkoutItems');
       const subtotalEl = document.getElementById('checkoutSubtotal');
       const shippingEl = document.getElementById('checkoutShipping');
@@ -229,32 +244,40 @@
       const weightInfo = document.getElementById('weightInfo');
       const phoneInput = document.getElementById('buyerPhone');
 
-      // Bersihkan karakter selain angka otomatis saat mengetik nomor WA
+      const formatRp = (num) => 'Rp ' + (Number(num) || 0).toLocaleString('id-ID');
+      const escapeHtml = (str) => String(str || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
       if (phoneInput) {
         phoneInput.addEventListener('input', () => {
           phoneInput.value = phoneInput.value.replace(/\D/g, '');
         });
       }
 
-      const formatRp = (num) => 'Rp ' + (Number(num) || 0).toLocaleString('id-ID');
-      const escapeHtml = (str) => String(str || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-
       let subtotal = 0, totalQty = 0, currentGrandTotal = 0, currentShippingCost = 0;
 
       if (!cart || !cart.length) {
-        if (itemsContainer) itemsContainer.innerHTML = '<div class="p-4 bg-brown-50 border border-brown-200 rounded-xl text-center"><p class="text-xs text-brown-700 mb-2">Keranjang belanjamu masih kosong.</p><a href="catalog.html" class="text-xs font-bold underline text-brown-900">Kembali ke Katalog</a></div>';
-        if (payButton) { payButton.disabled = true; payButton.classList.add('opacity-50', 'cursor-not-allowed'); }
+        if (itemsContainer) itemsContainer.innerHTML = '<div class="yw-empty" style="border:0;padding:1.5rem 0"><p class="yw-tiny" style="margin-bottom:.75rem">Keranjang belanjamu masih kosong.</p><a href="catalog.html" class="yw-btn yw-btn--sm">Kembali ke Katalog</a></div>';
+        if (payButton) { payButton.disabled = true; payButton.style.opacity = '.45'; payButton.style.cursor = 'not-allowed'; }
       } else if (itemsContainer) {
         itemsContainer.innerHTML = cart.map(item => {
           const price = Number(item.price) || 0, qty = Number(item.quantity) || 1, itemTotal = price * qty;
           subtotal += itemTotal;
           totalQty += qty;
-          return `<div class="flex items-center justify-between gap-4"><div class="flex items-center gap-3 min-w-0"><div class="w-14 h-14 bg-brown-100 rounded-xl overflow-hidden shrink-0 border border-brown-200 flex items-center justify-center text-brown-700"><i class="fa-solid fa-shirt text-2xl"></i></div><div class="min-w-0"><h4 class="font-bold text-sm text-brown-900 truncate">${escapeHtml(item.name || 'Produk')}</h4><p class="text-xs text-brown-700">Warna: ${escapeHtml(item.color || 'Default')} | Qty: ${qty}</p></div></div><span class="font-bold text-sm text-brown-900 shrink-0">${formatRp(itemTotal)}</span></div>`;
+          const thumb = item.image_url || ('baju' + item.id + '.png');
+          return `<div class="yw-checkout-item">
+            <img class="yw-checkout-item__thumb" src="${escapeHtml(thumb)}" alt="${escapeHtml(item.name || 'Produk')}" loading="lazy"
+                 onerror="this.onerror=null;this.src='https://via.placeholder.com/120x150/EEF0F1/000000?text=Yuwuri';">
+            <div style="min-width:0">
+              <p class="yw-checkout-item__name">${escapeHtml(item.name || 'Produk')}</p>
+              <p class="yw-checkout-item__meta">${escapeHtml(item.color || 'Default')} &middot; Qty ${qty}</p>
+            </div>
+            <b class="yw-checkout-item__meta" style="color:var(--ink);white-space:nowrap">${formatRp(itemTotal)}</b>
+          </div>`;
         }).join('');
       }
 
       const totalWeightGram = Math.max(250, totalQty * 250);
-      if (weightInfo) weightInfo.textContent = `Estimasi berat: ${totalWeightGram}g`;
+      if (weightInfo) weightInfo.textContent = 'Estimasi berat: ' + totalWeightGram + 'g';
 
       function updateTotals() {
         const selectedShipping = document.querySelector('input[name="shipping"]:checked');
@@ -267,11 +290,9 @@
         if (discountRow && discountEl) {
           if (shippingDiscount > 0) {
             discountRow.classList.remove('hidden');
-            discountRow.classList.add('flex');
             discountEl.textContent = '-' + formatRp(shippingDiscount);
           } else {
             discountRow.classList.add('hidden');
-            discountRow.classList.remove('flex');
           }
         }
         if (totalEl) totalEl.textContent = formatRp(currentGrandTotal);
@@ -280,31 +301,28 @@
       async function fetchOngkir() {
         const code = postalInput.value.replace(/\D/g, '').trim();
         if (code.length !== 5) {
-          shippingHelper.innerHTML = '<span class="text-red-600 font-semibold">Masukkan 5 digit kode pos tujuan yang valid (contoh: 40132).</span>';
+          shippingHelper.innerHTML = '<span style="color:var(--danger);font-weight:600">Masukkan 5 digit kode pos tujuan yang valid (contoh: 40132).</span>';
           return;
         }
 
         btnCheckOngkir.disabled = true;
         btnCheckOngkir.textContent = 'Mengecek...';
         shippingHelper.textContent = 'Mengambil tarif ekspedisi resmi untuk kode pos ' + code + '...';
-        shippingOptions.innerHTML = '<div class="p-4 bg-brown-50 border border-brown-200 rounded-xl text-xs text-brown-700 text-center">Memuat daftar kurir...</div>';
+        shippingOptions.innerHTML = '<div class="yw-empty" style="border:0;padding:1rem 0"><p class="yw-tiny">Memuat daftar kurir...</p></div>';
 
         try {
           const response = await fetch('/api/ongkir', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              destination_postal_code: code,
-              weight_gram: totalWeightGram
-            })
+            body: JSON.stringify({ destination_postal_code: code, weight_gram: totalWeightGram })
           });
 
           const data = await response.json();
 
           if (!data.success || !Array.isArray(data.pricing) || !data.pricing.length) {
             const alasan = data.error || data.message || 'Tarif untuk kode pos tersebut tidak ditemukan. Periksa kembali kode pos kamu.';
-            shippingHelper.innerHTML = `<span class="text-red-600 font-semibold">${escapeHtml(alasan)}</span>`;
-            shippingOptions.innerHTML = '<div class="p-4 bg-brown-50 border border-brown-200 rounded-xl text-xs text-brown-700 text-center">Tidak ada layanan pengiriman tersedia.</div>';
+            shippingHelper.innerHTML = `<span style="color:var(--danger);font-weight:600">${escapeHtml(alasan)}</span>`;
+            shippingOptions.innerHTML = '<div class="yw-empty" style="border:0;padding:1rem 0"><p class="yw-tiny">Tidak ada layanan pengiriman tersedia.</p></div>';
             updateTotals();
             return;
           }
@@ -313,24 +331,22 @@
           shippingOptions.innerHTML = data.pricing.map((item, idx) => {
             const labelKurir = `${item.courier_name} - ${item.courier_service_name}`;
             const durasi = item.duration ? `Estimasi ${item.duration}` : 'Layanan Reguler';
-            return `
-              <label class="flex items-center justify-between p-4 bg-brown-50 border border-brown-200 rounded-xl cursor-pointer hover:border-brown-700 transition-all">
-                <div class="flex items-center gap-3">
-                  <input type="radio" name="shipping" value="${escapeHtml(labelKurir)}" data-cost="${item.price}" ${idx === 0 ? 'checked' : ''} class="w-4 h-4 text-brown-900 focus:ring-brown-700">
-                  <div>
-                    <span class="font-semibold text-sm block">${escapeHtml(labelKurir)}</span>
-                    <span class="text-xs text-brown-700">${escapeHtml(durasi)}</span>
-                  </div>
-                </div>
-                <span class="font-bold text-sm">${formatRp(item.price)}</span>
-              </label>
-            `;
+            return `<label class="yw-ship">
+              <span class="yw-ship__left">
+                <input type="radio" name="shipping" value="${escapeHtml(labelKurir)}" data-cost="${item.price}" ${idx === 0 ? 'checked' : ''}>
+                <span>
+                  <span class="yw-ship__name">${escapeHtml(labelKurir)}</span>
+                  <span class="yw-ship__eta">${escapeHtml(durasi)}</span>
+                </span>
+              </span>
+              <span class="yw-ship__cost">${formatRp(item.price)}</span>
+            </label>`;
           }).join('');
 
           document.querySelectorAll('input[name="shipping"]').forEach(radio => radio.addEventListener('change', updateTotals));
           updateTotals();
         } catch (err) {
-          shippingHelper.innerHTML = '<span class="text-red-600 font-semibold">Gagal terhubung ke layanan cek ongkir. Coba beberapa saat lagi.</span>';
+          shippingHelper.innerHTML = '<span style="color:var(--danger);font-weight:600">Gagal terhubung ke layanan cek ongkir. Coba beberapa saat lagi.</span>';
           shippingOptions.innerHTML = '';
         } finally {
           btnCheckOngkir.disabled = false;
@@ -347,7 +363,6 @@
 
       updateTotals();
 
-      // Inisialisasi Supabase Client
       const supabaseClient = window.supabase.createClient(
         'https://jrsooxmoljjqtgjmkumz.supabase.co',
         'sb_publishable_scpzlZ7fozc6EogEkZTTYA_rsB5cF4M'
@@ -373,18 +388,16 @@
             return;
           }
 
-          // Validasi nomor WhatsApp Indonesia (minimal 10 digit, diawali 08 atau 628)
           if (!/^(08|628)\d{8,13}$/.test(rawPhone)) {
             alert('Nomor WhatsApp tidak valid. Masukkan nomor WhatsApp aktif yang diawali 08 (minimal 10 digit, contoh: 081234567890).');
             phoneInput.focus();
             return;
           }
 
-          // Normalisasi ke format 628... agar langsung valid di link wa.me
           const buyerPhone = rawPhone.startsWith('0') ? '62' + rawPhone.slice(1) : rawPhone;
 
           payButton.disabled = true;
-          payButton.innerHTML = 'Memproses Pembayaran...';
+          payButton.textContent = 'Memproses Pembayaran...';
 
           try {
             const orderCode = 'YWR-' + Date.now();
@@ -407,11 +420,9 @@
               resi: ''
             };
 
-            // 1. Simpan pesanan ke tabel 'orders' di Supabase
             const { error: dbError } = await supabaseClient.from('orders').insert([dbOrderData]);
             if (dbError) throw new Error('Gagal menyimpan pesanan: ' + dbError.message);
 
-            // 2. Panggil Edge Function untuk mendapatkan Snap Token Midtrans
             const { data: payData, error: funcError } = await supabaseClient.functions.invoke('create-midtrans-token', {
               body: {
                 order_code: orderCode,
@@ -426,7 +437,6 @@
               throw new Error('Gagal memuat token pembayaran Midtrans.');
             }
 
-            // 3. Tampilkan pop-up Midtrans Snap
             window.snap.pay(payData.token, {
               onSuccess: async function () {
                 await supabaseClient
@@ -453,7 +463,7 @@
             alert(err.message);
           } finally {
             payButton.disabled = false;
-            payButton.innerHTML = 'Lanjut ke Pembayaran QRIS <i class="fa-solid fa-arrow-right ml-1"></i>';
+            payButton.innerHTML = 'Lanjut ke Pembayaran QRIS <i class="fa-solid fa-arrow-right" style="margin-left:.5rem"></i>';
           }
         });
       }
