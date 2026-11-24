@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{brown:{50:'#f7f7f7',100:'#efefef',200:'#D8DCDE',300:'#b9bfc2',700:'#4a4f52',900:'#000000'}},fontFamily:{sans:['Didact Gothic','sans-serif'],serif:['Didact Gothic','sans-serif']}}}};</script>
   <link rel="stylesheet" href="css/yuwuri.css">
 </head>
 <body>
@@ -39,18 +41,18 @@
   </div>
 
   <!-- ============================================================ app -->
-  <div id="app" hidden>
+  <div id="app" class="hidden">
     <div class="yw-admin">
       <aside class="yw-admin__side">
         <div>
           <a href="index.html" class="yw-admin__logo">Yuwuri<span>.shop</span><small>Daily Shirt &amp; Blouse Admin</small></a>
           <nav class="yw-admin__nav">
-            <button type="button" data-tab="orders" class="is-active">
+            <a href="#ordersSection" class="is-active">
               <i class="fa-solid fa-bag-shopping"></i> Pesanan
               <span id="sidebarOrderBadge" class="yw-badge yw-badge--dark" style="margin-left:auto">0</span>
-            </button>
-            <button type="button" data-tab="products"><i class="fa-solid fa-shirt"></i> Produk</button>
-            <button type="button" data-tab="analytics"><i class="fa-solid fa-chart-line"></i> Analytics GA4</button>
+            </a>
+            <a href="#products"><i class="fa-solid fa-shirt"></i> Produk</a>
+            <a href="#analyticsSection"><i class="fa-solid fa-chart-line"></i> Analytics GA4</a>
             <a href="catalog.html"><i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Katalog</a>
           </nav>
         </div>
@@ -67,7 +69,7 @@
         <header class="yw-admin__top">
           <div>
             <p class="yw-admin__crumb">Yuwuri Shop / Admin</p>
-            <h1 id="pageTitle">Pesanan Masuk</h1>
+            <h1 id="pageTitle">Dashboard Admin</h1>
           </div>
           <div style="display:flex;gap:.5rem;flex-wrap:wrap">
             <button id="refreshOrdersBtn" class="yw-btn yw-btn--sm yw-btn--ghost"><i class="fa-solid fa-rotate" style="margin-right:.4rem"></i> Refresh</button>
@@ -76,15 +78,14 @@
         </header>
 
         <div class="yw-admin__mobnav" style="padding:.75rem clamp(1rem,2.5vw,2.25rem) 0">
-          <button type="button" data-tab="orders" class="yw-btn yw-btn--sm is-active">Pesanan</button>
-          <button type="button" data-tab="products" class="yw-btn yw-btn--sm yw-btn--ghost">Produk</button>
-          <button type="button" data-tab="analytics" class="yw-btn yw-btn--sm yw-btn--ghost">Analytics</button>
+          <a href="#ordersSection" class="yw-btn yw-btn--sm is-active">Pesanan</a>
+          <a href="#products" class="yw-btn yw-btn--sm yw-btn--ghost">Produk</a>
+          <a href="#analyticsSection" class="yw-btn yw-btn--sm yw-btn--ghost">Analytics</a>
         </div>
 
-        <main class="yw-admin__body">
+        <main id="dashboard" class="yw-admin__body">
 
           <!-- ---------------------------------------------------- pesanan -->
-          <section data-panel="orders">
             <div class="yw-kpis">
               <div class="yw-kpi">
                 <span class="yw-kpi__label">Perlu Diproses</span>
@@ -128,7 +129,7 @@
                 </div>
               </div>
 
-              <div id="orderStatusMessage" class="yw-notice" hidden style="margin:1rem 1.35rem 0"></div>
+              <div id="orderStatusMessage" class="yw-notice hidden" style="margin:1rem 1.35rem 0"></div>
 
               <div style="overflow-x:auto">
                 <table class="yw-table">
@@ -152,11 +153,9 @@
             <p class="yw-tiny" style="margin-top:1rem">
               Data pesanan terhubung langsung dengan tabel <code>orders</code> di Supabase Yuwuri Shop.
             </p>
-          </section>
 
           <!-- ---------------------------------------------------- produk -->
-          <section data-panel="products" hidden>
-            <section id="products" class="yw-panel" style="padding:0;overflow:hidden">
+            <section id="products" class="yw-panel" style="margin-top:2.5rem;padding:0;overflow:hidden">
               <div style="padding:1.15rem 1.35rem;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between">
                 <div>
                   <h2 style="font-size:1rem">Daftar Produk Yuwuri Shop</h2>
@@ -167,7 +166,7 @@
                   <select id="categoryFilter" class="yw-select" style="width:auto"><option value="">Semua kategori</option></select>
                 </div>
               </div>
-              <div id="statusMessage" class="yw-notice" hidden style="margin:1rem 1.35rem 0"></div>
+              <div id="statusMessage" class="yw-notice hidden" style="margin:1rem 1.35rem 0"></div>
               <div style="overflow-x:auto">
                 <table class="yw-table">
                   <thead>
@@ -190,10 +189,9 @@
             <p class="yw-tiny" style="margin-top:1rem">
               Perubahan produk disimpan langsung ke Supabase. Produk nonaktif tidak ditampilkan di katalog pelanggan.
             </p>
-          </section>
 
           <!-- ---------------------------------------------------- analytics -->
-          <section data-panel="analytics" hidden>
+          <section id="analyticsSection" style="margin-top:2.5rem">
             <div data-ga-dashboard>
               <div class="yw-ga-bar" style="margin-bottom:1.25rem">
                 <div data-ga-status><span class="yw-ga-bar__status"><span class="yw-dot"></span>Menyiapkan dashboard…</span></div>
@@ -308,7 +306,7 @@
   </div>
 
   <!-- ============================================================ modal pesanan -->
-  <div id="orderModal" class="yw-modal" hidden>
+  <div id="orderModal" class="yw-modal hidden">
     <form id="orderForm" class="yw-modal__card">
       <div class="yw-modal__head">
         <div>
@@ -350,7 +348,7 @@
   </div>
 
   <!-- ============================================================ modal produk -->
-  <div id="productModal" class="yw-modal" hidden>
+  <div id="productModal" class="yw-modal hidden">
     <form id="productForm" class="yw-modal__card">
       <div class="yw-modal__head">
         <h2 id="modalTitle">Tambah Produk</h2>
@@ -420,359 +418,287 @@
   <script src="js/ga-config.js"></script>
   <script src="js/ga-analytics.js"></script>
   <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-    const supabase = createClient('https://jrsooxmoljjqtgjmkumz.supabase.co', 'sb_publishable_scpzlZ7fozc6EogEkZTTYA_rsB5cF4M');
-    const $ = id => document.getElementById(id);
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const supabase = createClient('https://jrsooxmoljjqtgjmkumz.supabase.co', 'sb_publishable_scpzlZ7fozc6EogEkZTTYA_rsB5cF4M');
+const $ = id => document.getElementById(id);
 
-    let allProducts = [];
-    let allOrders = [];
+let allProducts = [];
+let allOrders = [];
 
-    /* ------------------------------------------------------------------ tabs */
-    const titles = { orders: 'Pesanan Masuk', products: 'Daftar Produk', analytics: 'Google Analytics 4' };
-    function setTab(name) {
-      document.querySelectorAll('[data-panel]').forEach(p => { p.hidden = p.getAttribute('data-panel') !== name; });
-      document.querySelectorAll('[data-tab]').forEach(b => {
-        const on = b.getAttribute('data-tab') === name;
-        b.classList.toggle('is-active', on);
-        if (b.classList.contains('yw-btn')) b.classList.toggle('yw-btn--ghost', !on);
-      });
-      $('pageTitle').textContent = titles[name] || 'Dashboard';
-      if (location.hash.slice(1) !== name) history.replaceState(null, '', '#' + name);
-      if (name === 'analytics' && window.YuwuriAnalytics) window.YuwuriAnalytics.refresh();
-    }
-    document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => setTab(b.getAttribute('data-tab'))));
+function notice(message, error=false) {
+ const el=$('statusMessage'); el.textContent=message;
+ el.className=`mx-5 mt-4 p-3 rounded-xl text-xs ${error?'bg-red-50 text-red-700':'bg-green-50 text-green-700'}`;
+}
+function orderNotice(message, error=false) {
+ const el=$('orderStatusMessage'); el.textContent=message;
+ el.className=`mx-5 mt-4 p-3 rounded-xl text-xs ${error?'bg-red-50 text-red-700':'bg-green-50 text-green-700'}`;
+}
+function toast(message) {
+ const el=$('toast'); el.textContent=message; el.classList.remove('hidden');
+ setTimeout(()=>el.classList.add('hidden'),2600);
+}
+function rupiah(n) {
+ return new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(n)||0);
+}
+function escapeHtml(v) {
+ return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+}
+function formatDate(iso) {
+ if (!iso) return '-';
+ return new Date(iso).toLocaleString('id-ID', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+}
 
-    /* --------------------------------------------------------------- helpers */
-    function notice(message, error = false) {
-      const el = $('statusMessage');
-      el.hidden = false;
-      el.textContent = message;
-      el.className = 'yw-notice ' + (error ? 'yw-notice--error' : 'yw-notice--ok');
-      el.style.margin = '1rem 1.35rem 0';
-    }
-    function orderNotice(message, error = false) {
-      const el = $('orderStatusMessage');
-      el.hidden = false;
-      el.textContent = message;
-      el.className = 'yw-notice ' + (error ? 'yw-notice--error' : 'yw-notice--ok');
-      el.style.margin = '1rem 1.35rem 0';
-    }
-    function toast(message) {
-      const el = $('toast');
-      el.innerHTML = message;
-      el.classList.add('is-visible');
-      clearTimeout(el._timer);
-      el._timer = setTimeout(() => el.classList.remove('is-visible'), 2600);
-    }
-    function rupiah(n) {
-      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(Number(n) || 0);
-    }
-    function escapeHtml(v) {
-      return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[c]));
-    }
-    function formatDate(iso) {
-      if (!iso) return '-';
-      return new Date(iso).toLocaleString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-    }
+// --- VERIFIKASI SESI ADMIN ---
+async function verifySession() {
+ const {data:{session},error:sessionError} = await supabase.auth.getSession();
+ if (sessionError || !session) { window.location.replace('login.html?next=admin.html'); return; }
+ const {data:admin,error} = await supabase.from('admin_users').select('user_id').eq('user_id',session.user.id).maybeSingle();
+ if (error) { notice('Tidak bisa memverifikasi hak admin: '+error.message,true); return; }
+ if (!admin) { window.location.replace('login.html?error=not-admin'); return; }
+ $('loginScreen').classList.add('hidden');
+ $('app').classList.remove('hidden');
+ $('app').classList.add('md:flex');
+ $('adminEmail').textContent=session.user.email||'Yuwuri Admin';
+ await Promise.all([loadOrders(), loadProducts()]);
+}
 
-    /* --------------------------------------------------------------- session */
-    async function verifySession() {
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      if (sessionError || !session) { window.location.replace('login.html?next=' + encodeURIComponent('admin.html' + (location.hash || ''))); return; }
-      const { data: admin, error } = await supabase.from('admin_users').select('user_id').eq('user_id', session.user.id).maybeSingle();
-      if (error) { $('loginMessage').textContent = 'Tidak bisa memverifikasi hak admin: ' + error.message; return; }
-      if (!admin) { window.location.replace('login.html?error=not-admin'); return; }
-      $('loginScreen').hidden = true;
-      $('app').hidden = false;
-      $('adminEmail').textContent = session.user.email || 'Yuwuri Admin';
-      const startTab = (location.hash || '').slice(1);
-      setTab(titles[startTab] ? startTab : 'orders');
-      await Promise.all([loadOrders(), loadProducts()]);
-    }
+$('logoutBtn').addEventListener('click',async()=>{await supabase.auth.signOut();window.location.href='login.html';});
 
-    $('logoutBtn').addEventListener('click', async () => { await supabase.auth.signOut(); window.location.href = 'login.html'; });
+// --- BAGIAN PESANAN (ORDERS) ---
+function getStatusBadgeClass(status) {
+ const s = String(status || '').toLowerCase();
+ if (s.includes('dibayar') || s.includes('paid')) return 'bg-emerald-50 text-emerald-700 border border-emerald-200';
+ if (s.includes('kemas')) return 'bg-blue-50 text-blue-700 border border-blue-200';
+ if (s.includes('kirim')) return 'bg-purple-50 text-purple-700 border border-purple-200';
+ if (s.includes('selesai')) return 'bg-gray-100 text-gray-700 border border-gray-200';
+ if (s.includes('batal')) return 'bg-red-50 text-red-700 border border-red-200';
+ return 'bg-amber-50 text-amber-700 border border-amber-200';
+}
 
-    /* --------------------------------------------------------------- pesanan */
-    function statusBadgeClass(status) {
-      const s = String(status || '').toLowerCase();
-      if (s.includes('dibayar') || s.includes('paid')) return 'yw-badge yw-badge--ok';
-      if (s.includes('kemas')) return 'yw-badge';
-      if (s.includes('kirim')) return 'yw-badge yw-badge--dark';
-      if (s.includes('selesai')) return 'yw-badge';
-      if (s.includes('batal')) return 'yw-badge yw-badge--low';
-      return 'yw-badge';
-    }
+function formatWaLink(order) {
+ let phone = String(order.buyer_phone || '').replace(/\D/g, '');
+ if (phone.startsWith('0')) phone = '62' + phone.slice(1);
+ const resiText = order.resi ? `\nNomor Resi: *${order.resi}* (${order.shipping_method || 'Ekspedisi'})` : '';
+ const msg = `Halo Kak *${order.buyer_name}*! Terima kasih sudah berbelanja di *Yuwuri Shop*.\n\nPesanan: *${order.order_code}*\nStatus saat ini: *${order.status}*${resiText}\n\nJika ada pertanyaan, silakan balas pesan ini ya Kak!`;
+ return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+}
 
-    function formatWaLink(order) {
-      let phone = String(order.buyer_phone || '').replace(/\D/g, '');
-      if (phone.startsWith('0')) phone = '62' + phone.slice(1);
-      const resiText = order.resi ? `\nNomor Resi: *${order.resi}* (${order.shipping_method || 'Ekspedisi'})` : '';
-      const msg = `Halo Kak *${order.buyer_name}*! Terima kasih sudah berbelanja di *Yuwuri Shop*.\n\nPesanan: *${order.order_code}*\nStatus saat ini: *${order.status}*${resiText}\n\nJika ada pertanyaan, silakan balas pesan ini ya Kak!`;
-      return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-    }
+function renderOrderMetrics() {
+ $('metricTotalOrders').textContent = allOrders.length;
+ const needProcess = allOrders.filter(o => {
+  const s = String(o.status || '').toLowerCase();
+  return s.includes('dibayar') || s.includes('paid') || s.includes('kemas');
+ }).length;
+ $('metricPendingProcess').textContent = needProcess;
+ $('sidebarOrderBadge').textContent = needProcess;
+}
 
-    function renderOrderMetrics() {
-      $('metricTotalOrders').textContent = allOrders.length;
-      const needProcess = allOrders.filter(o => {
-        const s = String(o.status || '').toLowerCase();
-        return s.includes('dibayar') || s.includes('paid') || s.includes('kemas');
-      }).length;
-      $('metricPendingProcess').textContent = needProcess;
-      $('sidebarOrderBadge').textContent = needProcess;
-    }
+function renderOrders() {
+ const q = $('orderSearchInput').value.toLowerCase();
+ const st = $('orderStatusFilter').value;
 
-    function renderOrders() {
-      const q = $('orderSearchInput').value.toLowerCase();
-      const st = $('orderStatusFilter').value;
+ const filtered = allOrders.filter(o => {
+  const matchStatus = !st || o.status === st;
+  const matchQuery = !q || `${o.order_code} ${o.buyer_name} ${o.buyer_phone} ${o.resi || ''}`.toLowerCase().includes(q);
+  return matchStatus && matchQuery;
+ });
 
-      const filtered = allOrders.filter(o => {
-        const matchStatus = !st || o.status === st;
-        const matchQuery = !q || `${o.order_code} ${o.buyer_name} ${o.buyer_phone} ${o.resi || ''}`.toLowerCase().includes(q);
-        return matchStatus && matchQuery;
-      });
+ if (!filtered.length) {
+  $('orderRows').innerHTML = '<tr><td colspan="6" class="p-8 text-center text-brown-700">Belum ada pesanan yang sesuai filter.</td></tr>';
+  return;
+ }
 
-      if (!filtered.length) {
-        $('orderRows').innerHTML = '<tr><td colspan="6" class="yw-tiny" style="text-align:center;padding:2rem">Belum ada pesanan yang sesuai filter.</td></tr>';
-        return;
-      }
+ $('orderRows').innerHTML = filtered.map(o => {
+  const items = Array.isArray(o.items) ? o.items : [];
+  const itemsHtml = items.map(it =>
+   `<div class="text-[11px] leading-snug">• <span class="font-semibold">${escapeHtml(it.name)}</span> (${escapeHtml(it.color || 'Default')}) x${it.quantity || 1}</div>`
+  ).join('') || '<span class="text-brown-700">-</span>';
 
-      $('orderRows').innerHTML = filtered.map(o => {
-        const items = Array.isArray(o.items) ? o.items : [];
-        const itemsHtml = items.map(it =>
-          `<div class="yw-tiny" style="color:var(--ink)">• <b>${escapeHtml(it.name)}</b> (${escapeHtml(it.color || 'Default')}) x${it.quantity || 1}</div>`
-        ).join('') || '<span class="yw-tiny">-</span>';
+  return `
+   <tr class="hover:bg-brown-50/70 align-top">
+    <td class="p-4 whitespace-nowrap">
+     <div class="font-bold text-brown-900">${escapeHtml(o.order_code)}</div>
+     <div class="text-[11px] text-brown-700 mt-0.5">${formatDate(o.created_at)}</div>
+    </td>
+    <td class="p-4 max-w-xs">
+     <div class="font-bold text-brown-900">${escapeHtml(o.buyer_name)}</div>
+     <div class="text-[11px] text-brown-700">${escapeHtml(o.buyer_phone)}</div>
+     <div class="text-[11px] text-brown-700/90 mt-1 line-clamp-2" title="${escapeHtml(o.shipping_address)}">${escapeHtml(o.shipping_address)}</div>
+     ${o.notes && o.notes !== 'Tidak ada' ? `<div class="text-[10px] text-amber-800 bg-amber-50 px-2 py-0.5 rounded mt-1 inline-block">Catatan: ${escapeHtml(o.notes)}</div>` : ''}
+    </td>
+    <td class="p-4 min-w-[180px] space-y-1">${itemsHtml}</td>
+    <td class="p-4 whitespace-nowrap">
+     <div class="font-bold text-brown-900">${escapeHtml(o.total_amount)}</div>
+     <div class="text-[11px] text-brown-700 mt-0.5">${escapeHtml(o.shipping_method || '-')}</div>
+    </td>
+    <td class="p-4 whitespace-nowrap">
+     <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold inline-block ${getStatusBadgeClass(o.status)}">${escapeHtml(o.status || 'pending')}</span>
+     <div class="text-[11px] text-brown-700 mt-1.5">Resi: <span class="font-bold text-brown-900">${o.resi ? escapeHtml(o.resi) : '-'}</span></div>
+    </td>
+    <td class="p-4">
+     <div class="flex items-center justify-center gap-2">
+      <button data-process-order="${o.id}" class="px-3 py-1.5 rounded-lg bg-brown-900 text-white text-[11px] font-bold hover:bg-brown-700">
+       Proses
+      </button>
+      <a href="${formatWaLink(o)}" target="_blank" rel="noopener" title="Chat WhatsApp Pembeli" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white text-xs hover:bg-emerald-700">
+       <i class="fa-brands fa-whatsapp"></i>
+      </a>
+     </div>
+    </td>
+   </tr>
+  `;
+ }).join('');
 
-        return `<tr style="vertical-align:top">
-          <td style="white-space:nowrap">
-            <div style="font-weight:400">${escapeHtml(o.order_code)}</div>
-            <div class="yw-tiny">${formatDate(o.created_at)}</div>
-          </td>
-          <td style="max-width:260px">
-            <div>${escapeHtml(o.buyer_name)}</div>
-            <div class="yw-tiny">${escapeHtml(o.buyer_phone)}</div>
-            <div class="yw-tiny" style="margin-top:.25rem" title="${escapeHtml(o.shipping_address)}">${escapeHtml(o.shipping_address)}</div>
-            ${o.notes && o.notes !== 'Tidak ada' ? `<div class="yw-tag" style="margin-top:.35rem">Catatan: ${escapeHtml(o.notes)}</div>` : ''}
-          </td>
-          <td style="min-width:170px">${itemsHtml}</td>
-          <td style="white-space:nowrap">
-            <div>${escapeHtml(o.total_amount)}</div>
-            <div class="yw-tiny">${escapeHtml(o.shipping_method || '-')}</div>
-          </td>
-          <td style="white-space:nowrap">
-            <span class="${statusBadgeClass(o.status)}">${escapeHtml(o.status || 'pending')}</span>
-            <div class="yw-tiny" style="margin-top:.35rem">Resi: ${o.resi ? escapeHtml(o.resi) : '-'}</div>
-          </td>
-          <td>
-            <div class="yw-table__actions" style="justify-content:center">
-              <button type="button" data-process-order="${o.id}" class="yw-btn yw-btn--sm">Proses</button>
-              <a href="${formatWaLink(o)}" target="_blank" rel="noopener" title="Chat WhatsApp Pembeli" class="yw-btn yw-btn--sm yw-btn--ghost" style="color:var(--ok)">
-                <i class="fa-brands fa-whatsapp"></i>
-              </a>
-            </div>
-          </td>
-        </tr>`;
-      }).join('');
+ $('orderRows').querySelectorAll('[data-process-order]').forEach(btn => {
+  btn.onclick = () => {
+   const order = allOrders.find(x => String(x.id) === String(btn.dataset.processOrder));
+   if (order) openOrderModal(order);
+  };
+ });
+}
 
-      $('orderRows').querySelectorAll('[data-process-order]').forEach(btn => {
-        btn.onclick = () => {
-          const order = allOrders.find(x => String(x.id) === String(btn.dataset.processOrder));
-          if (order) openOrderModal(order);
-        };
-      });
-    }
+async function loadOrders() {
+ const { data, error } = await supabase.from('orders').select('*').order('created_at', { ascending: false });
+ if (error) {
+  orderNotice('Gagal memuat pesanan: ' + error.message, true);
+  return;
+ }
+ allOrders = data || [];
+ $('orderStatusMessage').classList.add('hidden');
+ renderOrderMetrics();
+ renderOrders();
+}
 
-    async function loadOrders() {
-      const { data, error } = await supabase.from('orders').select('*').order('created_at', { ascending: false });
-      if (error) { orderNotice('Gagal memuat pesanan: ' + error.message, true); return; }
-      allOrders = data || [];
-      $('orderStatusMessage').hidden = true;
-      renderOrderMetrics();
-      renderOrders();
-    }
+function openOrderModal(order) {
+ $('orderId').value = order.id;
+ $('modalOrderCode').textContent = `${order.order_code} • ${formatDate(order.created_at)}`;
+ $('oStatus').value = order.status || 'Menunggu Pembayaran';
+ $('oResi').value = order.resi || '';
+ $('orderFormMessage').textContent = '';
 
-    function openOrderModal(order) {
-      $('orderId').value = order.id;
-      $('modalOrderCode').textContent = `${order.order_code} • ${formatDate(order.created_at)}`;
-      $('oStatus').value = order.status || 'Menunggu Pembayaran';
-      $('oResi').value = order.resi || '';
-      $('orderFormMessage').textContent = '';
+ const itemsList = (Array.isArray(order.items) ? order.items : [])
+  .map(i => `${escapeHtml(i.name)} (${escapeHtml(i.color || 'Default')}) x${i.quantity || 1}`)
+  .join(', ');
 
-      const itemsList = (Array.isArray(order.items) ? order.items : [])
-        .map(i => `${escapeHtml(i.name)} (${escapeHtml(i.color || 'Default')}) x${i.quantity || 1}`)
-        .join(', ');
+ $('modalOrderDetail').innerHTML = `
+  <div><span class="text-brown-700">Pembeli:</span> <strong>${escapeHtml(order.buyer_name)}</strong> (${escapeHtml(order.buyer_phone)})</div>
+  <div><span class="text-brown-700">Alamat:</span> ${escapeHtml(order.shipping_address)}</div>
+  <div><span class="text-brown-700">Kurir:</span> ${escapeHtml(order.shipping_method || '-')}</div>
+  <div><span class="text-brown-700">Produk:</span> ${itemsList}</div>
+  <div><span class="text-brown-700">Total Bayar:</span> <strong>${escapeHtml(order.total_amount)}</strong></div>
+ `;
 
-      $('modalOrderDetail').innerHTML = `
-        <div><span class="yw-tiny">Pembeli:</span> <strong>${escapeHtml(order.buyer_name)}</strong> (${escapeHtml(order.buyer_phone)})</div>
-        <div><span class="yw-tiny">Alamat:</span> ${escapeHtml(order.shipping_address)}</div>
-        <div><span class="yw-tiny">Kurir:</span> ${escapeHtml(order.shipping_method || '-')}</div>
-        <div><span class="yw-tiny">Produk:</span> ${itemsList}</div>
-        <div><span class="yw-tiny">Total Bayar:</span> <strong>${escapeHtml(order.total_amount)}</strong></div>
-      `;
+ $('orderModal').classList.remove('hidden');
+ $('orderModal').classList.add('flex');
+}
 
-      $('orderModal').hidden = false;
-    }
+function closeOrderModal() {
+ $('orderModal').classList.add('hidden');
+ $('orderModal').classList.remove('flex');
+}
 
-    function closeOrderModal() { $('orderModal').hidden = true; }
+$('closeOrderModal').onclick = closeOrderModal;
+$('cancelOrderModal').onclick = closeOrderModal;
+$('orderSearchInput').addEventListener('input', renderOrders);
+$('orderStatusFilter').addEventListener('change', renderOrders);
+$('refreshOrdersBtn').addEventListener('click', async () => {
+ toast('Memperbarui daftar pesanan...');
+ await loadOrders();
+});
 
-    $('closeOrderModal').onclick = closeOrderModal;
-    $('cancelOrderModal').onclick = closeOrderModal;
-    $('orderSearchInput').addEventListener('input', renderOrders);
-    $('orderStatusFilter').addEventListener('change', renderOrders);
-    $('refreshOrdersBtn').addEventListener('click', async () => {
-      toast('Memperbarui data...');
-      await Promise.all([loadOrders(), loadProducts()]);
-    });
+$('orderForm').addEventListener('submit', async e => {
+ e.preventDefault();
+ const id = $('orderId').value;
+ const newStatus = $('oStatus').value;
+ const newResi = $('oResi').value.trim();
 
-    $('orderForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      const id = $('orderId').value;
-      const newStatus = $('oStatus').value;
-      const newResi = $('oResi').value.trim();
+ $('saveOrderBtn').disabled = true;
+ $('saveOrderBtn').textContent = 'Menyimpan...';
+ $('orderFormMessage').textContent = '';
 
-      $('saveOrderBtn').disabled = true;
-      $('saveOrderBtn').textContent = 'Menyimpan...';
-      $('orderFormMessage').textContent = '';
+ const { error } = await supabase
+  .from('orders')
+  .update({ status: newStatus, resi: newResi })
+  .eq('id', id);
 
-      const { error } = await supabase.from('orders').update({ status: newStatus, resi: newResi }).eq('id', id);
+ $('saveOrderBtn').disabled = false;
+ $('saveOrderBtn').textContent = 'Simpan Perubahan';
 
-      $('saveOrderBtn').disabled = false;
-      $('saveOrderBtn').textContent = 'Simpan Perubahan';
+ if (error) {
+  $('orderFormMessage').textContent = 'Gagal memperbarui pesanan: ' + error.message;
+  return;
+ }
 
-      if (error) { $('orderFormMessage').textContent = 'Gagal memperbarui pesanan: ' + error.message; return; }
+ closeOrderModal();
+ toast('Status pesanan & resi berhasil diperbarui');
+ await loadOrders();
+});
 
-      closeOrderModal();
-      toast('Status pesanan &amp; resi berhasil diperbarui');
-      await loadOrders();
-    });
+// --- BAGIAN PRODUK (BAWAAN) ---
+function renderMetrics() {
+ $('totalProducts').textContent=allProducts.length;
+ $('activeProducts').textContent=allProducts.filter(p=>p.is_active).length;
+ $('lowStock').textContent=allProducts.filter(p=>Number(p.stock)<=5).length;
+ $('totalStock').textContent=allProducts.reduce((s,p)=>s+Number(p.stock||0),0);
+}
 
-    /* --------------------------------------------------------------- produk */
-    function renderMetrics() {
-      $('totalProducts').textContent = allProducts.length;
-      $('activeProducts').textContent = allProducts.filter(p => p.is_active).length;
-      $('lowStock').textContent = allProducts.filter(p => Number(p.stock) <= 5).length;
-      $('totalStock').textContent = allProducts.reduce((s, p) => s + Number(p.stock || 0), 0);
-    }
+function renderRows() {
+ const q=$('searchInput').value.toLowerCase(),cat=$('categoryFilter').value;
+ const rows=allProducts.filter(p=>(!cat||p.category===cat)&&(!q||`${p.name} ${p.category}`.toLowerCase().includes(q)));
+ $('productRows').innerHTML=rows.length?rows.map(p=>`<tr class="hover:bg-brown-50/70"><td class="p-4"><div class="flex items-center gap-3 min-w-48">${p.image_url?`<img src="${escapeHtml(p.image_url)}" class="w-10 h-12 object-cover rounded-lg" alt="">`:'<div class="w-10 h-12 rounded-lg bg-brown-100 flex items-center justify-center"><i class="fa-solid fa-shirt text-brown-700"></i></div>'}<span class="font-bold">${escapeHtml(p.name)}</span></div></td><td class="p-4">${escapeHtml(p.category)}</td><td class="p-4 whitespace-nowrap">${rupiah(p.price)}</td><td class="p-4">${p.stock}</td><td class="p-4"><span class="px-2 py-1 rounded-full ${p.is_active?'bg-green-50 text-green-700':'bg-gray-100 text-gray-600'}">${p.is_active?'Aktif':'Nonaktif'}</span></td><td class="p-4"><div class="flex justify-center gap-2"><button data-edit="${p.id}" class="text-brown-700 hover:text-blue-700" title="Edit"><i class="fa-solid fa-pen"></i></button><button data-toggle="${p.id}" class="text-brown-700 hover:text-green-700" title="Ubah status"><i class="fa-solid fa-power-off"></i></button><button data-delete="${p.id}" class="text-red-500 hover:text-red-700" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join(''):'<tr><td colspan="6" class="p-8 text-center text-brown-700">Belum ada produk yang cocok.</td></tr>';
+ $('productRows').querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openModal(allProducts.find(p=>String(p.id)===b.dataset.edit)));
+ $('productRows').querySelectorAll('[data-toggle]').forEach(b=>b.onclick=()=>toggleProduct(b.dataset.toggle));
+ $('productRows').querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>deleteProduct(b.dataset.delete));
+}
 
-    function renderRows() {
-      const q = $('searchInput').value.toLowerCase(), cat = $('categoryFilter').value;
-      const rows = allProducts.filter(p => (!cat || p.category === cat) && (!q || `${p.name} ${p.category}`.toLowerCase().includes(q)));
+async function loadProducts() {
+ notice('Memuat data produk...');
+ const {data,error}=await supabase.from('products').select('*').order('created_at',{ascending:false});
+ if(error){notice('Gagal mengambil produk: '+error.message,true);return;}
+ allProducts=data||[];
+ const cats=[...new Set(allProducts.map(p=>p.category).filter(Boolean))];
+ $('categoryFilter').innerHTML='<option value="">Semua kategori</option>'+cats.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+ renderMetrics();renderRows();$('statusMessage').classList.add('hidden');
+}
 
-      $('productRows').innerHTML = rows.length ? rows.map(p => `<tr>
-        <td>
-          <div class="yw-admin__product">
-            ${p.image_url
-              ? `<img class="yw-admin__thumb" src="${escapeHtml(p.image_url)}" alt="" loading="lazy">`
-              : `<div class="yw-admin__thumb" style="display:flex;align-items:center;justify-content:center;color:var(--muted)"><i class="fa-solid fa-shirt"></i></div>`}
-            <div><span>${escapeHtml(p.name)}</span></div>
-          </div>
-        </td>
-        <td>${escapeHtml(p.category)}</td>
-        <td style="white-space:nowrap">${rupiah(p.price)}</td>
-        <td>${p.stock}</td>
-        <td><span class="yw-badge ${p.is_active ? 'yw-badge--ok' : 'yw-badge--off'}">${p.is_active ? 'Aktif' : 'Nonaktif'}</span></td>
-        <td>
-          <div class="yw-table__actions" style="justify-content:center">
-            <button type="button" data-edit="${p.id}" title="Edit"><i class="fa-solid fa-pen"></i></button>
-            <button type="button" data-toggle="${p.id}" title="Ubah status"><i class="fa-solid fa-power-off"></i></button>
-            <button type="button" data-delete="${p.id}" title="Hapus" style="color:var(--danger)"><i class="fa-solid fa-trash"></i></button>
-          </div>
-        </td>
-      </tr>`).join('') : '<tr><td colspan="6" class="yw-tiny" style="text-align:center;padding:2rem">Belum ada produk yang cocok.</td></tr>';
+function openModal(p=null) {
+ $('productForm').reset();$('productId').value=p?.id??'';$('modalTitle').textContent=p?'Edit Produk':'Tambah Produk';
+ $('pName').value=p?.name??'';$('pCategory').value=p?.category??'';$('pPrice').value=p?.price??0;$('pStock').value=p?.stock??0;
+ $('pTag').value=p?.tag??'New';$('pColor').value=p?.color??'#E3CEB1';$('pPattern').value=p?.pattern??'collar';
+ $('pImage').value=p?.image_url??'';$('pDescription').value=p?.description??'';$('pActive').checked=p?.is_active??true;
+ $('formMessage').textContent='';$('productModal').classList.remove('hidden');$('productModal').classList.add('flex');
+}
+function closeModal() { $('productModal').classList.add('hidden');$('productModal').classList.remove('flex'); }
+$('addBtn').onclick=()=>openModal();$('closeModal').onclick=closeModal;$('cancelModal').onclick=closeModal;
+$('searchInput').addEventListener('input',renderRows);$('categoryFilter').addEventListener('change',renderRows);
 
-      $('productRows').querySelectorAll('[data-edit]').forEach(b => b.onclick = () => openModal(allProducts.find(p => String(p.id) === b.dataset.edit)));
-      $('productRows').querySelectorAll('[data-toggle]').forEach(b => b.onclick = () => toggleProduct(b.dataset.toggle));
-      $('productRows').querySelectorAll('[data-delete]').forEach(b => b.onclick = () => deleteProduct(b.dataset.delete));
-    }
+$('productForm').addEventListener('submit',async e=>{
+ e.preventDefault();$('saveBtn').disabled=true;$('saveBtn').textContent='Menyimpan...';$('formMessage').textContent='';
+ const payload={name:$('pName').value.trim(),category:$('pCategory').value.trim(),price:Number($('pPrice').value),stock:Number($('pStock').value),tag:$('pTag').value.trim()||'New',color:$('pColor').value.trim()||'#E3CEB1',pattern:$('pPattern').value.trim()||'collar',image_url:$('pImage').value.trim()||null,description:$('pDescription').value.trim()||null,is_active:$('pActive').checked};
+ let result;
+ if($('productId').value)result=await supabase.from('products').update(payload).eq('id',$('productId').value);
+ else result=await supabase.from('products').insert(payload);
+ $('saveBtn').disabled=false;$('saveBtn').textContent='Simpan Produk';
+ if(result.error){$('formMessage').textContent='Gagal menyimpan: '+result.error.message;return;}
+ closeModal();toast('Produk berhasil disimpan');await loadProducts();
+});
 
-    async function loadProducts() {
-      const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
-      if (error) { notice('Gagal mengambil produk: ' + error.message, true); return; }
-      allProducts = data || [];
-      const cats = [...new Set(allProducts.map(p => p.category).filter(Boolean))];
-      $('categoryFilter').innerHTML = '<option value="">Semua kategori</option>' + cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
-      renderMetrics();
-      renderRows();
-      $('statusMessage').hidden = true;
-    }
+async function toggleProduct(id) {
+ const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;
+ const {error}=await supabase.from('products').update({is_active:!p.is_active}).eq('id',id);
+ if(error){notice('Gagal mengubah status: '+error.message,true);return;}
+ toast('Status produk diperbarui');await loadProducts();
+}
 
-    function openModal(p = null) {
-      $('productForm').reset();
-      $('productId').value = p?.id ?? '';
-      $('modalTitle').textContent = p ? 'Edit Produk' : 'Tambah Produk';
-      $('pName').value = p?.name ?? '';
-      $('pCategory').value = p?.category ?? '';
-      $('pPrice').value = p?.price ?? 0;
-      $('pStock').value = p?.stock ?? 0;
-      $('pTag').value = p?.tag ?? 'New';
-      $('pColor').value = p?.color ?? '#D8DCDE';
-      $('pPattern').value = p?.pattern ?? 'collar';
-      $('pImage').value = p?.image_url ?? '';
-      $('pDescription').value = p?.description ?? '';
-      $('pActive').checked = p?.is_active ?? true;
-      $('formMessage').textContent = '';
-      $('productModal').hidden = false;
-    }
-    function closeModal() { $('productModal').hidden = true; }
+async function deleteProduct(id) {
+ const p=allProducts.find(x=>String(x.id)===String(id));if(!p||!confirm(`Hapus produk "${p.name}" secara permanen?`))return;
+ const {error}=await supabase.from('products').delete().eq('id',id);
+ if(error){notice('Gagal menghapus: '+error.message,true);return;}
+ toast('Produk dihapus');await loadProducts();
+}
 
-    $('addBtn').onclick = () => { setTab('products'); openModal(); };
-    $('closeModal').onclick = closeModal;
-    $('cancelModal').onclick = closeModal;
-    $('searchInput').addEventListener('input', renderRows);
-    $('categoryFilter').addEventListener('change', renderRows);
-
-    $('productForm').addEventListener('submit', async e => {
-      e.preventDefault();
-      $('saveBtn').disabled = true;
-      $('saveBtn').textContent = 'Menyimpan...';
-      $('formMessage').textContent = '';
-
-      const payload = {
-        name: $('pName').value.trim(),
-        category: $('pCategory').value.trim(),
-        price: Number($('pPrice').value),
-        stock: Number($('pStock').value),
-        tag: $('pTag').value.trim() || 'New',
-        color: $('pColor').value.trim() || '#D8DCDE',
-        pattern: $('pPattern').value.trim() || 'collar',
-        image_url: $('pImage').value.trim() || null,
-        description: $('pDescription').value.trim() || null,
-        is_active: $('pActive').checked
-      };
-
-      let result;
-      if ($('productId').value) result = await supabase.from('products').update(payload).eq('id', $('productId').value);
-      else result = await supabase.from('products').insert(payload);
-
-      $('saveBtn').disabled = false;
-      $('saveBtn').textContent = 'Simpan Produk';
-
-      if (result.error) { $('formMessage').textContent = 'Gagal menyimpan: ' + result.error.message; return; }
-
-      closeModal();
-      toast('Produk berhasil disimpan');
-      await loadProducts();
-    });
-
-    async function toggleProduct(id) {
-      const p = allProducts.find(x => String(x.id) === String(id));
-      if (!p) return;
-      const { error } = await supabase.from('products').update({ is_active: !p.is_active }).eq('id', id);
-      if (error) { notice('Gagal mengubah status: ' + error.message, true); return; }
-      toast('Status produk diperbarui');
-      await loadProducts();
-    }
-
-    async function deleteProduct(id) {
-      const p = allProducts.find(x => String(x.id) === String(id));
-      if (!p || !confirm(`Hapus produk "${p.name}" secara permanen?`)) return;
-      const { error } = await supabase.from('products').delete().eq('id', id);
-      if (error) { notice('Gagal menghapus: ' + error.message, true); return; }
-      toast('Produk dihapus');
-      await loadProducts();
-    }
-
-    supabase.auth.onAuthStateChange(() => { setTimeout(verifySession, 0); });
-    verifySession();
-  </script>
+supabase.auth.onAuthStateChange(()=>{setTimeout(verifySession,0);});
+verifySession();
+</script>
 </body>
 </html>

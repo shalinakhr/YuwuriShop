@@ -2797,3 +2797,25 @@ html.js .reveal.is-in {
     align-items: flex-start;
   }
 }
+
+/* --- admin: netralkan pil status yang dihasilkan JS (kelas Tailwind) --- */
+.yw-admin__nav .is-active .yw-badge.yw-badge--dark { background: #fff; color: #000; }
+
+.yw-admin .bg-emerald-50 { background: #000 !important; color: #fff !important; border-color: #000 !important; }
+.yw-admin .bg-green-50 { background: #000 !important; color: #fff !important; }
+.yw-admin .bg-blue-50 { background: var(--mist-soft, #efefef) !important; color: #000 !important; border-color: var(--mist-soft, #efefef) !important; }
+.yw-admin .bg-purple-50 { background: #D8DCDE !important; color: #000 !important; border-color: #D8DCDE !important; }
+.yw-admin .bg-gray-100 { background: #f7f7f7 !important; color: #5a6064 !important; border-color: var(--line, #e6e6e6) !important; }
+.yw-admin .bg-red-50 { background: #fff !important; color: var(--danger, #be1e1e) !important; border-color: rgba(190, 30, 30, 0.35) !important; }
+.yw-admin .bg-amber-50 { background: #fff !important; color: #000 !important; border-color: rgba(0, 0, 0, 0.45) !important; }
+
+/* tinggi tombol aksi di dalam tabel seragam */
+.yw-admin .yw-table button,
+.yw-admin .yw-table a[href^="https://wa.me"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  min-height: 28px;
+  padding: 0 0.55rem;
+}
