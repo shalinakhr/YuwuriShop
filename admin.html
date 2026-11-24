@@ -46,7 +46,7 @@
       <aside class="yw-admin__side">
         <div>
           <a href="index.html" class="yw-admin__logo">Yuwuri<span>.shop</span><small>Daily Shirt &amp; Blouse Admin</small></a>
-          <nav class="yw-admin__nav">
+          <nav class="yw-admin__nav" id="sideNav">
             <a href="#ordersSection" class="is-active">
               <i class="fa-solid fa-bag-shopping"></i> Pesanan
               <span id="sidebarOrderBadge" class="yw-badge yw-badge--dark" style="margin-left:auto">0</span>
@@ -77,7 +77,7 @@
           </div>
         </header>
 
-        <div class="yw-admin__mobnav" style="padding:.75rem clamp(1rem,2.5vw,2.25rem) 0">
+        <div class="yw-admin__mobnav" id="mobNav" style="padding:.75rem clamp(1rem,2.5vw,2.25rem) 0">
           <a href="#ordersSection" class="yw-btn yw-btn--sm is-active">Pesanan</a>
           <a href="#products" class="yw-btn yw-btn--sm yw-btn--ghost">Produk</a>
           <a href="#analyticsSection" class="yw-btn yw-btn--sm yw-btn--ghost">Analytics</a>
@@ -86,111 +86,111 @@
         <main id="dashboard" class="yw-admin__body">
 
           <!-- ---------------------------------------------------- pesanan -->
-            <div class="yw-kpis">
-              <div class="yw-kpi">
-                <span class="yw-kpi__label">Perlu Diproses</span>
-                <span id="metricPendingProcess" class="yw-kpi__value">—</span>
-                <span class="yw-kpi__hint yw-kpi__hint--up">Sudah dibayar / siap kemas</span>
+          <div class="yw-kpis">
+            <div class="yw-kpi">
+              <span class="yw-kpi__label">Perlu Diproses</span>
+              <span id="metricPendingProcess" class="yw-kpi__value">—</span>
+              <span class="yw-kpi__hint yw-kpi__hint--up">Sudah dibayar / siap kemas</span>
+            </div>
+            <div class="yw-kpi">
+              <span class="yw-kpi__label">Total Pesanan</span>
+              <span id="metricTotalOrders" class="yw-kpi__value">—</span>
+              <span class="yw-kpi__hint">Riwayat checkout masuk</span>
+            </div>
+            <div class="yw-kpi">
+              <span class="yw-kpi__label">Produk Aktif</span>
+              <span id="activeProducts" class="yw-kpi__value">—</span>
+              <span class="yw-kpi__hint">Dari <span id="totalProducts">0</span> total produk</span>
+            </div>
+            <div class="yw-kpi">
+              <span class="yw-kpi__label">Stok Menipis</span>
+              <span id="lowStock" class="yw-kpi__value">—</span>
+              <span class="yw-kpi__hint yw-kpi__hint--down">Stok ≤ 5 (total <span id="totalStock">0</span> unit)</span>
+            </div>
+          </div>
+
+          <section id="ordersSection" class="yw-panel" style="margin-top:1.5rem;padding:0;overflow:hidden">
+            <div style="padding:1.15rem 1.35rem;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between">
+              <div>
+                <h2 style="font-size:1rem">Pesanan Masuk (Checkout)</h2>
+                <p class="yw-tiny">Pantau pembayaran masuk, ubah status pengiriman, dan input nomor resi.</p>
               </div>
-              <div class="yw-kpi">
-                <span class="yw-kpi__label">Total Pesanan</span>
-                <span id="metricTotalOrders" class="yw-kpi__value">—</span>
-                <span class="yw-kpi__hint">Riwayat checkout masuk</span>
-              </div>
-              <div class="yw-kpi">
-                <span class="yw-kpi__label">Produk Aktif</span>
-                <span id="activeProducts" class="yw-kpi__value">—</span>
-                <span class="yw-kpi__hint">Dari <span id="totalProducts">0</span> total produk</span>
-              </div>
-              <div class="yw-kpi">
-                <span class="yw-kpi__label">Stok Menipis</span>
-                <span id="lowStock" class="yw-kpi__value">—</span>
-                <span class="yw-kpi__hint yw-kpi__hint--down">Stok ≤ 5 (total <span id="totalStock">0</span> unit)</span>
+              <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+                <input id="orderSearchInput" placeholder="Cari kode / nama pembeli..." class="yw-input" style="width:auto;min-width:180px">
+                <select id="orderStatusFilter" class="yw-select" style="width:auto">
+                  <option value="">Semua Status</option>
+                  <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
+                  <option value="Sudah Dibayar (Siap Diproses)">Sudah Dibayar (Siap Diproses)</option>
+                  <option value="Sedang Dikemas">Sedang Dikemas</option>
+                  <option value="Dikirim">Dikirim</option>
+                  <option value="Selesai">Selesai</option>
+                  <option value="Dibatalkan">Dibatalkan</option>
+                </select>
               </div>
             </div>
 
-            <section id="ordersSection" class="yw-panel" style="margin-top:1.5rem;padding:0;overflow:hidden">
-              <div style="padding:1.15rem 1.35rem;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between">
-                <div>
-                  <h2 style="font-size:1rem">Pesanan Masuk (Checkout)</h2>
-                  <p class="yw-tiny">Pantau pembayaran masuk, ubah status pengiriman, dan input nomor resi.</p>
-                </div>
-                <div style="display:flex;gap:.5rem;flex-wrap:wrap">
-                  <input id="orderSearchInput" placeholder="Cari kode / nama pembeli..." class="yw-input" style="width:auto;min-width:180px">
-                  <select id="orderStatusFilter" class="yw-select" style="width:auto">
-                    <option value="">Semua Status</option>
-                    <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
-                    <option value="Sudah Dibayar (Siap Diproses)">Sudah Dibayar (Siap Diproses)</option>
-                    <option value="Sedang Dikemas">Sedang Dikemas</option>
-                    <option value="Dikirim">Dikirim</option>
-                    <option value="Selesai">Selesai</option>
-                    <option value="Dibatalkan">Dibatalkan</option>
-                  </select>
-                </div>
-              </div>
+            <div id="orderStatusMessage" class="yw-notice hidden" style="margin:1rem 1.35rem 0"></div>
 
-              <div id="orderStatusMessage" class="yw-notice hidden" style="margin:1rem 1.35rem 0"></div>
+            <div class="yw-table-wrap">
+              <table class="yw-table">
+                <thead>
+                  <tr>
+                    <th>Order &amp; Waktu</th>
+                    <th>Pembeli &amp; Alamat</th>
+                    <th>Item Produk</th>
+                    <th>Total &amp; Kurir</th>
+                    <th>Status &amp; Resi</th>
+                    <th style="text-align:center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="orderRows">
+                  <tr><td colspan="6" class="yw-tiny" style="text-align:center;padding:2rem">Memuat data pesanan...</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="yw-scroll-hint yw-tiny">Geser tabel ke samping untuk melihat kolom lainnya.</p>
+          </section>
 
-              <div class="yw-table-wrap">
-                <table class="yw-table">
-                  <thead>
-                    <tr>
-                      <th>Order &amp; Waktu</th>
-                      <th>Pembeli &amp; Alamat</th>
-                      <th>Item Produk</th>
-                      <th>Total &amp; Kurir</th>
-                      <th>Status &amp; Resi</th>
-                      <th style="text-align:center">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody id="orderRows">
-                    <tr><td colspan="6" class="yw-tiny" style="text-align:center;padding:2rem">Memuat data pesanan...</td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <p class="yw-scroll-hint yw-tiny">Geser tabel ke samping untuk melihat kolom lainnya.</p>
-            </section>
-
-            <p class="yw-tiny" style="margin-top:1rem">
-              Data pesanan terhubung langsung dengan tabel <code>orders</code> di Supabase Yuwuri Shop.
-            </p>
+          <p class="yw-tiny" style="margin-top:1rem">
+            Data pesanan terhubung langsung dengan tabel <code>orders</code> di Supabase Yuwuri Shop.
+          </p>
 
           <!-- ---------------------------------------------------- produk -->
-            <section id="products" class="yw-panel" style="margin-top:2.5rem;padding:0;overflow:hidden">
-              <div style="padding:1.15rem 1.35rem;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between">
-                <div>
-                  <h2 style="font-size:1rem">Daftar Produk Yuwuri Shop</h2>
-                  <p class="yw-tiny">Kelola harga, varian, foto, dan ketersediaan stok.</p>
-                </div>
-                <div style="display:flex;gap:.5rem;flex-wrap:wrap">
-                  <input id="searchInput" placeholder="Cari produk..." class="yw-input" style="width:auto;min-width:180px">
-                  <select id="categoryFilter" class="yw-select" style="width:auto"><option value="">Semua kategori</option></select>
-                </div>
+          <section id="products" class="yw-panel" style="margin-top:2.5rem;padding:0;overflow:hidden">
+            <div style="padding:1.15rem 1.35rem;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between">
+              <div>
+                <h2 style="font-size:1rem">Daftar Produk Yuwuri Shop</h2>
+                <p class="yw-tiny">Kelola harga, varian, foto, dan ketersediaan stok.</p>
               </div>
-              <div id="statusMessage" class="yw-notice hidden" style="margin:1rem 1.35rem 0"></div>
-              <div class="yw-table-wrap">
-                <table class="yw-table">
-                  <thead>
-                    <tr>
-                      <th>Produk</th>
-                      <th>Kategori</th>
-                      <th>Harga</th>
-                      <th>Stok</th>
-                      <th>Status</th>
-                      <th style="text-align:center">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody id="productRows">
-                    <tr><td colspan="6" class="yw-tiny" style="text-align:center;padding:2rem">Memuat produk...</td></tr>
-                  </tbody>
-                </table>
+              <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+                <input id="searchInput" placeholder="Cari produk..." class="yw-input" style="width:auto;min-width:180px">
+                <select id="categoryFilter" class="yw-select" style="width:auto"><option value="">Semua kategori</option></select>
               </div>
-              <p class="yw-scroll-hint yw-tiny">Geser tabel ke samping untuk melihat kolom lainnya.</p>
-            </section>
+            </div>
+            <div id="statusMessage" class="yw-notice hidden" style="margin:1rem 1.35rem 0"></div>
+            <div class="yw-table-wrap">
+              <table class="yw-table">
+                <thead>
+                  <tr>
+                    <th>Produk</th>
+                    <th>Kategori</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                    <th>Status</th>
+                    <th style="text-align:center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="productRows">
+                  <tr><td colspan="6" class="yw-tiny" style="text-align:center;padding:2rem">Memuat produk...</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="yw-scroll-hint yw-tiny">Geser tabel ke samping untuk melihat kolom lainnya.</p>
+          </section>
 
-            <p class="yw-tiny" style="margin-top:1rem">
-              Perubahan produk disimpan langsung ke Supabase. Produk nonaktif tidak ditampilkan di katalog pelanggan.
-            </p>
+          <p class="yw-tiny" style="margin-top:1rem">
+            Perubahan produk disimpan langsung ke Supabase. Produk nonaktif tidak ditampilkan di katalog pelanggan.
+          </p>
 
           <!-- ---------------------------------------------------- analytics -->
           <section id="analyticsSection" style="margin-top:2.5rem">
@@ -208,7 +208,7 @@
                 <div style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:flex-end;justify-content:space-between">
                   <div class="yw-field" style="flex:1;min-width:200px">
                     <label for="gaProperty">GA4 Property ID</label>
-                    <input id="gaProperty" data-ga-property class="yw-input" inputmode="numeric" placeholder="Contoh: 123456789">
+                    <input id="gaProperty" data-ga-property class="yw-input" inputmode="numeric" placeholder="565368248">
                   </div>
                   <div>
                     <span class="yw-kpi__label" style="display:block;margin-bottom:.55rem">Rentang</span>
@@ -220,7 +220,7 @@
                   </div>
                 </div>
                 <p class="yw-tiny" style="margin-top:.75rem">
-                  Butuh OAuth Client ID dari Google Cloud Console — isi <code>clientId</code> di <code>js/ga-config.js</code>. Tanpa itu dashboard menampilkan data contoh.
+                  Klik <strong>Hubungkan Google Analytics</strong> dan login dengan akun Google pemilik properti GA4 Yuwuri untuk menampilkan statistik pengunjung secara real-time.
                 </p>
               </div>
 
@@ -419,6 +419,33 @@
   <div id="toast" class="yw-toast" role="status"></div>
 
   <script src="js/ga-config.js"></script>
+  <script>
+    // Pastikan input Property ID terisi otomatis dari js/ga-config.js jika tersedia
+    window.addEventListener('DOMContentLoaded', () => {
+      const propInput = document.getElementById('gaProperty');
+      if (propInput && !propInput.value && window.YUWURI_GA_CONFIG?.propertyId) {
+        propInput.value = window.YUWURI_GA_CONFIG.propertyId;
+      }
+
+      // Sinkronkan status aktif menu sidebar & mobile nav saat diklik
+      const syncActiveNav = (hash) => {
+        if (!hash) return;
+        document.querySelectorAll('#sideNav a').forEach(a => {
+          a.classList.toggle('is-active', a.getAttribute('href') === hash);
+        });
+        document.querySelectorAll('#mobNav a').forEach(a => {
+          const active = a.getAttribute('href') === hash;
+          a.classList.toggle('is-active', active);
+          a.classList.toggle('yw-btn--ghost', !active);
+        });
+      };
+
+      document.querySelectorAll('#sideNav a[href^="#"], #mobNav a[href^="#"]').forEach(link => {
+        link.addEventListener('click', () => syncActiveNav(link.getAttribute('href')));
+      });
+      if (window.location.hash) syncActiveNav(window.location.hash);
+    });
+  </script>
   <script src="js/ga-analytics.js"></script>
   <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
