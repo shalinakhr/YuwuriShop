@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐴 Admin — Yuwuri Shop</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{brown:{50:'#f7f7f7',100:'#efefef',200:'#D8DCDE',300:'#b9bfc2',700:'#4a4f52',900:'#000000'}},fontFamily:{sans:['Didact Gothic','sans-serif'],serif:['Didact Gothic','sans-serif']}}}};</script>
+  <link rel="stylesheet" href="css/yuwuri.css">
+</head>
+<body>
+
+  <!-- ============================================================ login -->
+  <div id="loginScreen" class="yw-admin" style="align-items:center;justify-content:center;padding:1.25rem">
+    <form id="loginForm" class="yw-auth" style="margin:0">
+      <a href="index.html" class="yw-logo">Yuwuri<span>.admin</span></a>
+      <p class="yw-tiny" style="margin-top:.5rem">Masuk ke dashboard admin</p>
+
+      <div class="yw-form-grid" style="margin-top:1.75rem">
+        <div class="yw-field">
+          <label for="loginEmail">Email admin</label>
+          <input id="loginEmail" type="email" required class="yw-input" placeholder="admin@email.com">
+        </div>
+        <div class="yw-field">
+          <label for="loginPassword">Password</label>
+          <input id="loginPassword" type="password" required class="yw-input" placeholder="Masukkan password">
+        </div>
+        <button class="yw-btn" style="width:100%">Masuk</button>
+      </div>
+
+      <p id="loginMessage" class="yw-tiny" style="color:var(--danger);margin-top:.85rem"></p>
+      <p class="yw-tiny" style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--line)">
+        Akun harus sudah terdaftar di Supabase Authentication dan terdaftar di tabel admin_users.
+      </p>
+    </form>
+  </div>
+
+  <!-- ============================================================ app -->
+  <div id="app" class="hidden">
+    <div class="yw-admin">
+      <aside class="yw-admin__side">
+        <div>
+          <a href="index.html" class="yw-admin__logo">Yuwuri<span>.shop</span><small>Daily Shirt &amp; Blouse Admin</small></a>
+          <nav class="yw-admin__nav">
+            <a href="#ordersSection" class="is-active">
+              <i class="fa-solid fa-bag-shopping"></i> Pesanan
+              <span id="sidebarOrderBadge" class="yw-badge yw-badge--dark" style="margin-left:auto">0</span>
+            </a>
+            <a href="#products"><i class="fa-solid fa-shirt"></i> Produk</a>
+            <a href="#analyticsSection"><i class="fa-solid fa-chart-line"></i> Analytics GA4</a>
+            <a href="catalog.html"><i class="fa-solid fa-arrow-up-right-from-square"></i> Lihat Katalog</a>
+          </nav>
+        </div>
+        <div class="yw-admin__user">
+          <div style="min-width:0">
+            <p id="adminEmail" style="font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Admin</p>
+            <p class="yw-tiny">Administrator</p>
+          </div>
+          <button id="logoutBtn" title="Keluar" aria-label="Keluar" style="color:var(--muted)"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+        </div>
+      </aside>
+
+      <div class="yw-admin__main">
+        <header class="yw-admin__top">
+          <div>
+            <p class="yw-admin__crumb">Yuwuri Shop / Admin</p>
+            <h1 id="pageTitle">Dashboard Admin</h1>
+          </div>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+            <button id="refreshOrdersBtn" class="yw-btn yw-btn--sm yw-btn--ghost"><i class="fa-solid fa-rotate" style="margin-right:.4rem"></i> Refresh</button>
+            <button id="addBtn" class="yw-btn yw-btn--sm"><i class="fa-solid fa-plus" style="margin-right:.4rem"></i> Tambah Produk</button>
+          </div>
+        </header>
+
+        <div class="yw-admin__mobnav" style="padding:.75rem clamp(1rem,2.5vw,2.25rem) 0">
+          <a href="#ordersSection" class="yw-btn yw-btn--sm is-active">Pesanan</a>
+          <a href="#products" class="yw-btn yw-btn--sm yw-btn--ghost">Produk</a>
+          <a href="#analyticsSection" class="yw-btn yw-btn--sm yw-btn--ghost">Analytics</a>
+        </div>
+
+        <main id="dashboard" class="yw-admin__body">
+
+          <!-- ---------------------------------------------------- pesanan -->
+            <div class="yw-kpis">
+              <div class="yw-kpi">
+                <span class="yw-kpi__label">Perlu Diproses</span>
+                <span id="metricPendingProcess" class="yw-kpi__value">—</span>
+                <span class="yw-kpi__hint yw-kpi__hint--up">Sudah dibayar / siap kemas</span>
+              </div>
+              <div class="yw-kpi">
+                <span class="yw-kpi__label">Total Pesanan</span>
+                <span id="metricTotalOrders" class="yw-kpi__value">—</span>
+                <span class="yw-kpi__hint">Riwayat checkout masuk</span>
+              </div>
+              <div class="yw-kpi">
+                <span class="yw-kpi__label">Produk Aktif</span>
+                <span id="activeProducts" class="yw-kpi__value">—</span>
+                <span class="yw-kpi__hint">Dari <span id="totalProducts">0</span> total produk</span>
+              </div>
+              <div class="yw-kpi">
+                <span class="yw-kpi__label">Stok Menipis</span>
+                <span id="lowStock" class="yw-kpi__value">—</span>
+                <span class="yw-kpi__hint yw-kpi__hint--down">Stok ≤ 5 (total <span id="totalStock">0</span> unit)</span>
+              </div>
+            </div>
+
+            <section id="ordersSection" class="yw-panel" style="margin-top:1.5rem;padding:0;overflow:hidden">
+              <div style="padding:1.15rem 1.35rem;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between">
+                <div>
+                  <h2 style="font-size:1rem">Pesanan Masuk (Checkout)</h2>
+                  <p class="yw-tiny">Pantau pembayaran masuk, ubah status pengiriman, dan input nomor resi.</p>
+                </div>
+                <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+                  <input id="orderSearchInput" placeholder="Cari kode / nama pembeli..." class="yw-input" style="width:auto;min-width:180px">
+                  <select id="orderStatusFilter" class="yw-select" style="width:auto">
+                    <option value="">Semua Status</option>
+                    <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
+                    <option value="Sudah Dibayar (Siap Diproses)">Sudah Dibayar (Siap Diproses)</option>
+                    <option value="Sedang Dikemas">Sedang Dikemas</option>
+                    <option value="Dikirim">Dikirim</option>
+                    <option value="Selesai">Selesai</option>
+                    <option value="Dibatalkan">Dibatalkan</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="orderStatusMessage" class="yw-notice hidden" style="margin:1rem 1.35rem 0"></div>
+
+              <div class="yw-table-wrap">
+                <table class="yw-table">
+                  <thead>
+                    <tr>
+                      <th>Order &amp; Waktu</th>
+                      <th>Pembeli &amp; Alamat</th>
+                      <th>Item Produk</th>
+                      <th>Total &amp; Kurir</th>
+                      <th>Status &amp; Resi</th>
+                      <th style="text-align:center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="orderRows">
+                    <tr><td colspan="6" class="yw-tiny" style="text-align:center;padding:2rem">Memuat data pesanan...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="yw-scroll-hint yw-tiny">Geser tabel ke samping untuk melihat kolom lainnya.</p>
+            </section>
+
+            <p class="yw-tiny" style="margin-top:1rem">
+              Data pesanan terhubung langsung dengan tabel <code>orders</code> di Supabase Yuwuri Shop.
+            </p>
+
+          <!-- ---------------------------------------------------- produk -->
+            <section id="products" class="yw-panel" style="margin-top:2.5rem;padding:0;overflow:hidden">
+              <div style="padding:1.15rem 1.35rem;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between">
+                <div>
+                  <h2 style="font-size:1rem">Daftar Produk Yuwuri Shop</h2>
+                  <p class="yw-tiny">Kelola harga, varian, foto, dan ketersediaan stok.</p>
+                </div>
+                <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+                  <input id="searchInput" placeholder="Cari produk..." class="yw-input" style="width:auto;min-width:180px">
+                  <select id="categoryFilter" class="yw-select" style="width:auto"><option value="">Semua kategori</option></select>
+                </div>
+              </div>
+              <div id="statusMessage" class="yw-notice hidden" style="margin:1rem 1.35rem 0"></div>
+              <div class="yw-table-wrap">
+                <table class="yw-table">
+                  <thead>
+                    <tr>
+                      <th>Produk</th>
+                      <th>Kategori</th>
+                      <th>Harga</th>
+                      <th>Stok</th>
+                      <th>Status</th>
+                      <th style="text-align:center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="productRows">
+                    <tr><td colspan="6" class="yw-tiny" style="text-align:center;padding:2rem">Memuat produk...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="yw-scroll-hint yw-tiny">Geser tabel ke samping untuk melihat kolom lainnya.</p>
+            </section>
+
+            <p class="yw-tiny" style="margin-top:1rem">
+              Perubahan produk disimpan langsung ke Supabase. Produk nonaktif tidak ditampilkan di katalog pelanggan.
+            </p>
+
+          <!-- ---------------------------------------------------- analytics -->
+          <section id="analyticsSection" style="margin-top:2.5rem">
+            <div data-ga-dashboard>
+              <div class="yw-ga-bar" style="margin-bottom:1.25rem">
+                <div data-ga-status><span class="yw-ga-bar__status"><span class="yw-dot"></span>Menyiapkan dashboard…</span></div>
+                <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+                  <span data-ga-mode class="yw-badge">Mode demo</span>
+                  <button type="button" data-ga-refresh class="yw-btn yw-btn--sm yw-btn--ghost">Muat ulang</button>
+                  <button type="button" data-ga-connect class="yw-btn yw-btn--sm">Hubungkan Google Analytics</button>
+                </div>
+              </div>
+
+              <div class="yw-panel" style="margin-bottom:1.25rem">
+                <div style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:flex-end;justify-content:space-between">
+                  <div class="yw-field" style="flex:1;min-width:200px">
+                    <label for="gaProperty">GA4 Property ID</label>
+                    <input id="gaProperty" data-ga-property class="yw-input" inputmode="numeric" placeholder="Contoh: 123456789">
+                  </div>
+                  <div>
+                    <span class="yw-kpi__label" style="display:block;margin-bottom:.55rem">Rentang</span>
+                    <div class="yw-tabs" style="margin:0;border-bottom:0">
+                      <button type="button" data-ga-range="7">7 hari</button>
+                      <button type="button" data-ga-range="28" class="is-active">28 hari</button>
+                      <button type="button" data-ga-range="90">90 hari</button>
+                    </div>
+                  </div>
+                </div>
+                <p class="yw-tiny" style="margin-top:.75rem">
+                  Butuh OAuth Client ID dari Google Cloud Console — isi <code>clientId</code> di <code>js/ga-config.js</code>. Tanpa itu dashboard menampilkan data contoh.
+                </p>
+              </div>
+
+              <div class="yw-kpis" style="margin-bottom:1.25rem">
+                <div class="yw-kpi">
+                  <span class="yw-kpi__label">Pengguna aktif</span>
+                  <span class="yw-kpi__value" data-ga-kpi="activeUsers">—</span>
+                  <span class="yw-kpi__hint" data-ga-kpi-hint="activeUsers">&nbsp;</span>
+                </div>
+                <div class="yw-kpi">
+                  <span class="yw-kpi__label">Pengguna baru</span>
+                  <span class="yw-kpi__value" data-ga-kpi="newUsers">—</span>
+                  <span class="yw-kpi__hint" data-ga-kpi-hint="newUsers">&nbsp;</span>
+                </div>
+                <div class="yw-kpi">
+                  <span class="yw-kpi__label">Sesi</span>
+                  <span class="yw-kpi__value" data-ga-kpi="sessions">—</span>
+                  <span class="yw-kpi__hint" data-ga-kpi-hint="sessions">&nbsp;</span>
+                </div>
+                <div class="yw-kpi">
+                  <span class="yw-kpi__label">Tampilan halaman</span>
+                  <span class="yw-kpi__value" data-ga-kpi="screenPageViews">—</span>
+                  <span class="yw-kpi__hint" data-ga-kpi-hint="screenPageViews">&nbsp;</span>
+                </div>
+                <div class="yw-kpi">
+                  <span class="yw-kpi__label">Durasi rata-rata</span>
+                  <span class="yw-kpi__value" data-ga-kpi="averageSessionDuration">—</span>
+                  <span class="yw-kpi__hint" data-ga-kpi-hint="averageSessionDuration">&nbsp;</span>
+                </div>
+                <div class="yw-kpi">
+                  <span class="yw-kpi__label">Engagement rate</span>
+                  <span class="yw-kpi__value" data-ga-kpi="engagementRate">—</span>
+                  <span class="yw-kpi__hint" data-ga-kpi-hint="engagementRate">&nbsp;</span>
+                </div>
+                <div class="yw-kpi">
+                  <span class="yw-kpi__label">Aktif sekarang</span>
+                  <span class="yw-kpi__value" data-ga-realtime>—</span>
+                  <span class="yw-kpi__hint">30 menit terakhir</span>
+                </div>
+                <div class="yw-kpi">
+                  <span class="yw-kpi__label">Sumber data</span>
+                  <span class="yw-kpi__value" style="font-size:1rem">GA4 Data API</span>
+                  <span class="yw-kpi__hint">analyticsdata.googleapis.com</span>
+                </div>
+              </div>
+
+              <div class="yw-admin__grid yw-admin__grid--2-1">
+                <div class="yw-panel">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:1rem">
+                    <h2 style="font-size:1rem">Pengguna harian</h2>
+                    <span class="yw-tiny">vs periode sebelumnya</span>
+                  </div>
+                  <svg class="yw-chart" data-ga-chart role="img" aria-label="Grafik pengguna harian"></svg>
+                </div>
+
+                <div class="yw-panel">
+                  <h2 style="font-size:1rem;margin-bottom:.75rem">Halaman teratas</h2>
+                  <table class="yw-table">
+                    <thead>
+                      <tr><th>Halaman</th><th>Pengguna</th><th>Views</th></tr>
+                    </thead>
+                    <tbody data-ga-pages>
+                      <tr><td colspan="3" class="yw-tiny">Memuat…</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              <p class="yw-scroll-hint yw-tiny">Geser tabel ke samping untuk melihat kolom lainnya.</p>
+              </div>
+
+              <div class="yw-admin__grid yw-admin__grid--1-1" style="margin-top:1.25rem">
+                <div class="yw-panel">
+                  <h2 style="font-size:1rem;margin-bottom:.75rem">Sumber traffic</h2>
+                  <div data-ga-sources></div>
+                </div>
+                <div class="yw-panel">
+                  <h2 style="font-size:1rem;margin-bottom:.75rem">Perangkat</h2>
+                  <div data-ga-devices></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ modal pesanan -->
+  <div id="orderModal" class="yw-modal hidden">
+    <form id="orderForm" class="yw-modal__card">
+      <div class="yw-modal__head">
+        <div>
+          <h2>Proses Pesanan</h2>
+          <p id="modalOrderCode" class="yw-tiny">YWR-...</p>
+        </div>
+        <button type="button" id="closeOrderModal" class="yw-modal__close" aria-label="Tutup">&times;</button>
+      </div>
+
+      <input type="hidden" id="orderId">
+
+      <div id="modalOrderDetail" class="yw-panel yw-panel--mist" style="font-size:.8rem;display:grid;gap:.4rem"></div>
+
+      <div class="yw-field">
+        <label for="oStatus">Status Pesanan</label>
+        <select id="oStatus" class="yw-select">
+          <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
+          <option value="Sudah Dibayar (Siap Diproses)">Sudah Dibayar (Siap Diproses)</option>
+          <option value="Sedang Dikemas">Sedang Dikemas</option>
+          <option value="Dikirim">Dikirim</option>
+          <option value="Selesai">Selesai</option>
+          <option value="Dibatalkan">Dibatalkan</option>
+        </select>
+      </div>
+
+      <div class="yw-field">
+        <label for="oResi">Nomor Resi Ekspedisi</label>
+        <input id="oResi" type="text" placeholder="Contoh: JP1234567890" class="yw-input">
+        <span class="yw-tiny" style="margin-top:.35rem">Isi resi jika paket sudah diserahkan ke kurir.</span>
+      </div>
+
+      <p id="orderFormMessage" class="yw-tiny" style="color:var(--danger)"></p>
+
+      <div style="display:flex;justify-content:flex-end;gap:.5rem;margin-top:1.35rem">
+        <button type="button" id="cancelOrderModal" class="yw-btn yw-btn--ghost yw-btn--sm">Batal</button>
+        <button id="saveOrderBtn" class="yw-btn yw-btn--sm">Simpan Perubahan</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ============================================================ modal produk -->
+  <div id="productModal" class="yw-modal hidden">
+    <form id="productForm" class="yw-modal__card">
+      <div class="yw-modal__head">
+        <h2 id="modalTitle">Tambah Produk</h2>
+        <button type="button" id="closeModal" class="yw-modal__close" aria-label="Tutup">&times;</button>
+      </div>
+      <input type="hidden" id="productId">
+
+      <div class="yw-form-grid yw-form-grid--2">
+        <div class="yw-field">
+          <label for="pName">Nama produk</label>
+          <input id="pName" required class="yw-input">
+        </div>
+        <div class="yw-field">
+          <label for="pCategory">Kategori</label>
+          <input id="pCategory" required list="categoryOptions" class="yw-input" placeholder="Kemeja Polos">
+          <datalist id="categoryOptions">
+            <option>Cardigan Rajut</option>
+            <option>Blouse Motif</option>
+            <option>Blouse Polos</option>
+          </datalist>
+        </div>
+        <div class="yw-field">
+          <label for="pPrice">Harga (Rupiah)</label>
+          <input id="pPrice" type="number" min="0" required class="yw-input">
+        </div>
+        <div class="yw-field">
+          <label for="pStock">Stok</label>
+          <input id="pStock" type="number" min="0" required class="yw-input">
+        </div>
+        <div class="yw-field">
+          <label for="pTag">Tag</label>
+          <input id="pTag" class="yw-input" placeholder="New / Best Seller">
+        </div>
+        <div class="yw-field">
+          <label for="pColor">Warna (hex)</label>
+          <input id="pColor" type="text" pattern="^#[0-9A-Fa-f]{6}$" value="#D8DCDE" class="yw-input">
+        </div>
+        <div class="yw-field">
+          <label for="pPattern">Pattern</label>
+          <input id="pPattern" class="yw-input" placeholder="collar / pocket / stripe">
+        </div>
+        <div class="yw-field">
+          <label for="pImage">URL gambar</label>
+          <input id="pImage" type="url" class="yw-input" placeholder="https://...">
+        </div>
+        <div class="yw-field yw-field--full">
+          <label for="pDescription">Deskripsi</label>
+          <textarea id="pDescription" rows="3" class="yw-textarea"></textarea>
+        </div>
+        <div class="yw-field yw-field--full" style="flex-direction:row;align-items:center;gap:.6rem">
+          <input id="pActive" type="checkbox" checked style="width:auto">
+          <label for="pActive" style="margin:0">Tampilkan di katalog (aktif)</label>
+        </div>
+      </div>
+
+      <p id="formMessage" class="yw-tiny" style="color:var(--danger);margin-top:.85rem"></p>
+
+      <div style="display:flex;justify-content:flex-end;gap:.5rem;margin-top:1.35rem">
+        <button type="button" id="cancelModal" class="yw-btn yw-btn--ghost yw-btn--sm">Batal</button>
+        <button id="saveBtn" class="yw-btn yw-btn--sm">Simpan Produk</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="toast" class="yw-toast" role="status"></div>
+
+  <script src="js/ga-config.js"></script>
+  <script src="js/ga-analytics.js"></script>
+  <script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const supabase = createClient('https://jrsooxmoljjqtgjmkumz.supabase.co', 'sb_publishable_scpzlZ7fozc6EogEkZTTYA_rsB5cF4M');
+const $ = id => document.getElementById(id);
+
+let allProducts = [];
+let allOrders = [];
+
+function notice(message, error=false) {
+ const el=$('statusMessage'); el.textContent=message;
+ el.className=`mx-5 mt-4 p-3 rounded-xl text-xs ${error?'bg-red-50 text-red-700':'bg-green-50 text-green-700'}`;
+}
+function orderNotice(message, error=false) {
+ const el=$('orderStatusMessage'); el.textContent=message;
+ el.className=`mx-5 mt-4 p-3 rounded-xl text-xs ${error?'bg-red-50 text-red-700':'bg-green-50 text-green-700'}`;
+}
+function toast(message) {
+ const el=$('toast'); el.textContent=message; el.classList.remove('hidden');
+ setTimeout(()=>el.classList.add('hidden'),2600);
+}
+function rupiah(n) {
+ return new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(n)||0);
+}
+function escapeHtml(v) {
+ return String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+}
+function formatDate(iso) {
+ if (!iso) return '-';
+ return new Date(iso).toLocaleString('id-ID', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+}
+
+// --- VERIFIKASI SESI ADMIN ---
+async function verifySession() {
+ const {data:{session},error:sessionError} = await supabase.auth.getSession();
+ if (sessionError || !session) { window.location.replace('login.html?next=admin.html'); return; }
+ const {data:admin,error} = await supabase.from('admin_users').select('user_id').eq('user_id',session.user.id).maybeSingle();
+ if (error) { notice('Tidak bisa memverifikasi hak admin: '+error.message,true); return; }
+ if (!admin) { window.location.replace('login.html?error=not-admin'); return; }
+ $('loginScreen').classList.add('hidden');
+ $('app').classList.remove('hidden');
+ $('app').classList.add('md:flex');
+ $('adminEmail').textContent=session.user.email||'Yuwuri Admin';
+ await Promise.all([loadOrders(), loadProducts()]);
+}
+
+$('logoutBtn').addEventListener('click',async()=>{await supabase.auth.signOut();window.location.href='login.html';});
+
+// --- BAGIAN PESANAN (ORDERS) ---
+function getStatusBadgeClass(status) {
+ const s = String(status || '').toLowerCase();
+ if (s.includes('dibayar') || s.includes('paid')) return 'bg-emerald-50 text-emerald-700 border border-emerald-200';
+ if (s.includes('kemas')) return 'bg-blue-50 text-blue-700 border border-blue-200';
+ if (s.includes('kirim')) return 'bg-purple-50 text-purple-700 border border-purple-200';
+ if (s.includes('selesai')) return 'bg-gray-100 text-gray-700 border border-gray-200';
+ if (s.includes('batal')) return 'bg-red-50 text-red-700 border border-red-200';
+ return 'bg-amber-50 text-amber-700 border border-amber-200';
+}
+
+function formatWaLink(order) {
+ let phone = String(order.buyer_phone || '').replace(/\D/g, '');
+ if (phone.startsWith('0')) phone = '62' + phone.slice(1);
+ const resiText = order.resi ? `\nNomor Resi: *${order.resi}* (${order.shipping_method || 'Ekspedisi'})` : '';
+ const msg = `Halo Kak *${order.buyer_name}*! Terima kasih sudah berbelanja di *Yuwuri Shop*.\n\nPesanan: *${order.order_code}*\nStatus saat ini: *${order.status}*${resiText}\n\nJika ada pertanyaan, silakan balas pesan ini ya Kak!`;
+ return `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+}
+
+function renderOrderMetrics() {
+ $('metricTotalOrders').textContent = allOrders.length;
+ const needProcess = allOrders.filter(o => {
+  const s = String(o.status || '').toLowerCase();
+  return s.includes('dibayar') || s.includes('paid') || s.includes('kemas');
+ }).length;
+ $('metricPendingProcess').textContent = needProcess;
+ $('sidebarOrderBadge').textContent = needProcess;
+}
+
+function renderOrders() {
+ const q = $('orderSearchInput').value.toLowerCase();
+ const st = $('orderStatusFilter').value;
+
+ const filtered = allOrders.filter(o => {
+  const matchStatus = !st || o.status === st;
+  const matchQuery = !q || `${o.order_code} ${o.buyer_name} ${o.buyer_phone} ${o.resi || ''}`.toLowerCase().includes(q);
+  return matchStatus && matchQuery;
+ });
+
+ if (!filtered.length) {
+  $('orderRows').innerHTML = '<tr><td colspan="6" class="p-8 text-center text-brown-700">Belum ada pesanan yang sesuai filter.</td></tr>';
+  return;
+ }
+
+ $('orderRows').innerHTML = filtered.map(o => {
+  const items = Array.isArray(o.items) ? o.items : [];
+  const itemsHtml = items.map(it =>
+   `<div class="text-[11px] leading-snug">• <span class="font-semibold">${escapeHtml(it.name)}</span> (${escapeHtml(it.color || 'Default')}) x${it.quantity || 1}</div>`
+  ).join('') || '<span class="text-brown-700">-</span>';
+
+  return `
+   <tr class="hover:bg-brown-50/70 align-top">
+    <td class="p-4 whitespace-nowrap">
+     <div class="font-bold text-brown-900">${escapeHtml(o.order_code)}</div>
+     <div class="text-[11px] text-brown-700 mt-0.5">${formatDate(o.created_at)}</div>
+    </td>
+    <td class="p-4 max-w-xs">
+     <div class="font-bold text-brown-900">${escapeHtml(o.buyer_name)}</div>
+     <div class="text-[11px] text-brown-700">${escapeHtml(o.buyer_phone)}</div>
+     <div class="text-[11px] text-brown-700/90 mt-1 line-clamp-2" title="${escapeHtml(o.shipping_address)}">${escapeHtml(o.shipping_address)}</div>
+     ${o.notes && o.notes !== 'Tidak ada' ? `<div class="text-[10px] text-amber-800 bg-amber-50 px-2 py-0.5 rounded mt-1 inline-block">Catatan: ${escapeHtml(o.notes)}</div>` : ''}
+    </td>
+    <td class="p-4 min-w-[180px] space-y-1">${itemsHtml}</td>
+    <td class="p-4 whitespace-nowrap">
+     <div class="font-bold text-brown-900">${escapeHtml(o.total_amount)}</div>
+     <div class="text-[11px] text-brown-700 mt-0.5">${escapeHtml(o.shipping_method || '-')}</div>
+    </td>
+    <td class="p-4 whitespace-nowrap">
+     <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold inline-block ${getStatusBadgeClass(o.status)}">${escapeHtml(o.status || 'pending')}</span>
+     <div class="text-[11px] text-brown-700 mt-1.5">Resi: <span class="font-bold text-brown-900">${o.resi ? escapeHtml(o.resi) : '-'}</span></div>
+    </td>
+    <td class="p-4">
+     <div class="flex items-center justify-center gap-2">
+      <button data-process-order="${o.id}" class="px-3 py-1.5 rounded-lg bg-brown-900 text-white text-[11px] font-bold hover:bg-brown-700">
+       Proses
+      </button>
+      <a href="${formatWaLink(o)}" target="_blank" rel="noopener" title="Chat WhatsApp Pembeli" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white text-xs hover:bg-emerald-700">
+       <i class="fa-brands fa-whatsapp"></i>
+      </a>
+     </div>
+    </td>
+   </tr>
+  `;
+ }).join('');
+
+ $('orderRows').querySelectorAll('[data-process-order]').forEach(btn => {
+  btn.onclick = () => {
+   const order = allOrders.find(x => String(x.id) === String(btn.dataset.processOrder));
+   if (order) openOrderModal(order);
+  };
+ });
+}
+
+async function loadOrders() {
+ const { data, error } = await supabase.from('orders').select('*').order('created_at', { ascending: false });
+ if (error) {
+  orderNotice('Gagal memuat pesanan: ' + error.message, true);
+  return;
+ }
+ allOrders = data || [];
+ $('orderStatusMessage').classList.add('hidden');
+ renderOrderMetrics();
+ renderOrders();
+}
+
+function openOrderModal(order) {
+ $('orderId').value = order.id;
+ $('modalOrderCode').textContent = `${order.order_code} • ${formatDate(order.created_at)}`;
+ $('oStatus').value = order.status || 'Menunggu Pembayaran';
+ $('oResi').value = order.resi || '';
+ $('orderFormMessage').textContent = '';
+
+ const itemsList = (Array.isArray(order.items) ? order.items : [])
+  .map(i => `${escapeHtml(i.name)} (${escapeHtml(i.color || 'Default')}) x${i.quantity || 1}`)
+  .join(', ');
+
+ $('modalOrderDetail').innerHTML = `
+  <div><span class="text-brown-700">Pembeli:</span> <strong>${escapeHtml(order.buyer_name)}</strong> (${escapeHtml(order.buyer_phone)})</div>
+  <div><span class="text-brown-700">Alamat:</span> ${escapeHtml(order.shipping_address)}</div>
+  <div><span class="text-brown-700">Kurir:</span> ${escapeHtml(order.shipping_method || '-')}</div>
+  <div><span class="text-brown-700">Produk:</span> ${itemsList}</div>
+  <div><span class="text-brown-700">Total Bayar:</span> <strong>${escapeHtml(order.total_amount)}</strong></div>
+ `;
+
+ $('orderModal').classList.remove('hidden');
+ $('orderModal').classList.add('flex');
+}
+
+function closeOrderModal() {
+ $('orderModal').classList.add('hidden');
+ $('orderModal').classList.remove('flex');
+}
+
+$('closeOrderModal').onclick = closeOrderModal;
+$('cancelOrderModal').onclick = closeOrderModal;
+$('orderSearchInput').addEventListener('input', renderOrders);
+$('orderStatusFilter').addEventListener('change', renderOrders);
+$('refreshOrdersBtn').addEventListener('click', async () => {
+ toast('Memperbarui daftar pesanan...');
+ await loadOrders();
+});
+
+$('orderForm').addEventListener('submit', async e => {
+ e.preventDefault();
+ const id = $('orderId').value;
+ const newStatus = $('oStatus').value;
+ const newResi = $('oResi').value.trim();
+
+ $('saveOrderBtn').disabled = true;
+ $('saveOrderBtn').textContent = 'Menyimpan...';
+ $('orderFormMessage').textContent = '';
+
+ const { error } = await supabase
+  .from('orders')
+  .update({ status: newStatus, resi: newResi })
+  .eq('id', id);
+
+ $('saveOrderBtn').disabled = false;
+ $('saveOrderBtn').textContent = 'Simpan Perubahan';
+
+ if (error) {
+  $('orderFormMessage').textContent = 'Gagal memperbarui pesanan: ' + error.message;
+  return;
+ }
+
+ closeOrderModal();
+ toast('Status pesanan & resi berhasil diperbarui');
+ await loadOrders();
+});
+
+// --- BAGIAN PRODUK (BAWAAN) ---
+function renderMetrics() {
+ $('totalProducts').textContent=allProducts.length;
+ $('activeProducts').textContent=allProducts.filter(p=>p.is_active).length;
+ $('lowStock').textContent=allProducts.filter(p=>Number(p.stock)<=5).length;
+ $('totalStock').textContent=allProducts.reduce((s,p)=>s+Number(p.stock||0),0);
+}
+
+function renderRows() {
+ const q=$('searchInput').value.toLowerCase(),cat=$('categoryFilter').value;
+ const rows=allProducts.filter(p=>(!cat||p.category===cat)&&(!q||`${p.name} ${p.category}`.toLowerCase().includes(q)));
+ $('productRows').innerHTML=rows.length?rows.map(p=>`<tr class="hover:bg-brown-50/70"><td class="p-4"><div class="flex items-center gap-3 min-w-48">${p.image_url?`<img src="${escapeHtml(p.image_url)}" class="w-10 h-12 object-cover rounded-lg" alt="">`:'<div class="w-10 h-12 rounded-lg bg-brown-100 flex items-center justify-center"><i class="fa-solid fa-shirt text-brown-700"></i></div>'}<span class="font-bold">${escapeHtml(p.name)}</span></div></td><td class="p-4">${escapeHtml(p.category)}</td><td class="p-4 whitespace-nowrap">${rupiah(p.price)}</td><td class="p-4">${p.stock}</td><td class="p-4"><span class="px-2 py-1 rounded-full ${p.is_active?'bg-green-50 text-green-700':'bg-gray-100 text-gray-600'}">${p.is_active?'Aktif':'Nonaktif'}</span></td><td class="p-4"><div class="flex justify-center gap-2"><button data-edit="${p.id}" class="text-brown-700 hover:text-blue-700" title="Edit"><i class="fa-solid fa-pen"></i></button><button data-toggle="${p.id}" class="text-brown-700 hover:text-green-700" title="Ubah status"><i class="fa-solid fa-power-off"></i></button><button data-delete="${p.id}" class="text-red-500 hover:text-red-700" title="Hapus"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join(''):'<tr><td colspan="6" class="p-8 text-center text-brown-700">Belum ada produk yang cocok.</td></tr>';
+ $('productRows').querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>openModal(allProducts.find(p=>String(p.id)===b.dataset.edit)));
+ $('productRows').querySelectorAll('[data-toggle]').forEach(b=>b.onclick=()=>toggleProduct(b.dataset.toggle));
+ $('productRows').querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>deleteProduct(b.dataset.delete));
+}
+
+async function loadProducts() {
+ notice('Memuat data produk...');
+ const {data,error}=await supabase.from('products').select('*').order('created_at',{ascending:false});
+ if(error){notice('Gagal mengambil produk: '+error.message,true);return;}
+ allProducts=data||[];
+ const cats=[...new Set(allProducts.map(p=>p.category).filter(Boolean))];
+ $('categoryFilter').innerHTML='<option value="">Semua kategori</option>'+cats.map(c=>`<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+ renderMetrics();renderRows();$('statusMessage').classList.add('hidden');
+}
+
+function openModal(p=null) {
+ $('productForm').reset();$('productId').value=p?.id??'';$('modalTitle').textContent=p?'Edit Produk':'Tambah Produk';
+ $('pName').value=p?.name??'';$('pCategory').value=p?.category??'';$('pPrice').value=p?.price??0;$('pStock').value=p?.stock??0;
+ $('pTag').value=p?.tag??'New';$('pColor').value=p?.color??'#E3CEB1';$('pPattern').value=p?.pattern??'collar';
+ $('pImage').value=p?.image_url??'';$('pDescription').value=p?.description??'';$('pActive').checked=p?.is_active??true;
+ $('formMessage').textContent='';$('productModal').classList.remove('hidden');$('productModal').classList.add('flex');
+}
+function closeModal() { $('productModal').classList.add('hidden');$('productModal').classList.remove('flex'); }
+$('addBtn').onclick=()=>openModal();$('closeModal').onclick=closeModal;$('cancelModal').onclick=closeModal;
+$('searchInput').addEventListener('input',renderRows);$('categoryFilter').addEventListener('change',renderRows);
+
+$('productForm').addEventListener('submit',async e=>{
+ e.preventDefault();$('saveBtn').disabled=true;$('saveBtn').textContent='Menyimpan...';$('formMessage').textContent='';
+ const payload={name:$('pName').value.trim(),category:$('pCategory').value.trim(),price:Number($('pPrice').value),stock:Number($('pStock').value),tag:$('pTag').value.trim()||'New',color:$('pColor').value.trim()||'#E3CEB1',pattern:$('pPattern').value.trim()||'collar',image_url:$('pImage').value.trim()||null,description:$('pDescription').value.trim()||null,is_active:$('pActive').checked};
+ let result;
+ if($('productId').value)result=await supabase.from('products').update(payload).eq('id',$('productId').value);
+ else result=await supabase.from('products').insert(payload);
+ $('saveBtn').disabled=false;$('saveBtn').textContent='Simpan Produk';
+ if(result.error){$('formMessage').textContent='Gagal menyimpan: '+result.error.message;return;}
+ closeModal();toast('Produk berhasil disimpan');await loadProducts();
+});
+
+async function toggleProduct(id) {
+ const p=allProducts.find(x=>String(x.id)===String(id));if(!p)return;
+ const {error}=await supabase.from('products').update({is_active:!p.is_active}).eq('id',id);
+ if(error){notice('Gagal mengubah status: '+error.message,true);return;}
+ toast('Status produk diperbarui');await loadProducts();
+}
+
+async function deleteProduct(id) {
+ const p=allProducts.find(x=>String(x.id)===String(id));if(!p||!confirm(`Hapus produk "${p.name}" secara permanen?`))return;
+ const {error}=await supabase.from('products').delete().eq('id',id);
+ if(error){notice('Gagal menghapus: '+error.message,true);return;}
+ toast('Produk dihapus');await loadProducts();
+}
+
+supabase.auth.onAuthStateChange(()=>{setTimeout(verifySession,0);});
+verifySession();
+</script>
+</body>
+</html>

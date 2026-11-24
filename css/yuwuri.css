@@ -1190,7 +1190,7 @@ p {
 
 .yw-input::placeholder,
 .yw-textarea::placeholder {
-  color: #9aa0a4;
+  color: #7d8488;
 }
 
 @media (min-width: 700px) {
@@ -1581,7 +1581,7 @@ p {
   border-top: 1px solid var(--line);
   margin-top: 0.85rem;
   padding-top: 1rem;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .yw-summary__total span:first-child {
@@ -2426,6 +2426,13 @@ html.js .reveal.is-in {
 .yw-kpi__hint {
   font-size: 10.5px;
   color: #5f666a;
+  margin-top: auto;
+}
+
+.yw-kpi__value,
+.yw-table td,
+.yw-table th {
+  font-variant-numeric: tabular-nums;
 }
 
 .yw-kpi__hint--up {
@@ -2446,12 +2453,13 @@ html.js .reveal.is-in {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.25rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 @media (min-width: 1100px) {
   .yw-admin__grid--2-1 {
     grid-template-columns: 1.8fr 1fr;
+  align-items: start;
   }
   .yw-admin__grid--1-1 {
     grid-template-columns: 1fr 1fr;
@@ -2471,9 +2479,15 @@ html.js .reveal.is-in {
 .yw-admin .yw-select,
 .yw-admin .yw-textarea {
   border: 1px solid var(--line-dark);
-  padding: 0.6rem 0.7rem;
+  height: 38px;
+  padding: 0 0.7rem;
   font-size: 12.5px;
   background: var(--paper);
+}
+
+.yw-admin .yw-textarea {
+  height: auto;
+  padding: 0.6rem 0.7rem;
 }
 
 .yw-admin .yw-input:focus,
@@ -2517,6 +2531,7 @@ html.js .reveal.is-in {
   width: 100%;
   height: 220px;
   display: block;
+  overflow: visible;
 }
 
 .yw-chart__grid {
@@ -2556,9 +2571,14 @@ html.js .reveal.is-in {
 }
 
 .yw-ga-bar__status {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  display: block;
+  line-height: 1.55;
+  overflow-wrap: break-word;
+}
+
+.yw-ga-bar__status .yw-dot {
+  margin-right: 0.5rem;
+  vertical-align: middle;
 }
 
 .yw-dot {
@@ -2777,4 +2797,67 @@ html.js .reveal.is-in {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+/* --- admin: netralkan pil status yang dihasilkan JS (kelas Tailwind) --- */
+.yw-admin__nav .is-active .yw-badge.yw-badge--dark { background: #fff; color: #000; }
+
+.yw-admin .bg-emerald-50 { background: #000 !important; color: #fff !important; border-color: #000 !important; }
+.yw-admin .bg-green-50 { background: #000 !important; color: #fff !important; }
+.yw-admin .bg-blue-50 { background: var(--mist-soft, #efefef) !important; color: #000 !important; border-color: var(--mist-soft, #efefef) !important; }
+.yw-admin .bg-purple-50 { background: #D8DCDE !important; color: #000 !important; border-color: #D8DCDE !important; }
+.yw-admin .bg-gray-100 { background: #f7f7f7 !important; color: #5a6064 !important; border-color: var(--line, #e6e6e6) !important; }
+.yw-admin .bg-red-50 { background: #fff !important; color: var(--danger, #be1e1e) !important; border-color: rgba(190, 30, 30, 0.35) !important; }
+.yw-admin .bg-amber-50 { background: #fff !important; color: #000 !important; border-color: rgba(0, 0, 0, 0.45) !important; }
+
+/* tinggi tombol aksi di dalam tabel seragam */
+.yw-admin .yw-table button,
+.yw-admin .yw-table a[href^="https://wa.me"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  min-height: 28px;
+  padding: 0 0.55rem;
+}
+
+/* kolom aksi tabel: header & isi rata kanan, jarak konsisten */
+.yw-admin .yw-table th:last-child,
+.yw-admin .yw-table td:last-child { text-align: right; }
+
+.yw-admin .yw-table__actions { justify-content: flex-end; gap: 0.45rem; }
+
+.yw-admin .yw-table th:last-child { padding-right: 0.9rem; text-align: right !important; }
+
+/* --- tinggi field & tombol seragam (checkout, login, kontak) --- */
+input.yw-input,
+select.yw-select { height: 44px; padding-block: 0; }
+
+.yw-voucher input { height: 44px; }
+.yw-voucher .yw-btn { height: 44px; }
+.yw-checkout .yw-field .yw-btn { height: 44px; }
+
+/* tabel bisa digeser di layar kecil */
+.yw-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.yw-scroll-hint { display: none; }
+
+@media (max-width: 900px) {
+  .yw-scroll-hint {
+    display: block;
+    margin: 0.7rem 1.35rem 0;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+}
+
+/* baris input + tombol: turun baris di layar sempit */
+@media (max-width: 520px) {
+  .yw-inline { flex-wrap: wrap; }
+  .yw-inline .yw-btn,
+  .yw-voucher .yw-btn { width: 100%; }
+  .yw-voucher { flex-wrap: wrap; }
 }
